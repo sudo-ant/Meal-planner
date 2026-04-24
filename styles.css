@@ -120,7 +120,7 @@ button.small {
 
 .tabs {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   margin: 14px 0;
   background: rgba(255,255,255,0.55);
@@ -329,4 +329,35 @@ button.small {
   color: var(--accent);
   font-weight: 700;
   font-size: 0.9rem;
+}
+
+
+.builder-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.plan-kind {
+  display: inline-block;
+  margin-top: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.preview-meal {
+  display: grid;
+  gap: 5px;
+}
+
+@media (max-width: 380px) {
+  .tab {
+    font-size: 0.82rem;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
 }

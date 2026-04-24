@@ -1,6 +1,6 @@
 {
-  "name": "Student Food Planner",
-  "short_name": "Food Plan",
+  "name": "Maia's Recipe & Meal Planner",
+  "short_name": "Maia Meals",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f6f4ef",

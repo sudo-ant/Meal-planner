@@ -85,3 +85,17 @@ Each plan uses recipe IDs from `recipes.json`.
 - Added hide-bought-items toggle.
 - Added copy shopping list button.
 - Bumped the service worker cache to v2.
+
+
+## v3 changes
+
+- Renamed app to `Maia's Recipe & Meal Planner`.
+- Weekly plans now show whether they are 5-day or 6-day plans.
+- Shopping list categories simplified:
+  - Tinned goods, dry goods, condiments, seasoning and oil now show as Cupboard.
+- Water is excluded from the shopping list.
+- Added Quick Plan Builder:
+  - choose 5 or 6 days
+  - optionally choose 1–2 must-have recipes
+  - generate a balanced plan
+  - use generated plan as the active plan

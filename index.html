@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Student Food Planner</title>
+  <title>Maia's Recipe & Meal Planner</title>
   <meta name="theme-color" content="#20374d">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="styles.css">
@@ -12,7 +12,7 @@
   <header class="app-header">
     <div>
       <p class="eyebrow">Mobile meal planner</p>
-      <h1>Student Food Planner</h1>
+      <h1>Maia's Recipe & Meal Planner</h1>
       <p class="subtitle">Choose a weekly plan, shop once, cook simple meals, and reset for next week.</p>
     </div>
   </header>
@@ -30,6 +30,7 @@
     <nav class="tabs" aria-label="Main sections">
       <button class="tab active" data-tab="plan">Plan</button>
       <button class="tab" data-tab="shopping">Shopping</button>
+      <button class="tab" data-tab="builder">Builder</button>
       <button class="tab" data-tab="recipes">Recipes</button>
     </nav>
 
@@ -58,6 +59,44 @@
         </div>
       </div>
       <div id="shoppingList" class="stack"></div>
+    </section>
+
+    <section id="builderPanel" class="panel">
+      <div class="card">
+        <h2>Quick Plan Builder</h2>
+        <p>Choose 5 or 6 days, optionally lock in 1–2 recipes, then let the app fill the rest.</p>
+
+        <div class="builder-grid">
+          <div>
+            <label for="builderDays">Number of days</label>
+            <select id="builderDays">
+              <option value="5">5-day plan</option>
+              <option value="6">6-day plan</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="mustHaveOne">Must-have recipe 1</label>
+            <select id="mustHaveOne">
+              <option value="">No preference</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="mustHaveTwo">Must-have recipe 2</label>
+            <select id="mustHaveTwo">
+              <option value="">No preference</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button id="generatePlanBtn">Generate plan</button>
+          <button id="useGeneratedPlanBtn" class="secondary" disabled>Use this plan</button>
+        </div>
+        <p id="builderMessage" class="meta"></p>
+      </div>
+      <div id="generatedPlanPreview" class="stack"></div>
     </section>
 
     <section id="recipesPanel" class="panel">
