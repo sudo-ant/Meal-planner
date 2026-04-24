@@ -1,20 +1,18 @@
 <!doctype html>
 <html lang="en-GB">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Maia Meal Planner</title>
+  <title>Student Food Planner</title>
   <meta name="theme-color" content="#20374d">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
   <header class="app-header">
     <div>
       <p class="eyebrow">Mobile meal planner</p>
-      <h1>Maia Meal Planner</h1>
+      <h1>Student Food Planner</h1>
       <p class="subtitle">Choose a weekly plan, shop once, cook simple meals, and reset for next week.</p>
     </div>
   </header>
@@ -46,8 +44,17 @@
           <div>
             <h2>Shopping list</h2>
             <p>Hybrid counts: fresh items are counted, dry/tinned goods are summed where useful.</p>
+            <p id="shoppingStatus" class="meta">Bought: 0 / 0</p>
           </div>
           <button id="resetShoppingBtn" class="secondary small">Untick shopping</button>
+        </div>
+        <div class="shopping-tools">
+          <label class="toggle-row">
+            <input id="hideBoughtToggle" type="checkbox">
+            <span>Hide bought items</span>
+          </label>
+          <button id="copyShoppingBtn" class="secondary small">Copy list</button>
+          <span id="copyStatus" class="copy-status" aria-live="polite"></span>
         </div>
       </div>
       <div id="shoppingList" class="stack"></div>
@@ -68,5 +75,4 @@
 
   <script src="app.js"></script>
 </body>
-
 </html>

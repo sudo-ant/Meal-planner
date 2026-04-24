@@ -265,3 +265,68 @@ button.small {
     padding-right: calc((100% - 760px) / 2 + 18px);
   }
 }
+
+
+.progress-wrap {
+  margin: 12px 0;
+}
+
+.progress-text {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 7px;
+}
+
+.progress-track {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.next-meal {
+  border-color: var(--accent);
+  box-shadow: 0 10px 28px rgba(32, 55, 77, 0.16);
+}
+
+.next-meal-note {
+  margin-top: 8px !important;
+  color: var(--accent) !important;
+  font-weight: 700;
+}
+
+.shopping-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.toggle-row {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.toggle-row input {
+  width: auto;
+  min-height: auto;
+  accent-color: var(--accent);
+}
+
+.copy-status {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.9rem;
+}

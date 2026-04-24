@@ -6,8 +6,25 @@ const DATA_PATHS = {
 const STORAGE_KEYS = {
   selectedPlan: "studentFoodPlanner.selectedPlan",
   mealTicks: "studentFoodPlanner.mealTicks",
-  shoppingTicks: "studentFoodPlanner.shoppingTicks"
+  shoppingTicks: "studentFoodPlanner.shoppingTicks",
+  hideBought: "studentFoodPlanner.hideBought"
 };
+
+const CATEGORY_ORDER = [
+  "Vegetables",
+  "Fruit",
+  "Meat",
+  "Fish",
+  "Dairy",
+  "Eggs",
+  "Frozen",
+  "Tinned goods",
+  "Dry goods",
+  "Condiments",
+  "Seasoning",
+  "Oil & cooking fats",
+  "Other"
+];
 
 let recipes = [];
 let plans = [];
@@ -37,7 +54,29 @@ function setStoredObject(key, value) {
 function formatQuantity(value) {
   if (value === undefined || value === null || value === "") return "";
   if (Number.isInteger(value)) return String(value);
-  return String(value).replace(".5", "½").replace(".25", "¼").replace(".75", "¾");
+
+  const whole = Math.trunc(value);
+  const fraction = Math.round((value - whole) * 100) / 100;
+  const fractionMap = {
+    0.25: "¼",
+    0.5: "½",
+    0.75: "¾"
+  };
+
+  if (fractionMap[fraction]) {
+    return whole === 0 ? fractionMap[fraction] : `${whole}${fractionMap[fraction]}`;
+  }
+
+  return String(value);
+}
+
+function categoryRank(category) {
+  const index = CATEGORY_ORDER.indexOf(category || "Other");
+  return index === -1 ? CATEGORY_ORDER.length : index;
+}
+
+function shoppingItemKey(plan, item) {
+  return `${plan.id}:${item.category}:${item.item}:${item.unit || item.detail || ""}`;
 }
 
 function normaliseItemKey(ingredient) {
@@ -127,7 +166,7 @@ function buildShoppingList(plan) {
   });
 
   return Array.from(map.values()).sort((a, b) => {
-    const cat = a.category.localeCompare(b.category);
+    const cat = categoryRank(a.category) - categoryRank(b.category);
     if (cat !== 0) return cat;
     return a.item.localeCompare(b.item);
   });
@@ -140,6 +179,14 @@ function groupByCategory(items) {
     groups[category].push(item);
     return groups;
   }, {});
+}
+
+function orderedCategoryEntries(groups) {
+  return Object.entries(groups).sort(([a], [b]) => {
+    const cat = categoryRank(a) - categoryRank(b);
+    if (cat !== 0) return cat;
+    return a.localeCompare(b);
+  });
 }
 
 function getSelectedPlan() {
@@ -174,6 +221,11 @@ function renderPlan() {
     return;
   }
 
+  const mealKeys = plan.days.map(day => `${plan.id}:${day.day}:${day.meal}`);
+  const completedCount = mealKeys.filter(key => mealTicks[key]).length;
+  const progressPercent = plan.days.length ? Math.round((completedCount / plan.days.length) * 100) : 0;
+  const nextUntickedIndex = plan.days.findIndex(day => !mealTicks[`${plan.id}:${day.day}:${day.meal}`]);
+
   const fillers = plan.fillers?.length
     ? `<h3>Fillers</h3><ul class="filler-list">${plan.fillers.map(filler => `<li>${filler}</li>`).join("")}</ul>`
     : "";
@@ -182,6 +234,11 @@ function renderPlan() {
     <div class="card">
       <h2>${plan.title}</h2>
       <p>${plan.days.length} planned recipe days.</p>
+      <div class="progress-wrap" aria-label="Meal progress">
+        <div class="progress-text">Progress: ${completedCount} / ${plan.days.length} meals (${progressPercent}%)</div>
+        <div class="progress-track"><div class="progress-fill" style="width:${progressPercent}%"></div></div>
+      </div>
+      ${nextUntickedIndex >= 0 ? `<p class="next-meal-note">Next meal: ${lookup[plan.days[nextUntickedIndex].meal]?.title || plan.days[nextUntickedIndex].meal}</p>` : `<p class="next-meal-note">All planned meals ticked off.</p>`}
       ${plan.notes ? `<p class="meta">${plan.notes}</p>` : ""}
       ${fillers}
     </div>
@@ -195,10 +252,11 @@ function renderPlan() {
 
     const tickKey = `${plan.id}:${day.day}:${recipe.id}`;
     const checked = mealTicks[tickKey] ? "checked" : "";
+    const nextClass = index === nextUntickedIndex ? " next-meal" : "";
     const tags = recipe.tags?.slice(0, 5).map(tag => `<span class="tag">${tag}</span>`).join("") || "";
 
     return `
-      <article class="card meal-card">
+      <article class="card meal-card${nextClass}">
         <input class="checkbox meal-check" type="checkbox" ${checked} data-key="${tickKey}" aria-label="Mark ${recipe.title} as cooked">
         <div>
           <p class="meta">${day.day}</p>
@@ -218,6 +276,7 @@ function renderPlan() {
       const ticks = getStoredObject(STORAGE_KEYS.mealTicks);
       ticks[event.target.dataset.key] = event.target.checked;
       setStoredObject(STORAGE_KEYS.mealTicks, ticks);
+      renderPlan();
     });
   });
 }
@@ -225,6 +284,7 @@ function renderPlan() {
 function renderShoppingList() {
   const plan = getSelectedPlan();
   const shoppingTicks = getStoredObject(STORAGE_KEYS.shoppingTicks);
+  const hideBought = localStorage.getItem(STORAGE_KEYS.hideBought) === "true";
   const container = document.getElementById("shoppingList");
 
   if (!plan) {
@@ -232,14 +292,22 @@ function renderShoppingList() {
     return;
   }
 
-  const items = buildShoppingList(plan);
-  const groups = groupByCategory(items);
+  const allItems = buildShoppingList(plan);
+  const visibleItems = hideBought
+    ? allItems.filter(item => !shoppingTicks[shoppingItemKey(plan, item)])
+    : allItems;
+  const groups = groupByCategory(visibleItems);
 
-  container.innerHTML = Object.entries(groups).map(([category, groupItems]) => `
+  const totalCount = allItems.length;
+  const boughtCount = allItems.filter(item => shoppingTicks[shoppingItemKey(plan, item)]).length;
+  const status = document.getElementById("shoppingStatus");
+  if (status) status.textContent = `Bought: ${boughtCount} / ${totalCount}`;
+
+  container.innerHTML = orderedCategoryEntries(groups).map(([category, groupItems]) => `
     <section class="card">
       <h3 class="category-title">${category}</h3>
       ${groupItems.map(item => {
-        const key = `${plan.id}:${item.category}:${item.item}:${item.unit || item.detail || ""}`;
+        const key = shoppingItemKey(plan, item);
         const checked = shoppingTicks[key] ? "checked" : "";
         const doneClass = shoppingTicks[key] ? "done" : "";
         const sources = [...new Set(item.sources)].slice(0, 3).join(", ");
@@ -254,7 +322,7 @@ function renderShoppingList() {
         `;
       }).join("")}
     </section>
-  `).join("");
+  `).join("") || `<div class="card empty">All shopping items are ticked off.</div>`;
 
   document.querySelectorAll(".shopping-check").forEach(input => {
     input.addEventListener("change", event => {
@@ -264,6 +332,42 @@ function renderShoppingList() {
       renderShoppingList();
     });
   });
+}
+
+function buildShoppingListText() {
+  const plan = getSelectedPlan();
+  if (!plan) return "";
+
+  const items = buildShoppingList(plan);
+  const groups = groupByCategory(items);
+  const lines = [plan.title.toUpperCase(), ""];
+
+  orderedCategoryEntries(groups).forEach(([category, groupItems]) => {
+    lines.push(category.toUpperCase());
+    groupItems.forEach(item => lines.push(`- ${displayIngredientLine(item)}`));
+    lines.push("");
+  });
+
+  return lines.join("\n").trim();
+}
+
+async function copyShoppingList() {
+  const text = buildShoppingListText();
+  if (!text) return;
+
+  try {
+    await navigator.clipboard.writeText(text);
+    showCopyStatus("Copied");
+  } catch {
+    showCopyStatus("Copy failed");
+  }
+}
+
+function showCopyStatus(message) {
+  const status = document.getElementById("copyStatus");
+  if (!status) return;
+  status.textContent = message;
+  window.setTimeout(() => { status.textContent = ""; }, 1800);
 }
 
 function renderRecipes() {
@@ -336,6 +440,13 @@ async function init() {
     renderShoppingList();
   });
 
+  document.getElementById("hideBoughtToggle").addEventListener("change", event => {
+    localStorage.setItem(STORAGE_KEYS.hideBought, event.target.checked ? "true" : "false");
+    renderShoppingList();
+  });
+
+  document.getElementById("copyShoppingBtn").addEventListener("click", copyShoppingList);
+
   document.getElementById("clearPlanBtn").addEventListener("click", () => {
     localStorage.removeItem(STORAGE_KEYS.selectedPlan);
     localStorage.removeItem(STORAGE_KEYS.mealTicks);
@@ -345,6 +456,8 @@ async function init() {
   });
 
   document.getElementById("recipeSearch").addEventListener("input", renderRecipes);
+
+  document.getElementById("hideBoughtToggle").checked = localStorage.getItem(STORAGE_KEYS.hideBought) === "true";
 
   renderAll();
 

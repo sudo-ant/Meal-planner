@@ -74,3 +74,14 @@ Each recipe needs:
 Edit `data/plans.json`.
 
 Each plan uses recipe IDs from `recipes.json`.
+
+
+## v2 changes
+
+- Fixed half quantities, e.g. `0.5 tsp` now displays as `½ tsp`, not `0½ tsp`.
+- Added supermarket-style category ordering.
+- Added meal progress percentage.
+- Highlighted the next unticked meal.
+- Added hide-bought-items toggle.
+- Added copy shopping list button.
+- Bumped the service worker cache to v2.
