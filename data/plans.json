@@ -1,0 +1,369 @@
+[
+  {
+    "id": "week_1_chicken_batch",
+    "title": "Week 1 - Chicken Batch",
+    "days": [
+      {
+        "day": "Day 1",
+        "meal": "chicken_frozen_stir_fry_rice"
+      },
+      {
+        "day": "Day 2",
+        "meal": "chicken_lentil_one_pot"
+      },
+      {
+        "day": "Day 3",
+        "meal": "chicken_tomato_vegetable_stew"
+      },
+      {
+        "day": "Day 4",
+        "meal": "chicken_chickpea_curry"
+      },
+      {
+        "day": "Day 5",
+        "meal": "tuna_veg_rice"
+      },
+      {
+        "day": "Day 6",
+        "meal": "egg_fried_rice"
+      }
+    ],
+    "notes": "Chicken used Days 1–4. Pantry meals at the end reduce spoilage risk."
+  },
+  {
+    "id": "week_2_chicken_spinach",
+    "title": "Week 2 - Chicken & Spinach",
+    "days": [
+      {
+        "day": "Day 1",
+        "meal": "lemon_garlic_chicken_potatoes"
+      },
+      {
+        "day": "Day 2",
+        "meal": "chicken_egg_fried_rice"
+      },
+      {
+        "day": "Day 3",
+        "meal": "chicken_spinach_yoghurt_pan"
+      },
+      {
+        "day": "Day 4",
+        "meal": "chicken_veg_noodle_bowl"
+      },
+      {
+        "day": "Day 5",
+        "meal": "lentil_vegetable_stew"
+      },
+      {
+        "day": "Day 6",
+        "meal": "chickpea_spinach_curry"
+      }
+    ]
+  },
+  {
+    "id": "week_3_turkey_batch",
+    "title": "Week 3 - Turkey Batch",
+    "days": [
+      {
+        "day": "Day 1",
+        "meal": "turkey_veg_rice_bowl"
+      },
+      {
+        "day": "Day 2",
+        "meal": "turkey_lentil_tomato_pot"
+      },
+      {
+        "day": "Day 3",
+        "meal": "turkey_stir_fry_low_carb"
+      },
+      {
+        "day": "Day 4",
+        "meal": "turkey_bean_chilli"
+      },
+      {
+        "day": "Day 5",
+        "meal": "tuna_chickpea_bowl"
+      },
+      {
+        "day": "Day 6",
+        "meal": "bean_veg_one_pot"
+      }
+    ],
+    "notes": "Same logic as chicken week. Freeze turkey portions individually."
+  },
+  {
+    "id": "week_4_fish_then_chicken",
+    "title": "Week 4 - Fish then Chicken",
+    "days": [
+      {
+        "day": "Day 1",
+        "meal": "white_fish_potato_pan"
+      },
+      {
+        "day": "Day 2",
+        "meal": "salmon_veg_rice"
+      },
+      {
+        "day": "Day 3",
+        "meal": "chicken_frozen_stir_fry_rice"
+      },
+      {
+        "day": "Day 4",
+        "meal": "chicken_lentil_one_pot"
+      },
+      {
+        "day": "Day 5",
+        "meal": "chickpea_stir_fry"
+      },
+      {
+        "day": "Day 6",
+        "meal": "vegetable_omelette_rice"
+      }
+    ],
+    "notes": "Fish early for best quality, then chicken."
+  },
+  {
+    "id": "week_5_mixed_protein",
+    "title": "Week 5 - Mixed Protein",
+    "days": [
+      {
+        "day": "Day 1",
+        "meal": "chicken_tomato_vegetable_stew"
+      },
+      {
+        "day": "Day 2",
+        "meal": "chicken_chickpea_curry"
+      },
+      {
+        "day": "Day 3",
+        "meal": "turkey_veg_rice_bowl"
+      },
+      {
+        "day": "Day 4",
+        "meal": "turkey_bean_chilli"
+      },
+      {
+        "day": "Day 5",
+        "meal": "egg_potato_hash"
+      },
+      {
+        "day": "Day 6",
+        "meal": "lentil_bolognese"
+      }
+    ]
+  },
+  {
+    "id": "week_6_low_cost_rotation",
+    "title": "Week 6 - Low Cost Rotation",
+    "days": [
+      {
+        "day": "Day 1",
+        "meal": "chicken_spinach_yoghurt_pan"
+      },
+      {
+        "day": "Day 2",
+        "meal": "chicken_veg_noodle_bowl"
+      },
+      {
+        "day": "Day 3",
+        "meal": "white_fish_potato_pan"
+      },
+      {
+        "day": "Day 4",
+        "meal": "tuna_veg_rice"
+      },
+      {
+        "day": "Day 5",
+        "meal": "chickpea_stir_fry"
+      },
+      {
+        "day": "Day 6",
+        "meal": "lentil_vegetable_stew"
+      }
+    ]
+  },
+  {
+    "id": "week_a_chicken_base",
+    "title": "Week A - Chicken Base (5 Days)",
+    "days": [
+      {
+        "day": "Day 1",
+        "meal": "chicken_frozen_stir_fry_rice"
+      },
+      {
+        "day": "Day 2",
+        "meal": "chicken_lentil_one_pot"
+      },
+      {
+        "day": "Day 3",
+        "meal": "chicken_tomato_vegetable_stew"
+      },
+      {
+        "day": "Day 4",
+        "meal": "chicken_chickpea_curry"
+      },
+      {
+        "day": "Day 5",
+        "meal": "egg_fried_rice"
+      }
+    ],
+    "fillers": [
+      "eggs + fruit",
+      "yoghurt + oats"
+    ],
+    "notes": "Chicken used early. Fillers at end of week."
+  },
+  {
+    "id": "week_b_chicken_veg",
+    "title": "Week B - Chicken + Vegetarian",
+    "days": [
+      {
+        "day": "Day 1",
+        "meal": "lemon_garlic_chicken_potatoes"
+      },
+      {
+        "day": "Day 2",
+        "meal": "chicken_egg_fried_rice"
+      },
+      {
+        "day": "Day 3",
+        "meal": "chicken_spinach_yoghurt_pan"
+      },
+      {
+        "day": "Day 4",
+        "meal": "lentil_vegetable_stew"
+      },
+      {
+        "day": "Day 5",
+        "meal": "chickpea_spinach_curry"
+      }
+    ],
+    "fillers": [
+      "tuna + rice",
+      "yoghurt + oats"
+    ]
+  },
+  {
+    "id": "week_c_turkey_base",
+    "title": "Week C - Turkey Base",
+    "days": [
+      {
+        "day": "Day 1",
+        "meal": "turkey_veg_rice_bowl"
+      },
+      {
+        "day": "Day 2",
+        "meal": "turkey_lentil_tomato_pot"
+      },
+      {
+        "day": "Day 3",
+        "meal": "turkey_stir_fry_low_carb"
+      },
+      {
+        "day": "Day 4",
+        "meal": "turkey_bean_chilli"
+      },
+      {
+        "day": "Day 5",
+        "meal": "bean_veg_one_pot"
+      }
+    ],
+    "fillers": [
+      "eggs + fruit",
+      "chickpea quick pan"
+    ],
+    "notes": "Freeze turkey portions on Day 0."
+  },
+  {
+    "id": "week_d_fish_chicken",
+    "title": "Week D - Fish + Chicken",
+    "days": [
+      {
+        "day": "Day 1",
+        "meal": "white_fish_potato_pan"
+      },
+      {
+        "day": "Day 2",
+        "meal": "salmon_veg_rice"
+      },
+      {
+        "day": "Day 3",
+        "meal": "chicken_frozen_stir_fry_rice"
+      },
+      {
+        "day": "Day 4",
+        "meal": "chicken_lentil_one_pot"
+      },
+      {
+        "day": "Day 5",
+        "meal": "vegetable_omelette_rice"
+      }
+    ],
+    "fillers": [
+      "yoghurt + oats",
+      "tuna + rice"
+    ],
+    "notes": "Fish early in the week."
+  },
+  {
+    "id": "week_e_mixed",
+    "title": "Week E - Mixed Rotation",
+    "days": [
+      {
+        "day": "Day 1",
+        "meal": "chicken_tomato_vegetable_stew"
+      },
+      {
+        "day": "Day 2",
+        "meal": "chicken_chickpea_curry"
+      },
+      {
+        "day": "Day 3",
+        "meal": "turkey_veg_rice_bowl"
+      },
+      {
+        "day": "Day 4",
+        "meal": "turkey_bean_chilli"
+      },
+      {
+        "day": "Day 5",
+        "meal": "egg_potato_hash"
+      }
+    ],
+    "fillers": [
+      "eggs + fruit",
+      "chickpeas + veg"
+    ]
+  },
+  {
+    "id": "week_f_low_cost",
+    "title": "Week F - Low Cost Pantry",
+    "days": [
+      {
+        "day": "Day 1",
+        "meal": "tuna_veg_rice"
+      },
+      {
+        "day": "Day 2",
+        "meal": "tuna_chickpea_bowl"
+      },
+      {
+        "day": "Day 3",
+        "meal": "lentil_vegetable_stew"
+      },
+      {
+        "day": "Day 4",
+        "meal": "chickpea_stir_fry"
+      },
+      {
+        "day": "Day 5",
+        "meal": "lentil_bolognese"
+      }
+    ],
+    "fillers": [
+      "yoghurt + oats",
+      "eggs + fruit"
+    ],
+    "notes": "Cheapest week. No fresh meat dependency."
+  }
+]

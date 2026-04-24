@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Food Planner</title>
+  <meta name="theme-color" content="#20374d">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Mobile meal planner</p>
+      <h1>Student Food Planner</h1>
+      <p class="subtitle">Choose a weekly plan, shop once, cook simple meals, and reset for next week.</p>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="card controls-card">
+      <label for="planSelect">Choose a plan</label>
+      <select id="planSelect"></select>
+      <div class="button-row">
+        <button id="resetProgressBtn" class="secondary">Reset ticks</button>
+        <button id="clearPlanBtn" class="ghost">Clear plan</button>
+      </div>
+    </section>
+
+    <nav class="tabs" aria-label="Main sections">
+      <button class="tab active" data-tab="plan">Plan</button>
+      <button class="tab" data-tab="shopping">Shopping</button>
+      <button class="tab" data-tab="recipes">Recipes</button>
+    </nav>
+
+    <section id="planPanel" class="panel active">
+      <div id="planSummary"></div>
+      <div id="mealList" class="stack"></div>
+    </section>
+
+    <section id="shoppingPanel" class="panel">
+      <div class="card">
+        <div class="section-heading">
+          <div>
+            <h2>Shopping list</h2>
+            <p>Hybrid counts: fresh items are counted, dry/tinned goods are summed where useful.</p>
+          </div>
+          <button id="resetShoppingBtn" class="secondary small">Untick shopping</button>
+        </div>
+      </div>
+      <div id="shoppingList" class="stack"></div>
+    </section>
+
+    <section id="recipesPanel" class="panel">
+      <div class="card">
+        <label for="recipeSearch">Search recipes</label>
+        <input id="recipeSearch" type="search" placeholder="Search chicken, lentils, quick...">
+      </div>
+      <div id="recipeList" class="stack"></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>Works offline after first load. Data is saved only on this device.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

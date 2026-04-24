@@ -1,0 +1,267 @@
+:root {
+  --bg: #f6f4ef;
+  --card: #ffffff;
+  --ink: #1f2933;
+  --muted: #657180;
+  --line: #e6e0d7;
+  --accent: #20374d;
+  --accent-soft: #e5edf4;
+  --danger: #8a2d2d;
+  --radius: 18px;
+  --shadow: 0 8px 24px rgba(28, 38, 48, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.app-header {
+  background: var(--accent);
+  color: white;
+  padding: 28px 18px 30px;
+  border-bottom-left-radius: 28px;
+  border-bottom-right-radius: 28px;
+}
+
+.app-header h1 {
+  margin: 4px 0 8px;
+  font-size: 1.9rem;
+  line-height: 1.1;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.subtitle {
+  margin: 0;
+  color: rgba(255,255,255,0.86);
+  line-height: 1.4;
+}
+
+.app-shell {
+  width: min(760px, 100%);
+  margin: -18px auto 0;
+  padding: 0 14px 32px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.controls-card {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+select, input {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  background: white;
+  color: var(--ink);
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 11px 14px;
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+button.ghost {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
+
+button.small {
+  padding: 8px 11px;
+  font-size: 0.85rem;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 14px 0;
+  background: rgba(255,255,255,0.55);
+  padding: 6px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+}
+
+.tab {
+  background: transparent;
+  color: var(--muted);
+  padding: 10px 8px;
+}
+
+.tab.active {
+  background: var(--accent);
+  color: white;
+}
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+.stack {
+  display: grid;
+  gap: 12px;
+}
+
+.meal-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+  margin-top: 2px;
+  accent-color: var(--accent);
+}
+
+.meal-title {
+  margin: 0;
+  font-size: 1.08rem;
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 3px 0 0;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.tag {
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 650;
+}
+
+.steps {
+  margin: 12px 0 0 18px;
+  padding: 0;
+  color: var(--ink);
+}
+
+.steps li { margin-bottom: 6px; }
+
+.section-heading {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.section-heading h2,
+.card h2,
+.card h3 {
+  margin: 0 0 4px;
+}
+
+.section-heading p,
+.card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.category-title {
+  margin: 8px 0 8px;
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+.shopping-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+
+.shopping-item:first-of-type {
+  border-top: 0;
+}
+
+.shopping-item.done span {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.filler-list {
+  margin: 10px 0 0 18px;
+  color: var(--muted);
+}
+
+.empty {
+  padding: 20px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.app-footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 20px 14px 34px;
+  font-size: 0.85rem;
+}
+
+@media (min-width: 700px) {
+  .app-header {
+    padding-left: calc((100% - 760px) / 2 + 18px);
+    padding-right: calc((100% - 760px) / 2 + 18px);
+  }
+}

@@ -1,0 +1,1076 @@
+[
+  {
+    "id": "chicken_frozen_stir_fry_rice",
+    "title": "Chicken & Frozen Stir-Fry Rice",
+    "group": "Chicken",
+    "servings": 2,
+    "tags": [
+      "chicken",
+      "rice",
+      "frozen-veg",
+      "hob",
+      "meal-prep",
+      "budget",
+      "student"
+    ],
+    "ingredients": [
+      {
+        "item": "chicken breast",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Meat"
+      },
+      {
+        "item": "frozen stir-fry vegetables",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "uncooked rice",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Dry goods"
+      },
+      {
+        "item": "garlic clove",
+        "quantity": 1,
+        "unit": "clove",
+        "category": "Vegetables"
+      },
+      {
+        "item": "garlic powder",
+        "quantity": 0.5,
+        "unit": "tsp",
+        "category": "Seasoning",
+        "optional": true,
+        "note": "Use instead of fresh garlic."
+      },
+      {
+        "item": "soy sauce",
+        "quantity": 1,
+        "unit": "tbsp",
+        "category": "Condiments"
+      },
+      {
+        "item": "oil",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Oil & cooking fats"
+      }
+    ],
+    "steps": [
+      "Cook the rice using 1 mug rice and 2 mugs water.",
+      "Slice the chicken and cook in oil for 5–6 minutes.",
+      "Add the frozen vegetables and garlic, then cook for 5 minutes.",
+      "Add the cooked rice and soy sauce, then mix well."
+    ]
+  },
+  {
+    "id": "chicken_lentil_one_pot",
+    "title": "Chicken & Lentil One-Pot",
+    "group": "Chicken",
+    "servings": 2,
+    "tags": [
+      "chicken",
+      "lentils",
+      "one-pot",
+      "hob",
+      "meal-prep",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "chicken breast",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Meat"
+      },
+      {
+        "item": "dry lentils",
+        "quantity": 0.5,
+        "unit": "mug",
+        "category": "Dry goods"
+      },
+      {
+        "item": "frozen mixed vegetables",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "stock cube",
+        "quantity": 1,
+        "unit": "cube",
+        "category": "Seasoning"
+      },
+      {
+        "item": "water",
+        "quantity": 2.5,
+        "unit": "mugs",
+        "category": "Other"
+      }
+    ],
+    "steps": [
+      "Add everything to a pot.",
+      "Simmer for 25–30 minutes, until the lentils are soft and the chicken is cooked through."
+    ]
+  },
+  {
+    "id": "chicken_tomato_vegetable_stew",
+    "title": "Chicken Tomato Vegetable Stew",
+    "group": "Chicken",
+    "servings": 2,
+    "tags": [
+      "chicken",
+      "tomato",
+      "stew",
+      "hob",
+      "meal-prep",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "chicken breast",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Meat"
+      },
+      {
+        "item": "chopped tomatoes",
+        "quantity": 1,
+        "unit": "400g tin",
+        "category": "Tinned goods"
+      },
+      {
+        "item": "frozen vegetables",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "onion",
+        "quantity": 0.5,
+        "unit": "piece",
+        "category": "Vegetables",
+        "note": "Chopped."
+      },
+      {
+        "item": "oil",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Oil & cooking fats"
+      }
+    ],
+    "steps": [
+      "Cook the onion and chicken in oil.",
+      "Add the chopped tomatoes and frozen vegetables.",
+      "Simmer for 20 minutes."
+    ]
+  },
+  {
+    "id": "chicken_chickpea_curry",
+    "title": "Chicken & Chickpea Curry",
+    "group": "Chicken",
+    "servings": 2,
+    "tags": [
+      "chicken",
+      "chickpeas",
+      "curry",
+      "hob",
+      "meal-prep",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "chicken breast",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Meat"
+      },
+      {
+        "item": "chickpeas",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods",
+        "note": "Drained."
+      },
+      {
+        "item": "frozen vegetables",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "curry powder",
+        "quantity": 1,
+        "unit": "tbsp",
+        "category": "Seasoning"
+      },
+      {
+        "item": "natural yoghurt",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Dairy"
+      }
+    ],
+    "steps": [
+      "Cook the chicken.",
+      "Add the chickpeas, frozen vegetables and curry powder.",
+      "Simmer for 10 minutes.",
+      "Stir in the yoghurt at the end."
+    ]
+  },
+  {
+    "id": "lemon_garlic_chicken_potatoes",
+    "title": "Lemon Garlic Chicken & Potatoes",
+    "group": "Chicken",
+    "servings": 1,
+    "tags": [
+      "chicken",
+      "potato",
+      "green-beans",
+      "hob",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "chicken breast",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Meat"
+      },
+      {
+        "item": "medium potato",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Vegetables",
+        "note": "Cubed."
+      },
+      {
+        "item": "frozen green beans",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Frozen"
+      },
+      {
+        "item": "oil",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Oil & cooking fats"
+      },
+      {
+        "item": "lemon",
+        "quantity": 0.5,
+        "unit": "piece",
+        "category": "Fruit",
+        "note": "Juice only."
+      }
+    ],
+    "steps": [
+      "Boil the cubed potato for 8–10 minutes.",
+      "Cook the chicken in oil.",
+      "Add the green beans, potato and lemon juice."
+    ]
+  },
+  {
+    "id": "chicken_egg_fried_rice",
+    "title": "Chicken & Egg Fried Rice",
+    "group": "Chicken",
+    "servings": 2,
+    "tags": [
+      "chicken",
+      "egg",
+      "rice",
+      "frozen-veg",
+      "hob",
+      "meal-prep",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "chicken breast",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Meat"
+      },
+      {
+        "item": "egg",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Eggs"
+      },
+      {
+        "item": "frozen vegetables",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "uncooked rice",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Dry goods"
+      },
+      {
+        "item": "soy sauce",
+        "quantity": 1,
+        "unit": "tbsp",
+        "category": "Condiments"
+      }
+    ],
+    "steps": [
+      "Cook the rice.",
+      "Cook the chicken and frozen vegetables.",
+      "Add the cooked rice.",
+      "Push everything to one side, scramble the egg, then mix together."
+    ]
+  },
+  {
+    "id": "chicken_spinach_yoghurt_pan",
+    "title": "Chicken & Spinach Yoghurt Pan",
+    "group": "Chicken",
+    "servings": 1,
+    "tags": [
+      "chicken",
+      "spinach",
+      "yoghurt",
+      "hob",
+      "quick",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "chicken breast",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Meat"
+      },
+      {
+        "item": "frozen spinach",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "natural yoghurt",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Dairy"
+      },
+      {
+        "item": "oil",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Oil & cooking fats"
+      }
+    ],
+    "steps": [
+      "Cook the chicken in oil.",
+      "Add the frozen spinach and cook until soft.",
+      "Turn off the heat, then stir in the yoghurt."
+    ]
+  },
+  {
+    "id": "chicken_veg_noodle_bowl",
+    "title": "Chicken Veg Noodle Bowl",
+    "group": "Chicken",
+    "servings": 1,
+    "tags": [
+      "chicken",
+      "noodles",
+      "frozen-veg",
+      "hob",
+      "quick",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "chicken breast",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Meat"
+      },
+      {
+        "item": "frozen vegetables",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "egg noodles",
+        "quantity": 1,
+        "unit": "portion",
+        "category": "Dry goods",
+        "note": "About 1 mug dry."
+      },
+      {
+        "item": "soy sauce",
+        "quantity": 1,
+        "unit": "tbsp",
+        "category": "Condiments"
+      }
+    ],
+    "steps": [
+      "Cook the noodles.",
+      "Cook the chicken and frozen vegetables.",
+      "Mix together with soy sauce."
+    ]
+  },
+  {
+    "id": "turkey_veg_rice_bowl",
+    "title": "Turkey Veg Rice Bowl",
+    "group": "Turkey",
+    "servings": 2,
+    "tags": [
+      "turkey",
+      "rice",
+      "frozen-veg",
+      "hob",
+      "meal-prep",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "turkey mince",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Meat"
+      },
+      {
+        "item": "frozen vegetables",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "uncooked rice",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Dry goods"
+      },
+      {
+        "item": "oil",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Oil & cooking fats"
+      }
+    ],
+    "steps": [
+      "Cook the rice.",
+      "Cook the turkey mince in oil.",
+      "Add the frozen vegetables and cook until hot.",
+      "Serve with the rice."
+    ]
+  },
+  {
+    "id": "turkey_lentil_tomato_pot",
+    "title": "Turkey & Lentil Tomato Pot",
+    "group": "Turkey",
+    "servings": 2,
+    "tags": [
+      "turkey",
+      "lentils",
+      "tomato",
+      "one-pot",
+      "hob",
+      "meal-prep",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "turkey mince",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Meat"
+      },
+      {
+        "item": "dry lentils",
+        "quantity": 0.5,
+        "unit": "mug",
+        "category": "Dry goods"
+      },
+      {
+        "item": "chopped tomatoes",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods"
+      },
+      {
+        "item": "water",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Other"
+      }
+    ],
+    "steps": [
+      "Add everything to a pot.",
+      "Cook together for 25 minutes, until the lentils are soft and the turkey is cooked through."
+    ]
+  },
+  {
+    "id": "turkey_stir_fry_low_carb",
+    "title": "Turkey Stir Fry",
+    "group": "Turkey",
+    "servings": 1,
+    "tags": [
+      "turkey",
+      "low-carb",
+      "frozen-veg",
+      "hob",
+      "quick",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "turkey mince",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Meat"
+      },
+      {
+        "item": "frozen vegetables",
+        "quantity": 3,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "soy sauce",
+        "quantity": 1,
+        "unit": "tbsp",
+        "category": "Condiments"
+      }
+    ],
+    "steps": [
+      "Cook the turkey mince.",
+      "Add the frozen vegetables and soy sauce.",
+      "Cook everything together for 10 minutes."
+    ]
+  },
+  {
+    "id": "turkey_bean_chilli",
+    "title": "Turkey & Bean Chilli",
+    "group": "Turkey",
+    "servings": 2,
+    "tags": [
+      "turkey",
+      "beans",
+      "tomato",
+      "chilli",
+      "hob",
+      "meal-prep",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "turkey mince",
+        "quantity": 150,
+        "unit": "g",
+        "category": "Meat"
+      },
+      {
+        "item": "kidney beans",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods"
+      },
+      {
+        "item": "chopped tomatoes",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods"
+      },
+      {
+        "item": "paprika",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Seasoning"
+      }
+    ],
+    "steps": [
+      "Add the turkey mince to a pot or pan and cook until browned.",
+      "Add the kidney beans, chopped tomatoes and paprika.",
+      "Cook for 20 minutes."
+    ]
+  },
+  {
+    "id": "tuna_veg_rice",
+    "title": "Tuna & Veg Rice",
+    "group": "Fish",
+    "servings": 2,
+    "tags": [
+      "tuna",
+      "rice",
+      "frozen-veg",
+      "hob",
+      "quick",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "tuna",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods"
+      },
+      {
+        "item": "frozen vegetables",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "uncooked rice",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Dry goods"
+      }
+    ],
+    "steps": [
+      "Cook the rice.",
+      "Heat the frozen vegetables.",
+      "Mix the tuna, rice and vegetables together while warm."
+    ]
+  },
+  {
+    "id": "tuna_chickpea_bowl",
+    "title": "Tuna Chickpea Bowl",
+    "group": "Fish",
+    "servings": 2,
+    "tags": [
+      "tuna",
+      "chickpeas",
+      "frozen-veg",
+      "hob",
+      "quick",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "tuna",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods"
+      },
+      {
+        "item": "chickpeas",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods"
+      },
+      {
+        "item": "frozen vegetables",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      }
+    ],
+    "steps": [
+      "Drain the tuna and chickpeas.",
+      "Heat everything together until hot."
+    ]
+  },
+  {
+    "id": "white_fish_potato_pan",
+    "title": "White Fish & Potato Pan",
+    "group": "Fish",
+    "servings": 1,
+    "tags": [
+      "white-fish",
+      "potato",
+      "frozen-veg",
+      "hob",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "frozen white fish fillet",
+        "quantity": 1,
+        "unit": "fillet",
+        "category": "Frozen"
+      },
+      {
+        "item": "medium potato",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Vegetables"
+      },
+      {
+        "item": "frozen vegetables",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "oil",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Oil & cooking fats"
+      }
+    ],
+    "steps": [
+      "Cook the potato until tender.",
+      "Cook the fish in oil until cooked through.",
+      "Add the frozen vegetables and heat through."
+    ]
+  },
+  {
+    "id": "salmon_veg_rice",
+    "title": "Salmon & Veg Rice",
+    "group": "Fish",
+    "servings": 2,
+    "tags": [
+      "salmon",
+      "rice",
+      "frozen-veg",
+      "hob",
+      "meal-prep"
+    ],
+    "ingredients": [
+      {
+        "item": "salmon fillet",
+        "quantity": 1,
+        "unit": "fillet",
+        "category": "Fish"
+      },
+      {
+        "item": "frozen vegetables",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "uncooked rice",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Dry goods"
+      }
+    ],
+    "steps": [
+      "Cook the rice.",
+      "Cook the salmon until cooked through.",
+      "Heat the frozen vegetables.",
+      "Combine the salmon, rice and vegetables."
+    ]
+  },
+  {
+    "id": "egg_fried_rice",
+    "title": "Egg Fried Rice",
+    "group": "Vegetarian / Eggs",
+    "servings": 2,
+    "tags": [
+      "egg",
+      "rice",
+      "frozen-veg",
+      "vegetarian",
+      "hob",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "eggs",
+        "quantity": 2,
+        "unit": "pieces",
+        "category": "Eggs"
+      },
+      {
+        "item": "frozen vegetables",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "uncooked rice",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Dry goods"
+      }
+    ],
+    "steps": [
+      "Cook the rice.",
+      "Add the frozen vegetables and heat through.",
+      "Push everything to one side, scramble the eggs, then mix together."
+    ]
+  },
+  {
+    "id": "lentil_vegetable_stew",
+    "title": "Lentil Vegetable Stew",
+    "group": "Vegetarian / Eggs",
+    "servings": 2,
+    "tags": [
+      "lentils",
+      "tomato",
+      "frozen-veg",
+      "vegetarian",
+      "one-pot",
+      "hob",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "dry lentils",
+        "quantity": 0.5,
+        "unit": "mug",
+        "category": "Dry goods"
+      },
+      {
+        "item": "frozen vegetables",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "chopped tomatoes",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods"
+      },
+      {
+        "item": "water",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Other"
+      }
+    ],
+    "steps": [
+      "Add everything to a pot.",
+      "Simmer for 25 minutes, until the lentils are soft."
+    ]
+  },
+  {
+    "id": "chickpea_spinach_curry",
+    "title": "Chickpea Spinach Curry",
+    "group": "Vegetarian / Eggs",
+    "servings": 2,
+    "tags": [
+      "chickpeas",
+      "spinach",
+      "curry",
+      "vegetarian",
+      "hob",
+      "quick",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "chickpeas",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods"
+      },
+      {
+        "item": "frozen spinach",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "curry powder",
+        "quantity": 1,
+        "unit": "tbsp",
+        "category": "Seasoning"
+      }
+    ],
+    "steps": [
+      "Add the chickpeas, frozen spinach and curry powder to a pot or pan.",
+      "Cook for 10–15 minutes, until hot and the spinach is soft."
+    ]
+  },
+  {
+    "id": "bean_veg_one_pot",
+    "title": "Bean & Veg One Pot",
+    "group": "Vegetarian / Eggs",
+    "servings": 2,
+    "tags": [
+      "beans",
+      "tomato",
+      "frozen-veg",
+      "vegetarian",
+      "one-pot",
+      "hob",
+      "quick",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "mixed beans",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods"
+      },
+      {
+        "item": "frozen vegetables",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "chopped tomatoes",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods"
+      }
+    ],
+    "steps": [
+      "Add everything to a pot.",
+      "Simmer for 15 minutes."
+    ]
+  },
+  {
+    "id": "egg_potato_hash",
+    "title": "Egg & Potato Hash",
+    "group": "Vegetarian / Eggs",
+    "servings": 1,
+    "tags": [
+      "egg",
+      "potato",
+      "frozen-veg",
+      "vegetarian",
+      "hob",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "eggs",
+        "quantity": 2,
+        "unit": "pieces",
+        "category": "Eggs"
+      },
+      {
+        "item": "medium potato",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Vegetables"
+      },
+      {
+        "item": "frozen vegetables",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Frozen"
+      }
+    ],
+    "steps": [
+      "Cook the potato until tender.",
+      "Add the frozen vegetables and heat through.",
+      "Add the eggs and cook until set."
+    ]
+  },
+  {
+    "id": "lentil_bolognese",
+    "title": "Lentil Bolognese",
+    "group": "Vegetarian / Eggs",
+    "servings": 2,
+    "tags": [
+      "lentils",
+      "tomato",
+      "pasta",
+      "vegetarian",
+      "hob",
+      "meal-prep",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "dry lentils",
+        "quantity": 0.5,
+        "unit": "mug",
+        "category": "Dry goods"
+      },
+      {
+        "item": "chopped tomatoes",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods"
+      },
+      {
+        "item": "dry pasta",
+        "quantity": 0.5,
+        "unit": "mug",
+        "category": "Dry goods",
+        "optional": true
+      }
+    ],
+    "steps": [
+      "Cook the lentils in the tomato sauce until soft.",
+      "Serve with cooked pasta, if using."
+    ]
+  },
+  {
+    "id": "chickpea_stir_fry",
+    "title": "Chickpea Stir Fry",
+    "group": "Vegetarian / Eggs",
+    "servings": 2,
+    "tags": [
+      "chickpeas",
+      "frozen-veg",
+      "vegetarian",
+      "hob",
+      "quick",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "chickpeas",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods"
+      },
+      {
+        "item": "frozen vegetables",
+        "quantity": 2,
+        "unit": "mugs",
+        "category": "Frozen"
+      },
+      {
+        "item": "soy sauce",
+        "quantity": 1,
+        "unit": "tbsp",
+        "category": "Condiments"
+      }
+    ],
+    "steps": [
+      "Add the chickpeas and frozen vegetables to a pan.",
+      "Cook until hot.",
+      "Add soy sauce and mix well."
+    ]
+  },
+  {
+    "id": "vegetable_omelette_rice",
+    "title": "Vegetable Omelette + Rice",
+    "group": "Vegetarian / Eggs",
+    "servings": 1,
+    "tags": [
+      "egg",
+      "rice",
+      "frozen-veg",
+      "vegetarian",
+      "hob",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "eggs",
+        "quantity": 2,
+        "unit": "pieces",
+        "category": "Eggs"
+      },
+      {
+        "item": "frozen vegetables",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Frozen"
+      },
+      {
+        "item": "uncooked rice",
+        "quantity": 0.5,
+        "unit": "mug",
+        "category": "Dry goods"
+      }
+    ],
+    "steps": [
+      "Cook the rice.",
+      "Make an omelette with the eggs and frozen vegetables.",
+      "Serve the omelette with the rice."
+    ]
+  }
+]
