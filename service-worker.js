@@ -1,4 +1,4 @@
-const CACHE_NAME = "student-food-planner-v51";
+const CACHE_NAME = "student-food-planner-v51-fixed";
 const ASSETS = [
   "./",
   "index.html",
