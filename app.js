@@ -287,7 +287,8 @@ function renderPlan() {
     const tickKey = `${plan.id}:${day.day}:${recipe.id}`;
     const checked = mealTicks[tickKey] ? "checked" : "";
     const nextClass = index === nextUntickedIndex ? " next-meal" : "";
-    const tags = recipe.tags?.slice(0, 5).map(tag => `<span class="tag">${tag}</span>`).join("") || "";
+    const tags = recipe.tags?.filter(tag => tag !== "lighter-ideas").slice(0, 5).map(tag => `<span class="tag">${tag}</span>`).join("") || "";
+    const hasLighterIdeas = recipe.tags?.includes("lighter-ideas");
 
     return `
       <article class="card meal-card${nextClass}">
@@ -296,8 +297,8 @@ function renderPlan() {
           <p class="meta">${day.day}</p>
           <h3 class="meal-title">${recipe.title}</h3>
           <p class="meta">${recipe.servings || 1} portion${recipe.servings === 1 ? "" : "s"} · ${recipe.group || "Recipe"}</p>
-          <p class="pack-note">${(recipe.servings || 1) >= 2 ? "Prepare the evening before. Pack lunch + dinner." : "Single portion. Add a filler or side if needed."}</p>
-          <div class="tags">${tags}</div>
+          <p class="pack-note">${(recipe.servings || 1) >= 2 ? "2+ portions → lunch + dinner." : "1 portion → add side or combine."}</p>
+          <div class="tags">${hasLighterIdeas ? `<span class="tag light-tag">🌿 Lighter ideas</span>` : ""}${tags}</div>
           <ol class="steps">
             ${recipe.steps.map(step => `<li>${step}</li>`).join("")}
           </ol>
@@ -479,9 +480,9 @@ function renderRecipes() {
       <article class="card recipe-card">
         <h3>${recipe.title}</h3>
         <p>${recipe.servings || 1} portion${recipe.servings === 1 ? "" : "s"} · ${recipe.group || "Recipe"}</p>
-        <p class="pack-note">${(recipe.servings || 1) >= 2 ? "Good food pack option: lunch + dinner." : "Single portion: useful for light meals, fillers, or flexible days."}</p>
+        <p class="pack-note">${(recipe.servings || 1) >= 2 ? "2+ portions → lunch + dinner." : "1 portion → add side or combine."}</p>
         ${usedIn.length ? `<p class="meta">Used in: ${usedIn.slice(0, 3).join(", ")}${usedIn.length > 3 ? "..." : ""}</p>` : ""}
-        <div class="tags">${(recipe.tags || []).slice(0, 6).map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
+        <div class="tags">${(recipe.tags || []).includes("lighter-ideas") ? `<span class="tag light-tag">🌿 Lighter ideas</span>` : ""}${(recipe.tags || []).filter(tag => tag !== "lighter-ideas").slice(0, 6).map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
 
         <details class="recipe-details">
           <summary>Ingredients</summary>
@@ -500,6 +501,15 @@ function renderRecipes() {
             ${recipe.steps.map(step => `<li>${step}</li>`).join("")}
           </ol>
         </details>
+
+        ${recipe.notes?.length ? `
+          <details class="recipe-details">
+            <summary>Notes</summary>
+            <ul>
+              ${recipe.notes.map(note => `<li>${note}</li>`).join("")}
+            </ul>
+          </details>
+        ` : ""}
       </article>
     `;
   }).join("") || `<div class="card empty">No recipes found.</div>`;

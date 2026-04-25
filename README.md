@@ -107,3 +107,14 @@ Each plan uses recipe IDs from `recipes.json`.
 - Updated plan language to food packs.
 - Quick Plan Builder preserved and now favours 2-portion recipes.
 - Service worker cache bumped to v4-fixed.
+
+
+## v5 changes
+
+- Includes the full 35-recipe set, including light/summer recipes.
+- Added short “Lighter ideas” notes where genuinely useful.
+- Added a visible “🌿 Lighter ideas” label on relevant recipes.
+- Tightened food pack guidance:
+  - 2+ portions → lunch + dinner
+  - 1 portion → add side or combine
+- Service worker cache bumped to v5.

@@ -11,7 +11,8 @@
       "hob",
       "meal-prep",
       "budget",
-      "student"
+      "student",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -64,6 +65,9 @@
       "Slice the chicken and cook in oil for 5–6 minutes.",
       "Add the frozen vegetables and garlic, then cook for 5 minutes.",
       "Add the cooked rice and soy sauce, then mix well."
+    ],
+    "notes": [
+      "Lighter ideas: use half the rice, add extra vegetables."
     ]
   },
   {
@@ -179,7 +183,8 @@
       "curry",
       "hob",
       "meal-prep",
-      "budget"
+      "budget",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -219,6 +224,9 @@
       "Add the chickpeas, frozen vegetables and curry powder.",
       "Simmer for 10 minutes.",
       "Stir in the yoghurt at the end."
+    ],
+    "notes": [
+      "Lighter ideas: use less yoghurt, reduce chickpeas slightly and add more veg."
     ]
   },
   {
@@ -231,7 +239,8 @@
       "potato",
       "green-beans",
       "hob",
-      "budget"
+      "budget",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -271,6 +280,9 @@
       "Boil the cubed potato for 8–10 minutes.",
       "Cook the chicken in oil.",
       "Add the green beans, potato and lemon juice."
+    ],
+    "notes": [
+      "Lighter ideas: use fewer potatoes, add extra green beans or salad."
     ]
   },
   {
@@ -285,7 +297,8 @@
       "frozen-veg",
       "hob",
       "meal-prep",
-      "budget"
+      "budget",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -324,6 +337,9 @@
       "Cook the chicken and frozen vegetables.",
       "Add the cooked rice.",
       "Push everything to one side, scramble the egg, then mix together."
+    ],
+    "notes": [
+      "Lighter ideas: use half the rice, add more vegetables."
     ]
   },
   {
@@ -382,7 +398,8 @@
       "frozen-veg",
       "hob",
       "quick",
-      "budget"
+      "budget",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -415,6 +432,9 @@
       "Cook the noodles.",
       "Cook the chicken and frozen vegetables.",
       "Mix together with soy sauce."
+    ],
+    "notes": [
+      "Lighter ideas: use fewer noodles, increase vegetables."
     ]
   },
   {
@@ -428,7 +448,8 @@
       "frozen-veg",
       "hob",
       "meal-prep",
-      "budget"
+      "budget",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -461,6 +482,9 @@
       "Cook the turkey mince in oil.",
       "Add the frozen vegetables and cook until hot.",
       "Serve with the rice."
+    ],
+    "notes": [
+      "Lighter ideas: reduce rice portion, add more vegetables."
     ]
   },
   {
@@ -559,7 +583,8 @@
       "chilli",
       "hob",
       "meal-prep",
-      "budget"
+      "budget",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -591,6 +616,9 @@
       "Add the turkey mince to a pot or pan and cook until browned.",
       "Add the kidney beans, chopped tomatoes and paprika.",
       "Cook for 20 minutes."
+    ],
+    "notes": [
+      "Lighter ideas: reduce beans slightly, add extra vegetables."
     ]
   },
   {
@@ -604,7 +632,8 @@
       "frozen-veg",
       "hob",
       "quick",
-      "budget"
+      "budget",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -630,6 +659,9 @@
       "Cook the rice.",
       "Heat the frozen vegetables.",
       "Mix the tuna, rice and vegetables together while warm."
+    ],
+    "notes": [
+      "Lighter ideas: use less rice, increase vegetables."
     ]
   },
   {
@@ -680,7 +712,8 @@
       "potato",
       "frozen-veg",
       "hob",
-      "budget"
+      "budget",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -712,6 +745,9 @@
       "Cook the potato until tender.",
       "Cook the fish in oil until cooked through.",
       "Add the frozen vegetables and heat through."
+    ],
+    "notes": [
+      "Lighter ideas: use fewer potatoes, add extra vegetables."
     ]
   },
   {
@@ -724,7 +760,8 @@
       "rice",
       "frozen-veg",
       "hob",
-      "meal-prep"
+      "meal-prep",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -751,6 +788,9 @@
       "Cook the salmon until cooked through.",
       "Heat the frozen vegetables.",
       "Combine the salmon, rice and vegetables."
+    ],
+    "notes": [
+      "Lighter ideas: reduce rice portion, add more vegetables."
     ]
   },
   {
@@ -764,7 +804,8 @@
       "frozen-veg",
       "vegetarian",
       "hob",
-      "budget"
+      "budget",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -790,6 +831,9 @@
       "Cook the rice.",
       "Add the frozen vegetables and heat through.",
       "Push everything to one side, scramble the eggs, then mix together."
+    ],
+    "notes": [
+      "Lighter ideas: use less rice, add more vegetables."
     ]
   },
   {
@@ -927,7 +971,8 @@
       "frozen-veg",
       "vegetarian",
       "hob",
-      "budget"
+      "budget",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -953,6 +998,9 @@
       "Cook the potato until tender.",
       "Add the frozen vegetables and heat through.",
       "Add the eggs and cook until set."
+    ],
+    "notes": [
+      "Lighter ideas: reduce potatoes, add more vegetables."
     ]
   },
   {
@@ -967,7 +1015,8 @@
       "vegetarian",
       "hob",
       "meal-prep",
-      "budget"
+      "budget",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -993,6 +1042,9 @@
     "steps": [
       "Cook the lentils in the tomato sauce until soft.",
       "Serve with cooked pasta, if using."
+    ],
+    "notes": [
+      "Lighter ideas: use less pasta, serve with vegetables instead."
     ]
   },
   {
@@ -1086,7 +1138,8 @@
       "cold",
       "protein",
       "meal-prep",
-      "quick"
+      "quick",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -1134,7 +1187,8 @@
     ],
     "notes": [
       "Other ideas: add peppers, onion, olives or sweetcorn.",
-      "Works well cold for lunch."
+      "Works well cold for lunch.",
+      "Lighter ideas: use less oil."
     ]
   },
   {
@@ -1148,7 +1202,8 @@
       "light",
       "summer",
       "quick",
-      "lunch"
+      "lunch",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -1184,7 +1239,8 @@
     ],
     "notes": [
       "Can use leftover chicken.",
-      "Other ideas: add cucumber, peppers or cheese."
+      "Other ideas: add cucumber, peppers or cheese.",
+      "Lighter ideas: use less yoghurt, add more salad."
     ]
   },
   {
@@ -1200,7 +1256,8 @@
       "summer",
       "no-cook",
       "quick",
-      "protein"
+      "protein",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -1241,7 +1298,8 @@
     ],
     "notes": [
       "Other ideas: add onion, peppers or sweetcorn.",
-      "Very quick no-cook meal."
+      "Very quick no-cook meal.",
+      "Lighter ideas: use less oil."
     ]
   },
   {
@@ -1257,7 +1315,8 @@
       "summer",
       "no-cook",
       "quick",
-      "protein"
+      "protein",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -1286,7 +1345,8 @@
     ],
     "notes": [
       "Other ideas: add lemon, pepper or garlic powder.",
-      "Works well as a wrap filling."
+      "Works well as a wrap filling.",
+      "Lighter ideas: use low-fat yoghurt."
     ]
   },
   {
@@ -1347,7 +1407,8 @@
       "light",
       "summer",
       "quick",
-      "budget"
+      "budget",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -1375,7 +1436,8 @@
       "Roll and eat."
     ],
     "notes": [
-      "Other ideas: add cheese, tomato or peppers."
+      "Other ideas: add cheese, tomato or peppers.",
+      "Lighter ideas: add more salad, use less egg if needed."
     ]
   },
   {
@@ -1534,7 +1596,8 @@
       "summer",
       "cold",
       "protein-flex",
-      "leftovers"
+      "leftovers",
+      "lighter-ideas"
     ],
     "ingredients": [
       {
@@ -1571,7 +1634,8 @@
     ],
     "notes": [
       "Good for using leftovers.",
-      "Other ideas: add cucumber, tomato, peppers, olives or onion."
+      "Other ideas: add cucumber, tomato, peppers, olives or onion.",
+      "Lighter ideas: reduce rice, increase vegetables."
     ]
   },
   {

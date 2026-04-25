@@ -396,3 +396,9 @@ button.small {
   font-weight: 750;
   font-size: 0.9rem;
 }
+
+
+.light-tag {
+  background: #e8f3e8;
+  color: #285b2a;
+}
