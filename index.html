@@ -32,12 +32,12 @@
       <button class="tab" data-tab="shopping">Shopping</button>
       <button class="tab" data-tab="builder">Builder</button>
       <button class="tab" data-tab="recipes">Recipes</button>
+      <button class="tab" data-tab="weight">Weight</button>
     </nav>
 
     <section id="planPanel" class="panel active">
       <div id="planSummary"></div>
       <div id="mealList" class="stack"></div>
-      <div id="weightCheckIn"></div>
     </section>
 
     <section id="shoppingPanel" class="panel">
@@ -107,21 +107,17 @@
       <div id="generatedPlanPreview" class="stack"></div>
     </section>
 
-    <section id="recipesPanel" class="tab-panel">
-      <h2>Recipes</h2>
-      <div id="recipeList"></div>
-    </section>
-
-    <section id="weightPanel" class="tab-panel">
-      <h2>Weight</h2>
-      <div id="weightCheckIn"></div>
-    </section> class="panel">
+    <section id="recipesPanel" class="panel">
       <div class="card">
         <label for="recipeSearch">Search recipes</label>
         <input id="recipeSearch" type="search" placeholder="Search chicken, lentils, quick...">
         <div id="recipeFilters" class="filter-row" aria-label="Recipe filters"></div>
       </div>
       <div id="recipeList" class="stack"></div>
+    </section>
+
+    <section id="weightPanel" class="panel">
+      <div id="weightCheckIn"></div>
     </section>
   </main>
 

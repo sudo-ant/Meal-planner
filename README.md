@@ -154,3 +154,11 @@ Each plan uses recipe IDs from `recipes.json`.
   - previous-entry change
   - saved only on this device via localStorage
 - Service worker cache bumped to v5.5.
+
+
+## v5.6 fixed changes
+
+- Weight check-in moved to its own Weight tab.
+- Removed duplicate / misplaced Weight block from the Plan tab.
+- Recipes tab preserved.
+- Service worker cache bumped to v5.6-fixed.

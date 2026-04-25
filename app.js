@@ -486,7 +486,6 @@ function renderRecipeFilters() {
     button.addEventListener("click", () => {
       activeRecipeFilter = button.dataset.filter;
       renderRecipes();
-  renderWeightCheckIn();
     });
   });
 }
@@ -769,7 +768,7 @@ function saveWeightEntry() {
 
   localStorage.setItem(STORAGE_KEYS.weightEntries, JSON.stringify(entries));
   input.value = "";
-  
+  renderWeightCheckIn();
 }
 
 function renderWeightCheckIn() {
@@ -812,7 +811,6 @@ function renderAll() {
   renderShoppingList();
   renderRecipes();
   renderWeightCheckIn();
-  
 }
 
 async function init() {
