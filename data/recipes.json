@@ -1073,4 +1073,562 @@
       "Serve the omelette with the rice."
     ]
   }
+  {
+    "id": "chicken_salad_bowl",
+    "title": "Chicken Salad Bowl",
+    "group": "Light / Summer",
+    "servings": 1,
+    "tags": [
+      "chicken",
+      "salad",
+      "light",
+      "summer",
+      "cold",
+      "protein",
+      "meal-prep"
+    ],
+    "ingredients": [
+      {
+        "item": "chicken breast",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Meat"
+      },
+      {
+        "item": "lettuce or bagged salad",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Vegetables"
+      },
+      {
+        "item": "cucumber",
+        "quantity": 0.5,
+        "unit": "piece",
+        "category": "Vegetables"
+      },
+      {
+        "item": "tomato",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Vegetables"
+      },
+      {
+        "item": "olive oil",
+        "quantity": 1,
+        "unit": "tbsp",
+        "category": "Oil & cooking fats"
+      },
+      {
+        "item": "lemon juice or vinegar",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Condiments"
+      }
+    ],
+    "steps": [
+      "Slice the chicken and pan fry until cooked through, about 5–6 minutes.",
+      "Let the chicken cool slightly.",
+      "Chop the cucumber and tomato.",
+      "Mix everything in a bowl with olive oil and lemon juice or vinegar."
+    ],
+    "notes": [
+      "Other ideas: add peppers, onion, olives or sweetcorn.",
+      "Works well cold for lunch."
+    ]
+  },
+  {
+    "id": "chicken_wrap",
+    "title": "Chicken Wrap",
+    "group": "Light / Summer",
+    "servings": 1,
+    "tags": [
+      "chicken",
+      "wrap",
+      "light",
+      "summer",
+      "quick",
+      "lunch"
+    ],
+    "ingredients": [
+      {
+        "item": "tortilla wrap",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Dry goods"
+      },
+      {
+        "item": "chicken breast",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Meat"
+      },
+      {
+        "item": "salad leaves",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Vegetables"
+      },
+      {
+        "item": "natural yoghurt",
+        "quantity": 1,
+        "unit": "tbsp",
+        "category": "Dairy"
+      }
+    ],
+    "steps": [
+      "Pan fry the chicken until cooked through, about 5–6 minutes.",
+      "Slice the chicken.",
+      "Fill the wrap with chicken, salad leaves and yoghurt.",
+      "Roll and eat."
+    ],
+    "notes": [
+      "Can use leftover chicken.",
+      "Other ideas: add cucumber, peppers or cheese."
+    ]
+  },
+  {
+    "id": "tuna_salad_bowl",
+    "title": "Tuna Salad Bowl",
+    "group": "Light / Summer",
+    "servings": 1,
+    "tags": [
+      "tuna",
+      "salad",
+      "light",
+      "summer",
+      "no-cook",
+      "quick",
+      "protein"
+    ],
+    "ingredients": [
+      {
+        "item": "tuna",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods"
+      },
+      {
+        "item": "cucumber",
+        "quantity": 0.5,
+        "unit": "piece",
+        "category": "Vegetables"
+      },
+      {
+        "item": "tomato",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Vegetables"
+      },
+      {
+        "item": "stoned olives",
+        "quantity": 1,
+        "unit": "handful",
+        "category": "Tinned goods"
+      },
+      {
+        "item": "olive oil",
+        "quantity": 1,
+        "unit": "tbsp",
+        "category": "Oil & cooking fats"
+      }
+    ],
+    "steps": [
+      "Drain the tuna.",
+      "Chop the cucumber and tomato.",
+      "Mix everything together."
+    ],
+    "notes": [
+      "Other ideas: add onion, peppers or sweetcorn.",
+      "Very quick no-cook meal."
+    ]
+  },
+  {
+    "id": "tuna_yoghurt_protein_bowl",
+    "title": "Tuna & Yoghurt Protein Bowl",
+    "group": "Light / Summer",
+    "servings": 1,
+    "tags": [
+      "tuna",
+      "yoghurt",
+      "light",
+      "summer",
+      "no-cook",
+      "quick",
+      "protein"
+    ],
+    "ingredients": [
+      {
+        "item": "tuna",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods"
+      },
+      {
+        "item": "natural yoghurt",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Dairy"
+      },
+      {
+        "item": "cucumber",
+        "quantity": 0.5,
+        "unit": "piece",
+        "category": "Vegetables"
+      }
+    ],
+    "steps": [
+      "Drain the tuna.",
+      "Chop the cucumber.",
+      "Mix everything together."
+    ],
+    "notes": [
+      "Other ideas: add lemon, pepper or garlic powder.",
+      "Works well as a wrap filling."
+    ]
+  },
+  {
+    "id": "cold_egg_veg_bowl",
+    "title": "Cold Egg & Veg Bowl",
+    "group": "Light / Summer",
+    "servings": 1,
+    "tags": [
+      "egg",
+      "salad",
+      "light",
+      "summer",
+      "cold",
+      "protein",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "eggs",
+        "quantity": 2,
+        "unit": "pieces",
+        "category": "Eggs"
+      },
+      {
+        "item": "salad, cucumber, tomato or cold cooked frozen veg",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Vegetables"
+      },
+      {
+        "item": "olive oil",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Oil & cooking fats"
+      }
+    ],
+    "steps": [
+      "Boil the eggs.",
+      "Cool, peel and chop the eggs.",
+      "Mix with the vegetables.",
+      "Add olive oil."
+    ],
+    "notes": [
+      "Frozen veg option: cook once, cool, then use cold.",
+      "Other ideas: add olives, peppers or onion."
+    ]
+  },
+  {
+    "id": "egg_wrap",
+    "title": "Egg Wrap",
+    "group": "Light / Summer",
+    "servings": 1,
+    "tags": [
+      "egg",
+      "wrap",
+      "light",
+      "summer",
+      "quick",
+      "budget"
+    ],
+    "ingredients": [
+      {
+        "item": "eggs",
+        "quantity": 2,
+        "unit": "pieces",
+        "category": "Eggs"
+      },
+      {
+        "item": "tortilla wrap",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Dry goods"
+      },
+      {
+        "item": "spinach or salad",
+        "quantity": 1,
+        "unit": "handful",
+        "category": "Vegetables"
+      }
+    ],
+    "steps": [
+      "Scramble the eggs.",
+      "Add the eggs to the wrap with spinach or salad.",
+      "Roll and eat."
+    ],
+    "notes": [
+      "Other ideas: add cheese, tomato or peppers."
+    ]
+  },
+  {
+    "id": "chickpea_salad",
+    "title": "Chickpea Salad",
+    "group": "Light / Summer",
+    "servings": 1,
+    "tags": [
+      "chickpeas",
+      "salad",
+      "light",
+      "summer",
+      "no-cook",
+      "vegetarian",
+      "protein"
+    ],
+    "ingredients": [
+      {
+        "item": "chickpeas",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods"
+      },
+      {
+        "item": "cucumber",
+        "quantity": 0.5,
+        "unit": "piece",
+        "category": "Vegetables"
+      },
+      {
+        "item": "tomato",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Vegetables"
+      },
+      {
+        "item": "olive oil",
+        "quantity": 1,
+        "unit": "tbsp",
+        "category": "Oil & cooking fats"
+      }
+    ],
+    "steps": [
+      "Drain the chickpeas.",
+      "Chop the cucumber and tomato.",
+      "Mix everything together."
+    ],
+    "notes": [
+      "Other ideas: add onion, peppers or olives.",
+      "Add lemon for freshness."
+    ]
+  },
+  {
+    "id": "lentil_cold_salad",
+    "title": "Lentil Cold Salad",
+    "group": "Light / Summer",
+    "servings": 1,
+    "tags": [
+      "lentils",
+      "salad",
+      "light",
+      "summer",
+      "cold",
+      "vegetarian",
+      "protein"
+    ],
+    "ingredients": [
+      {
+        "item": "cooked lentils",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Dry goods"
+      },
+      {
+        "item": "tomato",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Vegetables"
+      },
+      {
+        "item": "cucumber",
+        "quantity": 0.5,
+        "unit": "piece",
+        "category": "Vegetables"
+      },
+      {
+        "item": "olive oil",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Oil & cooking fats"
+      }
+    ],
+    "steps": [
+      "Mix everything together and eat cold."
+    ],
+    "notes": [
+      "Other ideas: add onion, peppers or vinegar.",
+      "Good for meal prep."
+    ]
+  },
+  {
+    "id": "yoghurt_fruit_bowl",
+    "title": "Yoghurt Fruit Bowl",
+    "group": "Light / Summer",
+    "servings": 1,
+    "tags": [
+      "yoghurt",
+      "fruit",
+      "oats",
+      "light",
+      "summer",
+      "no-cook",
+      "breakfast",
+      "filler"
+    ],
+    "ingredients": [
+      {
+        "item": "yoghurt",
+        "quantity": 1,
+        "unit": "pot",
+        "category": "Dairy"
+      },
+      {
+        "item": "fruit",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Fruit",
+        "note": "Banana or apple."
+      },
+      {
+        "item": "oats",
+        "quantity": 2,
+        "unit": "tbsp",
+        "category": "Dry goods"
+      }
+    ],
+    "steps": [
+      "Chop the fruit if needed.",
+      "Mix everything together."
+    ],
+    "notes": [
+      "Other ideas: add honey, nuts or cinnamon.",
+      "Works as breakfast or a light meal."
+    ]
+  },
+  {
+    "id": "simple_rice_salad",
+    "title": "Simple Rice Salad",
+    "group": "Light / Summer",
+    "servings": 1,
+    "tags": [
+      "rice",
+      "salad",
+      "light",
+      "summer",
+      "cold",
+      "protein-flex",
+      "leftovers"
+    ],
+    "ingredients": [
+      {
+        "item": "cooked rice",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Dry goods",
+        "note": "Cold."
+      },
+      {
+        "item": "vegetables",
+        "quantity": 1,
+        "unit": "mug",
+        "category": "Vegetables"
+      },
+      {
+        "item": "protein choice",
+        "quantity": 1,
+        "unit": "portion",
+        "category": "Protein",
+        "note": "Choose tuna, chickpeas, boiled egg, leftover chicken, lentils or sardines."
+      },
+      {
+        "item": "olive oil",
+        "quantity": 1,
+        "unit": "tbsp",
+        "category": "Oil & cooking fats"
+      }
+    ],
+    "steps": [
+      "Choose one protein: tuna, chickpeas, boiled egg, leftover chicken, lentils or sardines.",
+      "Mix the rice, vegetables and protein together.",
+      "Add olive oil."
+    ],
+    "notes": [
+      "Good for using leftovers.",
+      "Other ideas: add cucumber, tomato, peppers, olives or onion."
+    ]
+  },
+  {
+    "id": "sardine_salad_bowl",
+    "title": "Sardine Salad Bowl",
+    "group": "Light / Summer",
+    "servings": 1,
+    "tags": [
+      "sardines",
+      "salad",
+      "light",
+      "summer",
+      "no-cook",
+      "quick",
+      "protein"
+    ],
+    "ingredients": [
+      {
+        "item": "sardines",
+        "quantity": 1,
+        "unit": "tin",
+        "category": "Tinned goods",
+        "note": "In olive oil or tomato sauce."
+      },
+      {
+        "item": "tomato",
+        "quantity": 1,
+        "unit": "piece",
+        "category": "Vegetables"
+      },
+      {
+        "item": "cucumber",
+        "quantity": 0.5,
+        "unit": "piece",
+        "category": "Vegetables"
+      },
+      {
+        "item": "onion",
+        "quantity": 0.25,
+        "unit": "piece",
+        "category": "Vegetables",
+        "optional": true
+      },
+      {
+        "item": "olive oil",
+        "quantity": 1,
+        "unit": "tsp",
+        "category": "Oil & cooking fats",
+        "optional": true,
+        "note": "Only if needed."
+      }
+    ],
+    "steps": [
+      "Drain the sardines slightly, but not fully if they are in olive oil.",
+      "Chop the vegetables.",
+      "Break the sardines into pieces.",
+      "Mix everything together."
+    ],
+    "notes": [
+      "Other ideas: add boiled egg, peppers or rice.",
+      "Works well with bread or toast.",
+      "Very cheap and filling.",
+      "No cooking required."
+    ]
+  }
 ]
