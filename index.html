@@ -13,13 +13,13 @@
     <div>
       <p class="eyebrow">Mobile meal planner</p>
       <h1>Maia's Recipe & Meal Planner</h1>
-      <p class="subtitle">Choose a weekly plan, shop once, cook simple meals, and reset for next week.</p>
+      <p class="subtitle">Choose a weekly plan, prep daily food packs, shop once, and reset for next week.</p>
     </div>
   </header>
 
   <main class="app-shell">
     <section class="card controls-card">
-      <label for="planSelect">Choose a plan</label>
+      <label for="planSelect">Choose a food pack plan</label>
       <select id="planSelect"></select>
       <div class="button-row">
         <button id="resetProgressBtn" class="secondary">Reset ticks</button>
@@ -64,7 +64,7 @@
     <section id="builderPanel" class="panel">
       <div class="card">
         <h2>Quick Plan Builder</h2>
-        <p>Choose 5 or 6 days, optionally lock in 1–2 recipes, then let the app fill the rest.</p>
+        <p>Choose 5 or 6 food pack days, optionally lock in 1–2 recipes, then let the app fill the rest.</p>
 
         <div class="builder-grid">
           <div>
@@ -103,6 +103,7 @@
       <div class="card">
         <label for="recipeSearch">Search recipes</label>
         <input id="recipeSearch" type="search" placeholder="Search chicken, lentils, quick...">
+        <div id="recipeFilters" class="filter-row" aria-label="Recipe filters"></div>
       </div>
       <div id="recipeList" class="stack"></div>
     </section>

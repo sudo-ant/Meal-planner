@@ -361,3 +361,38 @@ button.small {
     padding-right: 4px;
   }
 }
+
+
+.filter-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px 0 2px;
+  scrollbar-width: none;
+}
+
+.filter-row::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-chip {
+  flex: 0 0 auto;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 8px 11px;
+  font-size: 0.88rem;
+}
+
+.filter-chip.active {
+  background: var(--accent);
+  color: white;
+}
+
+.pack-note {
+  margin: 7px 0 0;
+  color: var(--accent);
+  font-weight: 750;
+  font-size: 0.9rem;
+}
