@@ -304,9 +304,9 @@ function renderPlan() {
           <p class="pack-note">${(recipe.servings || 1) >= 2 ? "2+ portions → lunch + dinner." : "1 portion → add side or combine."}</p>
           ${hasLighterIdeas ? `<span class="tag light-tag">🌿 Lighter ideas</span>` : ""}
 
-          <button class="details-toggle plan-details-toggle" type="button">Details</button>
+          <button class="details-toggle plan-details-toggle" type="button" data-target="plan-details-${plan.id}-${index}" aria-expanded="false">Details</button>
 
-          <div class="recipe-details-panel hidden">
+          <div id="plan-details-${plan.id}-${index}" class="recipe-details-panel hidden">
             <section class="recipe-detail-block">
               <h4>Ingredients</h4>
               <ul>
@@ -345,14 +345,6 @@ function renderPlan() {
       ticks[event.target.dataset.key] = event.target.checked;
       setStoredObject(STORAGE_KEYS.mealTicks, ticks);
       renderPlan();
-    });
-  });
-
-  document.querySelectorAll(".plan-details-toggle").forEach(button => {
-    button.addEventListener("click", () => {
-      const panel = button.nextElementSibling;
-      const isHidden = panel.classList.toggle("hidden");
-      button.textContent = isHidden ? "Details" : "Hide details";
     });
   });
 }
@@ -524,9 +516,9 @@ function renderRecipes() {
         ${usedIn.length ? `<p class="meta">Used in: ${usedIn.slice(0, 3).join(", ")}${usedIn.length > 3 ? "..." : ""}</p>` : ""}
         <div class="tags">${(recipe.tags || []).includes("lighter-ideas") ? `<span class="tag light-tag">🌿 Lighter ideas</span>` : ""}${(recipe.tags || []).filter(tag => tag !== "lighter-ideas").slice(0, 6).map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
 
-        <button class="details-toggle" type="button">Details</button>
+        <button class="details-toggle" type="button" data-target="recipe-details-${recipe.id}" aria-expanded="false">Details</button>
 
-        <div class="recipe-details-panel hidden">
+        <div id="recipe-details-${recipe.id}" class="recipe-details-panel hidden">
           <section class="recipe-detail-block">
             <h4>Ingredients</h4>
             <ul>
@@ -557,14 +549,6 @@ function renderRecipes() {
       </article>
     `;
   }).join("") || `<div class="card empty">No recipes found.</div>`;
-
-  document.querySelectorAll(".details-toggle").forEach(button => {
-    button.addEventListener("click", () => {
-      const panel = button.nextElementSibling;
-      const isHidden = panel.classList.toggle("hidden");
-      button.textContent = isHidden ? "Details" : "Hide details";
-    });
-  });
 }
 
 
@@ -737,6 +721,23 @@ function useGeneratedPlan() {
   setActiveTab("plan");
 }
 
+
+function setupDetailsDelegation() {
+  document.addEventListener("click", event => {
+    const button = event.target.closest(".details-toggle");
+    if (!button) return;
+
+    const panelId = button.dataset.target;
+    const panel = panelId ? document.getElementById(panelId) : button.parentElement.querySelector(".recipe-details-panel");
+    if (!panel) return;
+
+    const isHidden = panel.classList.toggle("hidden");
+    button.textContent = isHidden ? "Details" : "Hide details";
+    button.setAttribute("aria-expanded", String(!isHidden));
+  });
+}
+
+
 function renderAll() {
   renderPlanSelect();
   renderPlan();
@@ -795,6 +796,7 @@ async function init() {
   document.getElementById("hideBoughtToggle").checked = localStorage.getItem(STORAGE_KEYS.hideBought) === "true";
 
   populateBuilderRecipeSelects();
+  setupDetailsDelegation();
   renderAll();
 
   if ("serviceWorker" in navigator) {

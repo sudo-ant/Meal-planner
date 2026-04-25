@@ -134,3 +134,12 @@ Each plan uses recipe IDs from `recipes.json`.
 - Plan card details show Ingredients, Steps and Notes together.
 - The Light Ideas label is kept where relevant.
 - Service worker cache bumped to v5.3-plan-details.
+
+
+## v5.4 details fixed changes
+
+- Details buttons use event delegation so they work after dynamic rendering.
+- Details buttons now have a distinct full-width outline style.
+- Details panels have stable target ids.
+- Hidden panels use a stronger `.hidden` rule.
+- Service worker cache bumped to v5.4-details-fixed.

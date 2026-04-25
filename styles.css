@@ -442,3 +442,41 @@ button.small {
 .plan-details-toggle {
   margin-top: 10px;
 }
+
+
+.hidden {
+  display: none !important;
+}
+
+.details-toggle {
+  margin-top: 12px;
+  background: white;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 9px 12px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  width: 100%;
+  text-align: left;
+}
+
+.details-toggle::after {
+  content: " +";
+  float: right;
+}
+
+.details-toggle[aria-expanded="true"]::after {
+  content: " −";
+}
+
+.filter-chip {
+  width: auto;
+  text-align: center;
+}
+
+.recipe-details-panel {
+  margin-top: 10px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
