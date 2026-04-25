@@ -143,3 +143,14 @@ Each plan uses recipe IDs from `recipes.json`.
 - Details panels have stable target ids.
 - Hidden panels use a stronger `.hidden` rule.
 - Service worker cache bumped to v5.4-details-fixed.
+
+
+## v5.5 changes
+
+- Quick Plan Builder now has three optional must-have recipe selectors.
+- Added a minimal Weight check-in at the bottom of the Plan tab:
+  - manual kg entry
+  - latest weight display
+  - previous-entry change
+  - saved only on this device via localStorage
+- Service worker cache bumped to v5.5.

@@ -480,3 +480,20 @@ button.small {
   border-top: 1px solid var(--line);
   padding-top: 10px;
 }
+
+
+.weight-card {
+  margin-top: 16px;
+}
+
+.weight-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.weight-row input {
+  min-height: 44px;
+}

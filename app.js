@@ -8,7 +8,8 @@ const STORAGE_KEYS = {
   mealTicks: "studentFoodPlanner.mealTicks",
   shoppingTicks: "studentFoodPlanner.shoppingTicks",
   hideBought: "studentFoodPlanner.hideBought",
-  generatedPlan: "studentFoodPlanner.generatedPlan"
+  generatedPlan: "studentFoodPlanner.generatedPlan",
+  weightEntries: "studentFoodPlanner.weightEntries"
 };
 
 const CUPBOARD_CATEGORIES = [
@@ -648,7 +649,7 @@ function populateBuilderRecipeSelects() {
     .map(recipe => `<option value="${recipe.id}">${recipe.title}</option>`)
     .join("");
 
-  ["mustHaveOne", "mustHaveTwo"].forEach(id => {
+  ["mustHaveOne", "mustHaveTwo", "mustHaveThree"].forEach(id => {
     const select = document.getElementById(id);
     const current = select.value;
     select.innerHTML = `<option value="">No preference</option>${options}`;
@@ -691,11 +692,12 @@ function generateQuickPlan() {
   const dayCount = Number(document.getElementById("builderDays").value);
   const mustHaveIds = [
     document.getElementById("mustHaveOne").value,
-    document.getElementById("mustHaveTwo").value
+    document.getElementById("mustHaveTwo").value,
+    document.getElementById("mustHaveThree").value
   ].filter(Boolean);
 
   if (mustHaveIds.length !== new Set(mustHaveIds).size) {
-    document.getElementById("builderMessage").textContent = "Choose two different must-have recipes, or leave one blank.";
+    document.getElementById("builderMessage").textContent = "Choose different must-have recipes, or leave one or more blank.";
     pendingGeneratedPlan = null;
     renderGeneratedPlanPreview(null);
     document.getElementById("useGeneratedPlanBtn").disabled = true;
@@ -738,11 +740,77 @@ function setupDetailsDelegation() {
 }
 
 
+
+function getWeightEntries() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEYS.weightEntries)) || [];
+  } catch {
+    return [];
+  }
+}
+
+function saveWeightEntry() {
+  const input = document.getElementById("weightInput");
+  const message = document.getElementById("weightMessage");
+  if (!input) return;
+
+  const value = Number(input.value);
+  if (!value || value < 30 || value > 250) {
+    if (message) message.textContent = "Enter a sensible weight in kg.";
+    return;
+  }
+
+  const entries = getWeightEntries();
+  entries.push({
+    date: new Date().toISOString(),
+    weight: Math.round(value * 10) / 10
+  });
+
+  localStorage.setItem(STORAGE_KEYS.weightEntries, JSON.stringify(entries));
+  input.value = "";
+  renderWeightCheckIn();
+}
+
+function renderWeightCheckIn() {
+  const container = document.getElementById("weightCheckIn");
+  if (!container) return;
+
+  const entries = getWeightEntries();
+  const last = entries[entries.length - 1];
+  const previous = entries[entries.length - 2];
+
+  let summary = "No weight recorded yet.";
+  if (last && previous) {
+    const change = Math.round((last.weight - previous.weight) * 10) / 10;
+    const sign = change > 0 ? "+" : "";
+    summary = `Last: ${last.weight} kg · Previous change: ${sign}${change} kg`;
+  } else if (last) {
+    summary = `Last: ${last.weight} kg`;
+  }
+
+  container.innerHTML = `
+    <div class="card weight-card">
+      <h2>Weight check-in</h2>
+      <p class="meta">Optional, private and saved only on this device.</p>
+      <div class="weight-row">
+        <input id="weightInput" type="number" inputmode="decimal" step="0.1" min="30" max="250" placeholder="kg">
+        <button id="saveWeightBtn" class="secondary" type="button">Save</button>
+      </div>
+      <p id="weightSummary" class="meta">${summary}</p>
+      <p id="weightMessage" class="meta"></p>
+    </div>
+  `;
+
+  document.getElementById("saveWeightBtn").addEventListener("click", saveWeightEntry);
+}
+
+
 function renderAll() {
   renderPlanSelect();
   renderPlan();
   renderShoppingList();
   renderRecipes();
+  renderWeightCheckIn();
 }
 
 async function init() {
