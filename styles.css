@@ -402,3 +402,38 @@ button.small {
   background: #e8f3e8;
   color: #285b2a;
 }
+
+
+.details-toggle {
+  margin-top: 12px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+}
+
+.recipe-details-panel {
+  margin-top: 10px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+}
+
+.recipe-detail-block {
+  margin-top: 12px;
+}
+
+.recipe-detail-block:first-child {
+  margin-top: 0;
+}
+
+.recipe-detail-block h4 {
+  margin: 0 0 6px;
+  color: var(--accent);
+}
+
+.recipe-detail-block ul,
+.recipe-detail-block ol {
+  margin-top: 0;
+  margin-bottom: 0;
+}

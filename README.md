@@ -118,3 +118,11 @@ Each plan uses recipe IDs from `recipes.json`.
   - 2+ portions → lunch + dinner
   - 1 portion → add side or combine
 - Service worker cache bumped to v5.
+
+
+## v5.1 changes
+
+- Replaced separate Ingredients / Steps / Notes expanders with one recipe-level button:
+  - Details
+  - Hide details
+- Service worker cache bumped to v5.1.
