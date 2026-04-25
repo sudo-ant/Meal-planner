@@ -437,3 +437,8 @@ button.small {
   margin-top: 0;
   margin-bottom: 0;
 }
+
+
+.plan-details-toggle {
+  margin-top: 10px;
+}

@@ -268,12 +268,17 @@ function renderPlan() {
       <h2>${plan.title}</h2>
       <span class="plan-kind">${plan.days.length}-day plan</span>
       <p>${plan.days.length} planned food pack days.</p>
-      <div class="progress-wrap" aria-label="Meal progress">
+      <div class="progress-wrap" aria-label="Food pack progress">
         <div class="progress-text">Food pack progress: ${completedCount} / ${plan.days.length} food packs (${progressPercent}%)</div>
         <div class="progress-track"><div class="progress-fill" style="width:${progressPercent}%"></div></div>
       </div>
       ${nextUntickedIndex >= 0 ? `<p class="next-meal-note">Next food pack: ${lookup[plan.days[nextUntickedIndex].meal]?.title || plan.days[nextUntickedIndex].meal}</p>` : `<p class="next-meal-note">All planned food packs ticked off.</p>`}
-      ${plan.notes ? `<p class="meta">${plan.notes}</p>` : ""}
+      ${plan.notes ? `
+        <div class="prep-notes">
+          <strong>Prep notes</strong>
+          <p class="meta">${plan.notes}</p>
+        </div>
+      ` : ""}
       ${fillers}
     </div>
   `;
@@ -287,7 +292,6 @@ function renderPlan() {
     const tickKey = `${plan.id}:${day.day}:${recipe.id}`;
     const checked = mealTicks[tickKey] ? "checked" : "";
     const nextClass = index === nextUntickedIndex ? " next-meal" : "";
-    const tags = recipe.tags?.filter(tag => tag !== "lighter-ideas").slice(0, 5).map(tag => `<span class="tag">${tag}</span>`).join("") || "";
     const hasLighterIdeas = recipe.tags?.includes("lighter-ideas");
 
     return `
@@ -298,10 +302,38 @@ function renderPlan() {
           <h3 class="meal-title">${recipe.title}</h3>
           <p class="meta">${recipe.servings || 1} portion${recipe.servings === 1 ? "" : "s"} · ${recipe.group || "Recipe"}</p>
           <p class="pack-note">${(recipe.servings || 1) >= 2 ? "2+ portions → lunch + dinner." : "1 portion → add side or combine."}</p>
-          <div class="tags">${hasLighterIdeas ? `<span class="tag light-tag">🌿 Lighter ideas</span>` : ""}${tags}</div>
-          <ol class="steps">
-            ${recipe.steps.map(step => `<li>${step}</li>`).join("")}
-          </ol>
+          ${hasLighterIdeas ? `<span class="tag light-tag">🌿 Lighter ideas</span>` : ""}
+
+          <button class="details-toggle plan-details-toggle" type="button">Details</button>
+
+          <div class="recipe-details-panel hidden">
+            <section class="recipe-detail-block">
+              <h4>Ingredients</h4>
+              <ul>
+                ${recipe.ingredients
+                  .filter(ingredient => typeof shouldSkipIngredient === "function" ? !shouldSkipIngredient(ingredient) : true)
+                  .map(ingredient => `
+                    <li>${formatQuantity(ingredient.quantity)} ${ingredient.unit || ""} ${ingredient.item}${ingredient.optional ? " (optional)" : ""}</li>
+                  `).join("")}
+              </ul>
+            </section>
+
+            <section class="recipe-detail-block">
+              <h4>Steps</h4>
+              <ol class="steps">
+                ${recipe.steps.map(step => `<li>${step}</li>`).join("")}
+              </ol>
+            </section>
+
+            ${recipe.notes?.length ? `
+              <section class="recipe-detail-block">
+                <h4>Notes</h4>
+                <ul>
+                  ${recipe.notes.map(note => `<li>${note}</li>`).join("")}
+                </ul>
+              </section>
+            ` : ""}
+          </div>
         </div>
       </article>
     `;
@@ -313,6 +345,14 @@ function renderPlan() {
       ticks[event.target.dataset.key] = event.target.checked;
       setStoredObject(STORAGE_KEYS.mealTicks, ticks);
       renderPlan();
+    });
+  });
+
+  document.querySelectorAll(".plan-details-toggle").forEach(button => {
+    button.addEventListener("click", () => {
+      const panel = button.nextElementSibling;
+      const isHidden = panel.classList.toggle("hidden");
+      button.textContent = isHidden ? "Details" : "Hide details";
     });
   });
 }
@@ -484,35 +524,47 @@ function renderRecipes() {
         ${usedIn.length ? `<p class="meta">Used in: ${usedIn.slice(0, 3).join(", ")}${usedIn.length > 3 ? "..." : ""}</p>` : ""}
         <div class="tags">${(recipe.tags || []).includes("lighter-ideas") ? `<span class="tag light-tag">🌿 Lighter ideas</span>` : ""}${(recipe.tags || []).filter(tag => tag !== "lighter-ideas").slice(0, 6).map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
 
-        <details class="recipe-details">
-          <summary>Ingredients</summary>
-          <ul>
-            ${recipe.ingredients
-              .filter(ingredient => typeof shouldSkipIngredient === "function" ? !shouldSkipIngredient(ingredient) : true)
-              .map(ingredient => `
-                <li>${formatQuantity(ingredient.quantity)} ${ingredient.unit || ""} ${ingredient.item}${ingredient.optional ? " (optional)" : ""}</li>
-              `).join("")}
-          </ul>
-        </details>
+        <button class="details-toggle" type="button">Details</button>
 
-        <details class="recipe-details">
-          <summary>Steps</summary>
-          <ol class="steps">
-            ${recipe.steps.map(step => `<li>${step}</li>`).join("")}
-          </ol>
-        </details>
-
-        ${recipe.notes?.length ? `
-          <details class="recipe-details">
-            <summary>Notes</summary>
+        <div class="recipe-details-panel hidden">
+          <section class="recipe-detail-block">
+            <h4>Ingredients</h4>
             <ul>
-              ${recipe.notes.map(note => `<li>${note}</li>`).join("")}
+              ${recipe.ingredients
+                .filter(ingredient => typeof shouldSkipIngredient === "function" ? !shouldSkipIngredient(ingredient) : true)
+                .map(ingredient => `
+                  <li>${formatQuantity(ingredient.quantity)} ${ingredient.unit || ""} ${ingredient.item}${ingredient.optional ? " (optional)" : ""}</li>
+                `).join("")}
             </ul>
-          </details>
-        ` : ""}
+          </section>
+
+          <section class="recipe-detail-block">
+            <h4>Steps</h4>
+            <ol class="steps">
+              ${recipe.steps.map(step => `<li>${step}</li>`).join("")}
+            </ol>
+          </section>
+
+          ${recipe.notes?.length ? `
+            <section class="recipe-detail-block">
+              <h4>Notes</h4>
+              <ul>
+                ${recipe.notes.map(note => `<li>${note}</li>`).join("")}
+              </ul>
+            </section>
+          ` : ""}
+        </div>
       </article>
     `;
   }).join("") || `<div class="card empty">No recipes found.</div>`;
+
+  document.querySelectorAll(".details-toggle").forEach(button => {
+    button.addEventListener("click", () => {
+      const panel = button.nextElementSibling;
+      const isHidden = panel.classList.toggle("hidden");
+      button.textContent = isHidden ? "Details" : "Hide details";
+    });
+  });
 }
 
 

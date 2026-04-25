@@ -120,9 +120,17 @@ Each plan uses recipe IDs from `recipes.json`.
 - Service worker cache bumped to v5.
 
 
-## v5.1 changes
+## v5.2-details changes
 
-- Replaced separate Ingredients / Steps / Notes expanders with one recipe-level button:
-  - Details
-  - Hide details
-- Service worker cache bumped to v5.1.
+- Recipe cards now use one Details / Hide details button.
+- Ingredients, Steps and Notes open together.
+- Service worker cache bumped to v5.2-details.
+
+
+## v5.3 plan details changes
+
+- Plan cards no longer show general search tags.
+- Plan cards now include one Details / Hide details button.
+- Plan card details show Ingredients, Steps and Notes together.
+- The Light Ideas label is kept where relevant.
+- Service worker cache bumped to v5.3-plan-details.
