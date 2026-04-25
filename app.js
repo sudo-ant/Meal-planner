@@ -296,7 +296,7 @@ function renderPlan() {
           <p class="meta">${day.day}</p>
           <h3 class="meal-title">${recipe.title}</h3>
           <p class="meta">${recipe.servings || 1} portion${recipe.servings === 1 ? "" : "s"} · ${recipe.group || "Recipe"}</p>
-          <p class="pack-note">${recipe.servings >= 2 ? "Prepare the evening before. Pack lunch + dinner." : "Single portion. Add a filler or side if needed."}</p>
+          <p class="pack-note">${(recipe.servings || 1) >= 2 ? "Prepare the evening before. Pack lunch + dinner." : "Single portion. Add a filler or side if needed."}</p>
           <div class="tags">${tags}</div>
           <ol class="steps">
             ${recipe.steps.map(step => `<li>${step}</li>`).join("")}
@@ -479,7 +479,7 @@ function renderRecipes() {
       <article class="card recipe-card">
         <h3>${recipe.title}</h3>
         <p>${recipe.servings || 1} portion${recipe.servings === 1 ? "" : "s"} · ${recipe.group || "Recipe"}</p>
-        <p class="pack-note">${recipe.servings >= 2 ? "Good food pack option: lunch + dinner." : "Single portion: useful for light meals, fillers, or flexible days."}</p>
+        <p class="pack-note">${(recipe.servings || 1) >= 2 ? "Good food pack option: lunch + dinner." : "Single portion: useful for light meals, fillers, or flexible days."}</p>
         ${usedIn.length ? `<p class="meta">Used in: ${usedIn.slice(0, 3).join(", ")}${usedIn.length > 3 ? "..." : ""}</p>` : ""}
         <div class="tags">${(recipe.tags || []).slice(0, 6).map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
 
@@ -503,6 +503,176 @@ function renderRecipes() {
       </article>
     `;
   }).join("") || `<div class="card empty">No recipes found.</div>`;
+}
+
+
+function classifyRecipe(recipe) {
+  const group = (recipe.group || "").toLowerCase();
+  const tags = (recipe.tags || []).join(" ").toLowerCase();
+  const title = (recipe.title || "").toLowerCase();
+
+  if (group.includes("chicken") || tags.includes("chicken") || title.includes("chicken")) return "chicken";
+  if (group.includes("turkey") || tags.includes("turkey") || title.includes("turkey")) return "turkey";
+  if (group.includes("fish") || tags.includes("tuna") || tags.includes("salmon") || title.includes("tuna") || title.includes("fish") || title.includes("salmon")) return "fish";
+  return "vegetarian";
+}
+
+function scoreCandidate(recipe, selected, targetCounts) {
+  const type = classifyRecipe(recipe);
+  const selectedTypes = selected.map(classifyRecipe);
+  let score = 0;
+
+  score += (targetCounts[type] || 0) * 10;
+  score -= selectedTypes.filter(t => t === type).length * 6;
+
+  const lastType = selectedTypes[selectedTypes.length - 1];
+  if (lastType && lastType === type) score -= 4;
+
+  if ((recipe.servings || 1) >= 2) score += 8;
+  if ((recipe.tags || []).includes("meal-prep")) score += 3;
+  if ((recipe.tags || []).includes("budget")) score += 2;
+  if ((recipe.tags || []).includes("quick")) score += 1;
+  if ((recipe.tags || []).includes("light")) score += 1;
+
+  return score;
+}
+
+function buildBalancedPlan(dayCount, mustHaveIds) {
+  const lookup = recipeById();
+  const selected = [];
+
+  mustHaveIds.filter(Boolean).forEach(id => {
+    const recipe = lookup[id];
+    if (recipe && !selected.some(item => item.id === recipe.id)) selected.push(recipe);
+  });
+
+  const targetCounts = dayCount === 5
+    ? { chicken: 2, turkey: 1, fish: 1, vegetarian: 1 }
+    : { chicken: 2, turkey: 1, fish: 1, vegetarian: 2 };
+
+  while (selected.length < dayCount) {
+    const candidates = recipes.filter(recipe => !selected.some(item => item.id === recipe.id));
+    if (!candidates.length) break;
+
+    const selectedTypeCounts = selected.reduce((acc, recipe) => {
+      const type = classifyRecipe(recipe);
+      acc[type] = (acc[type] || 0) + 1;
+      return acc;
+    }, {});
+
+    const remainingTargets = { ...targetCounts };
+    Object.keys(selectedTypeCounts).forEach(type => {
+      remainingTargets[type] = Math.max(0, (remainingTargets[type] || 0) - selectedTypeCounts[type]);
+    });
+
+    candidates.sort((a, b) => scoreCandidate(b, selected, remainingTargets) - scoreCandidate(a, selected, remainingTargets));
+    selected.push(candidates[0]);
+  }
+
+  const ordered = orderGeneratedRecipes(selected);
+
+  return {
+    id: `generated_plan_${Date.now()}`,
+    title: `Generated ${dayCount}-Day Food Pack Plan`,
+    generated: true,
+    days: ordered.slice(0, dayCount).map((recipe, index) => ({
+      day: `Day ${index + 1}`,
+      meal: recipe.id
+    })),
+    notes: "Generated locally on this device. Designed as daily food packs: prepare the evening before and pack lunch + dinner where portions allow. Fresh meat and fish are placed earlier where possible."
+  };
+}
+
+function orderGeneratedRecipes(selected) {
+  const priority = recipe => {
+    const type = classifyRecipe(recipe);
+    if (type === "fish") return 1;
+    if (type === "chicken") return 2;
+    if (type === "turkey") return 3;
+    return 4;
+  };
+
+  return [...selected].sort((a, b) => priority(a) - priority(b));
+}
+
+function populateBuilderRecipeSelects() {
+  const options = recipes
+    .slice()
+    .sort((a, b) => a.title.localeCompare(b.title))
+    .map(recipe => `<option value="${recipe.id}">${recipe.title}</option>`)
+    .join("");
+
+  ["mustHaveOne", "mustHaveTwo"].forEach(id => {
+    const select = document.getElementById(id);
+    const current = select.value;
+    select.innerHTML = `<option value="">No preference</option>${options}`;
+    select.value = current;
+  });
+}
+
+function renderGeneratedPlanPreview(plan) {
+  const lookup = recipeById();
+  const container = document.getElementById("generatedPlanPreview");
+
+  if (!plan) {
+    container.innerHTML = "";
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="card">
+      <h2>${plan.title}</h2>
+      <span class="plan-kind">${plan.days.length}-day plan</span>
+      <p class="meta">${plan.notes}</p>
+    </div>
+    ${plan.days.map(day => {
+      const recipe = lookup[day.meal];
+      return `
+        <article class="card preview-meal">
+          <p class="meta">${day.day}</p>
+          <h3>${recipe?.title || day.meal}</h3>
+          <p class="meta">${recipe ? `${recipe.servings || 1} portion${recipe.servings === 1 ? "" : "s"} · ${recipe.group || "Recipe"}` : ""}</p>
+          <div class="tags">${(recipe?.tags || []).slice(0, 5).map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
+        </article>
+      `;
+    }).join("")}
+  `;
+}
+
+let pendingGeneratedPlan = null;
+
+function generateQuickPlan() {
+  const dayCount = Number(document.getElementById("builderDays").value);
+  const mustHaveIds = [
+    document.getElementById("mustHaveOne").value,
+    document.getElementById("mustHaveTwo").value
+  ].filter(Boolean);
+
+  if (mustHaveIds.length !== new Set(mustHaveIds).size) {
+    document.getElementById("builderMessage").textContent = "Choose two different must-have recipes, or leave one blank.";
+    pendingGeneratedPlan = null;
+    renderGeneratedPlanPreview(null);
+    document.getElementById("useGeneratedPlanBtn").disabled = true;
+    return;
+  }
+
+  pendingGeneratedPlan = buildBalancedPlan(dayCount, mustHaveIds);
+  renderGeneratedPlanPreview(pendingGeneratedPlan);
+  document.getElementById("useGeneratedPlanBtn").disabled = false;
+  document.getElementById("builderMessage").textContent = "Plan generated. Review it, then use it if it looks right.";
+}
+
+function useGeneratedPlan() {
+  if (!pendingGeneratedPlan) return;
+
+  localStorage.setItem(STORAGE_KEYS.generatedPlan, JSON.stringify(pendingGeneratedPlan));
+  selectedPlanId = pendingGeneratedPlan.id;
+  localStorage.setItem(STORAGE_KEYS.selectedPlan, selectedPlanId);
+  localStorage.removeItem(STORAGE_KEYS.mealTicks);
+  localStorage.removeItem(STORAGE_KEYS.shoppingTicks);
+
+  renderAll();
+  setActiveTab("plan");
 }
 
 function renderAll() {

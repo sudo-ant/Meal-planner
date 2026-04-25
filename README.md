@@ -101,12 +101,9 @@ Each plan uses recipe IDs from `recipes.json`.
   - use generated plan as the active plan
 
 
-## v4 changes
+## v4 fixed changes
 
-- Added recipe filter buttons:
-  - All, Light, Chicken, Turkey, Fish, Eggs, Vegetarian, No-cook, Quick.
-- Updated language from “meals” to “food packs” to match Maia’s routine.
-- Plan screen now emphasises preparing food the evening before and packing lunch + dinner.
-- Recipe cards show whether they are good food pack options or single-portion flexible meals.
-- Quick Plan Builder now favours 2-portion recipes.
-- Service worker cache bumped to v4.
+- Added recipe filter buttons.
+- Updated plan language to food packs.
+- Quick Plan Builder preserved and now favours 2-portion recipes.
+- Service worker cache bumped to v4-fixed.
