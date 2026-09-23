@@ -1,164 +1,82 @@
-# Student Food Planner
+# Maia's Recipe & Meal Planner
 
-A static, mobile-first meal planning and shopping app.
+A lightweight, mobile-first personal meal-planning PWA for choosing or generating food-pack plans, preparing a shopping list, following recipes, and optionally recording weight locally.
 
 ## Features
 
-- Select a premade 5-day or 6-day plan
-- View the week's recipes
-- Tick meals off when cooked
-- Generate a hybrid shopping list
-- Tick shopping items off
-- Reset meal or shopping ticks
-- Search all recipes
-- Installable PWA
-- Works on GitHub Pages
+- Choose from premade five- and six-day plans.
+- Generate a plan with optional must-have recipes.
+- Review recipes and tick completed food packs.
+- Generate, group, copy, and tick off shopping-list items.
+- Search and filter the recipe collection.
+- Record optional weight check-ins on the current device.
+- Install and use the app offline after its resources are cached.
 
-## Files
+## Architecture
+
+The project intentionally uses static HTML, vanilla JavaScript, CSS, JSON data, `localStorage`, and a service worker. It has no dependencies, package manager, build step, backend, or database, and is designed for GitHub Pages.
+
+## Repository structure
 
 ```text
-student_food_planner_app/
-├─ index.html
-├─ styles.css
-├─ app.js
-├─ manifest.json
-├─ service-worker.js
-├─ data/
-│  ├─ recipes.json
-│  └─ plans.json
-└─ icons/
+Meal-planner/
+|- AGENTS.md                 Development and contribution guidance
+|- PROJECT.md                Current product and architecture reference
+|- CHANGELOG.md              Historical release notes
+|- README.md                 Repository overview and operating instructions
+|- index.html                Application shell
+|- styles.css                Application styles
+|- app.js                    Rendering, interactions, and local state
+|- manifest.json             PWA metadata
+|- service-worker.js         Offline asset and data caching
+|- scripts/
+|  `- validate-data.mjs      Zero-dependency data validator
+|- data/
+|  |- recipes.json           Recipe collection
+|  `- plans.json             Premade plans
+`- icons/                    PWA icons
 ```
 
-## Shopping list logic
+## Running locally
 
-The app uses a hybrid approach.
+Serve the repository over HTTP so `fetch()` and service-worker behaviour work correctly. Do not open `index.html` directly with a `file://` URL.
 
-It sums clear quantities such as:
+No installation is required. One optional approach, when Python is available, is:
 
-- mugs of rice
-- tins of beans
-- grams of turkey mince
-- eggs
-- chicken breasts
-- frozen vegetable mugs
+```sh
+python -m http.server 8000
+```
 
-It keeps items grouped by Continente-style sections such as Meat, Frozen, Dry goods, Tinned goods, Dairy, Eggs and Seasoning.
+Then open `http://localhost:8000/`.
+
+## Data
+
+Recipes are stored in `data/recipes.json`. Premade plans are stored in `data/plans.json`, with each plan day referencing a recipe by its recipe ID.
+
+## Data validation
+
+With Node.js available, validate both data files and their plan-to-recipe references with:
+
+```sh
+node scripts/validate-data.mjs
+```
+
+The validator uses only built-in Node.js functionality and requires no installation.
+
+## Local storage
+
+Plan selection, completion ticks, shopping state, the hide-bought preference, generated plans, and weight entries are stored in the current browser with `localStorage`. There is no account or cross-device synchronisation, and clearing browser or site data can remove this state.
+
+## Offline/PWA behaviour
+
+The service worker caches the application shell and JSON data for offline use. Changes to cached runtime files or data should account for the cache/update strategy. Documentation-only changes do not require a cache bump.
 
 ## Deployment
 
-Upload the folder contents to a GitHub Pages repository.
+The repository can be served directly with GitHub Pages. Publish the repository root and preserve the existing relative file paths, including `data/recipes.json` and `data/plans.json`. No build command or generated output is required.
 
-For best results, keep the data files at:
+## Development guidance
 
-```text
-data/recipes.json
-data/plans.json
-```
-
-## Editing recipes
-
-Edit `data/recipes.json`.
-
-Each recipe needs:
-
-- id
-- title
-- group
-- servings
-- tags
-- ingredients
-- steps
-
-## Editing plans
-
-Edit `data/plans.json`.
-
-Each plan uses recipe IDs from `recipes.json`.
-
-
-## v2 changes
-
-- Fixed half quantities, e.g. `0.5 tsp` now displays as `½ tsp`, not `0½ tsp`.
-- Added supermarket-style category ordering.
-- Added meal progress percentage.
-- Highlighted the next unticked meal.
-- Added hide-bought-items toggle.
-- Added copy shopping list button.
-- Bumped the service worker cache to v2.
-
-
-## v3 changes
-
-- Renamed app to `Maia's Recipe & Meal Planner`.
-- Weekly plans now show whether they are 5-day or 6-day plans.
-- Shopping list categories simplified:
-  - Tinned goods, dry goods, condiments, seasoning and oil now show as Cupboard.
-- Water is excluded from the shopping list.
-- Added Quick Plan Builder:
-  - choose 5 or 6 days
-  - optionally choose 1–2 must-have recipes
-  - generate a balanced plan
-  - use generated plan as the active plan
-
-
-## v4 fixed changes
-
-- Added recipe filter buttons.
-- Updated plan language to food packs.
-- Quick Plan Builder preserved and now favours 2-portion recipes.
-- Service worker cache bumped to v4-fixed.
-
-
-## v5 changes
-
-- Includes the full 35-recipe set, including light/summer recipes.
-- Added short “Lighter ideas” notes where genuinely useful.
-- Added a visible “🌿 Lighter ideas” label on relevant recipes.
-- Tightened food pack guidance:
-  - 2+ portions → lunch + dinner
-  - 1 portion → add side or combine
-- Service worker cache bumped to v5.
-
-
-## v5.2-details changes
-
-- Recipe cards now use one Details / Hide details button.
-- Ingredients, Steps and Notes open together.
-- Service worker cache bumped to v5.2-details.
-
-
-## v5.3 plan details changes
-
-- Plan cards no longer show general search tags.
-- Plan cards now include one Details / Hide details button.
-- Plan card details show Ingredients, Steps and Notes together.
-- The Light Ideas label is kept where relevant.
-- Service worker cache bumped to v5.3-plan-details.
-
-
-## v5.4 details fixed changes
-
-- Details buttons use event delegation so they work after dynamic rendering.
-- Details buttons now have a distinct full-width outline style.
-- Details panels have stable target ids.
-- Hidden panels use a stronger `.hidden` rule.
-- Service worker cache bumped to v5.4-details-fixed.
-
-
-## v5.5 changes
-
-- Quick Plan Builder now has three optional must-have recipe selectors.
-- Added a minimal Weight check-in at the bottom of the Plan tab:
-  - manual kg entry
-  - latest weight display
-  - previous-entry change
-  - saved only on this device via localStorage
-- Service worker cache bumped to v5.5.
-
-
-## v5.6 fixed changes
-
-- Weight check-in moved to its own Weight tab.
-- Removed duplicate / misplaced Weight block from the Plan tab.
-- Recipes tab preserved.
-- Service worker cache bumped to v5.6-fixed.
+- Read `AGENTS.md` before making changes.
+- Use `PROJECT.md` for the current product behaviour and review areas.
+- Use `CHANGELOG.md` for release history.
