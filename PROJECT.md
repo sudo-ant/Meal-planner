@@ -1,5 +1,7 @@
 # Project Reference
 
+This document describes the application's current product state and existing decisions. It is a reference for future work, not an immutable specification; explicit future requirements may intentionally change the behaviour documented here.
+
 ## Purpose
 
 Maia's Recipe & Meal Planner supports planning practical meals from food packs, turning a selected or generated plan into recipe guidance and a combined shopping list. It is designed for straightforward personal use rather than multi-user administration.

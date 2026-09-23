@@ -4,6 +4,10 @@
 
 Maia's Recipe & Meal Planner is a lightweight, mobile-first personal meal-planning PWA. Its simple architecture is intentional.
 
+## Project reference
+
+Before significant product or functional changes, read `PROJECT.md` for the current product behaviour, architecture, and known review areas. It describes the current state and does not override an explicit new user instruction to change that behaviour.
+
 ## Architecture
 
 The application currently uses:
@@ -30,7 +34,9 @@ Do not introduce frameworks, backends, databases, build systems, or external dep
 - Consider migration and backwards compatibility before changing storage keys or stored structures.
 - Safely handle content if it becomes user-entered or externally sourced in the future.
 - Maintain accessibility, including semantic structure, keyboard use, labels, focus behaviour, and readable contrast.
-- Do not invent significant product behaviour when requirements are ambiguous; clarify it with the user.
+- Do not silently invent significant product behaviour.
+- If material ambiguity would meaningfully affect the product outcome, report it with the relevant options or proposed assumption.
+- Resolve minor implementation details using the smallest reasonable approach consistent with the task and existing product behaviour.
 
 ## Git workflow
 
