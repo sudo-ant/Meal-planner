@@ -19,8 +19,6 @@
 - Added a zero-dependency data validator, now updated for v2 recipe and ingredient data.
 - Reworked the README as concise current documentation and moved historical release notes here.
 
-This is repository and documentation foundation work, not a new user-facing feature release.
-
 ## v5.6 fixed
 
 - Weight check-in moved to its own Weight tab.
