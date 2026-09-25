@@ -1,43 +1,40 @@
 const DATA_PATHS = {
   recipes: "data/recipes.json",
-  plans: "data/plans.json"
+  ingredients: "data/ingredients.json"
 };
 
 const STORAGE_KEYS = {
-  selectedPlan: "studentFoodPlanner.selectedPlan",
-  mealTicks: "studentFoodPlanner.mealTicks",
-  shoppingTicks: "studentFoodPlanner.shoppingTicks",
+  currentWeek: "studentFoodPlanner.currentWeek",
+  atHome: "studentFoodPlanner.atHome",
   hideBought: "studentFoodPlanner.hideBought",
-  generatedPlan: "studentFoodPlanner.generatedPlan",
   weightEntries: "studentFoodPlanner.weightEntries"
 };
 
-const CUPBOARD_CATEGORIES = [
-  "Tinned goods",
-  "Dry goods",
-  "Condiments",
-  "Seasoning",
-  "Oil & cooking fats"
-];
-
 const CATEGORY_ORDER = [
-  "Vegetables",
-  "Fruit",
   "Meat",
   "Fish",
-  "Dairy",
   "Eggs",
+  "Pulses",
+  "Vegetables",
+  "Fruit",
+  "Dairy",
   "Frozen",
-  "Cupboard",
+  "Dry goods",
+  "Tinned goods",
+  "Herbs",
+  "Condiments",
+  "Seasoning",
+  "Oil & cooking fats",
   "Other"
 ];
 
 let recipes = [];
-let plans = [];
-let selectedPlanId = null;
+let ingredients = [];
+let recipesById = {};
+let ingredientsById = {};
+let currentWeek = null;
+let atHome = null;
 let activeRecipeFilter = "all";
-
-const recipeById = () => Object.fromEntries(recipes.map(recipe => [recipe.id, recipe]));
 
 function loadJson(path) {
   return fetch(path).then(response => {
@@ -46,16 +43,106 @@ function loadJson(path) {
   });
 }
 
-function getStoredObject(key) {
+function getStoredJson(key, fallback) {
   try {
-    return JSON.parse(localStorage.getItem(key)) || {};
+    const value = JSON.parse(localStorage.getItem(key));
+    return value ?? fallback;
   } catch {
-    return {};
+    return fallback;
   }
 }
 
-function setStoredObject(key, value) {
+function setStoredJson(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
+}
+
+function createEmptyWeek() {
+  return {
+    version: 2,
+    createdAt: new Date().toISOString(),
+    selections: [],
+    boughtIngredientIds: []
+  };
+}
+
+function getBatch(recipe, batchId) {
+  return recipe?.batchOptions.find(batch => batch.id === batchId) || recipe?.batchOptions[0] || null;
+}
+
+function normaliseChoiceSelections(batch, values = {}) {
+  const selections = {};
+
+  (batch?.choices || []).forEach(choice => {
+    const chosen = choice.options.some(option => option.id === values[choice.id])
+      ? values[choice.id]
+      : choice.defaultOptionId;
+
+    if (chosen && choice.options.some(option => option.id === chosen)) {
+      selections[choice.id] = chosen;
+    }
+  });
+
+  return selections;
+}
+
+function normaliseCurrentWeek(value) {
+  if (!value || value.version !== 2 || !Array.isArray(value.selections)) {
+    return createEmptyWeek();
+  }
+
+  const seenRecipes = new Set();
+  const selections = [];
+
+  value.selections.forEach(selection => {
+    const recipe = recipesById[selection?.recipeId];
+    if (!recipe || seenRecipes.has(recipe.id)) return;
+
+    const batch = getBatch(recipe, selection.batchId);
+    if (!batch) return;
+
+    seenRecipes.add(recipe.id);
+    selections.push({
+      recipeId: recipe.id,
+      batchId: batch.id,
+      cooked: Boolean(selection.cooked),
+      choiceSelections: normaliseChoiceSelections(batch, selection.choiceSelections)
+    });
+  });
+
+  return {
+    version: 2,
+    createdAt: typeof value.createdAt === "string" ? value.createdAt : new Date().toISOString(),
+    selections,
+    boughtIngredientIds: Array.isArray(value.boughtIngredientIds)
+      ? [...new Set(value.boughtIngredientIds.filter(id => ingredientsById[id]))]
+      : []
+  };
+}
+
+function normaliseAtHome(value) {
+  return {
+    version: 1,
+    ingredientIds: Array.isArray(value?.ingredientIds)
+      ? [...new Set(value.ingredientIds.filter(id => ingredientsById[id]))]
+      : []
+  };
+}
+
+function saveCurrentWeek() {
+  setStoredJson(STORAGE_KEYS.currentWeek, currentWeek);
+}
+
+function saveAtHome() {
+  setStoredJson(STORAGE_KEYS.atHome, atHome);
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 function formatQuantity(value) {
@@ -64,25 +151,40 @@ function formatQuantity(value) {
 
   const whole = Math.trunc(value);
   const fraction = Math.round((value - whole) * 100) / 100;
-  const fractionMap = {
-    0.25: "¼",
-    0.5: "½",
-    0.75: "¾"
-  };
+  const fractionMap = { 0.25: "¼", 0.5: "½", 0.75: "¾" };
 
   if (fractionMap[fraction]) {
     return whole === 0 ? fractionMap[fraction] : `${whole}${fractionMap[fraction]}`;
   }
 
-  return String(value);
+  return String(Math.round(value * 100) / 100);
 }
 
-function displayCategory(category) {
-  return CUPBOARD_CATEGORIES.includes(category) ? "Cupboard" : (category || "Other");
+function pluraliseUnit(unit, quantity) {
+  if (!unit) return "";
+  if (quantity === 1) return unit;
+
+  const pluralMap = {
+    piece: "pieces",
+    clove: "cloves",
+    cube: "cubes",
+    tin: "tins",
+    bag: "bags",
+    mug: "mugs"
+  };
+
+  return pluralMap[unit] || unit;
 }
 
-function shouldSkipIngredient(ingredient) {
-  return (ingredient.item || "").toLowerCase() === "water";
+function formatAmount(quantity, unit) {
+  if (typeof quantity !== "number") return "";
+  const displayUnit = pluraliseUnit(unit, quantity);
+  return `${formatQuantity(quantity)}${displayUnit ? ` ${displayUnit}` : ""}`;
+}
+
+function formatYield(batch) {
+  const { min, max } = batch.yield;
+  return min === max ? `about ${min} portions` : `about ${min}–${max} portions`;
 }
 
 function categoryRank(category) {
@@ -90,109 +192,9 @@ function categoryRank(category) {
   return index === -1 ? CATEGORY_ORDER.length : index;
 }
 
-function shoppingItemKey(plan, item) {
-  return `${plan.id}:${item.category}:${item.item}:${item.unit || item.detail || ""}`;
-}
-
-function normaliseItemKey(ingredient) {
-  const category = displayCategory(ingredient.category);
-  return `${ingredient.item.toLowerCase()}|${ingredient.unit || ""}|${category}`;
-}
-
-function canSum(ingredient) {
-  const unit = (ingredient.unit || "").toLowerCase();
-  return [
-    "g", "kg", "ml", "l", "tsp", "tbsp", "mug", "mugs",
-    "piece", "pieces", "clove", "cloves", "cube", "cubes",
-    "tin", "tins", "fillet", "fillets", "portion", "portions",
-    "400g tin"
-  ].includes(unit) && typeof ingredient.quantity === "number";
-}
-
-function pluraliseUnit(unit, qty) {
-  if (!unit) return "";
-  if (qty === 1) return unit;
-  const pluralMap = {
-    "piece": "pieces",
-    "clove": "cloves",
-    "cube": "cubes",
-    "tin": "tins",
-    "fillet": "fillets",
-    "portion": "portions",
-    "mug": "mugs"
-  };
-  return pluralMap[unit] || unit;
-}
-
-function displayIngredientLine(entry) {
-  if (entry.mode === "count") {
-    return `${entry.item}: ${entry.count} x ${entry.detail}`;
-  }
-
-  const unit = pluraliseUnit(entry.unit, entry.quantity);
-  const qty = formatQuantity(entry.quantity);
-  const optional = entry.optional ? " (optional)" : "";
-  return `${entry.item}: ${qty}${unit ? " " + unit : ""}${optional}`;
-}
-
-function buildShoppingList(plan) {
-  const map = new Map();
-  const lookup = recipeById();
-
-  plan.days.forEach(day => {
-    const recipe = lookup[day.meal];
-    if (!recipe) return;
-
-    recipe.ingredients.forEach(ingredient => {
-      if (shouldSkipIngredient(ingredient)) return;
-      const key = normaliseItemKey(ingredient);
-      const category = displayCategory(ingredient.category);
-
-      if (canSum(ingredient)) {
-        if (!map.has(key)) {
-          map.set(key, {
-            mode: "sum",
-            item: ingredient.item,
-            category,
-            unit: ingredient.unit || "",
-            quantity: 0,
-            optional: Boolean(ingredient.optional),
-            sources: []
-          });
-        }
-        const entry = map.get(key);
-        entry.quantity += ingredient.quantity;
-        entry.optional = entry.optional && Boolean(ingredient.optional);
-        entry.sources.push(recipe.title);
-      } else {
-        const countKey = `${ingredient.item.toLowerCase()}|count|${category}`;
-        if (!map.has(countKey)) {
-          map.set(countKey, {
-            mode: "count",
-            item: ingredient.item,
-            category,
-            count: 0,
-            detail: `${formatQuantity(ingredient.quantity)} ${ingredient.unit || ""}`.trim(),
-            sources: []
-          });
-        }
-        const entry = map.get(countKey);
-        entry.count += 1;
-        entry.sources.push(recipe.title);
-      }
-    });
-  });
-
-  return Array.from(map.values()).sort((a, b) => {
-    const cat = categoryRank(a.category) - categoryRank(b.category);
-    if (cat !== 0) return cat;
-    return a.item.localeCompare(b.item);
-  });
-}
-
 function groupByCategory(items) {
   return items.reduce((groups, item) => {
-    const category = item.category || "Other";
+    const category = item.ingredient.category || "Other";
     if (!groups[category]) groups[category] = [];
     groups[category].push(item);
     return groups;
@@ -201,27 +203,36 @@ function groupByCategory(items) {
 
 function orderedCategoryEntries(groups) {
   return Object.entries(groups).sort(([a], [b]) => {
-    const cat = categoryRank(a) - categoryRank(b);
-    if (cat !== 0) return cat;
-    return a.localeCompare(b);
+    const difference = categoryRank(a) - categoryRank(b);
+    return difference || a.localeCompare(b);
   });
 }
 
-function getGeneratedPlan() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEYS.generatedPlan));
-  } catch {
-    return null;
-  }
+function getSelection(recipeId) {
+  return currentWeek.selections.find(selection => selection.recipeId === recipeId) || null;
 }
 
-function getAllPlans() {
-  const generated = getGeneratedPlan();
-  return generated ? [generated, ...plans] : plans;
+function getSelectedOption(choice, selection) {
+  const optionId = selection.choiceSelections?.[choice.id] || choice.defaultOptionId;
+  return choice.options.find(option => option.id === optionId) || null;
 }
 
-function getSelectedPlan() {
-  return getAllPlans().find(plan => plan.id === selectedPlanId) || getAllPlans()[0];
+function getSelectedRecipeData(selection) {
+  const recipe = recipesById[selection.recipeId];
+  const batch = getBatch(recipe, selection.batchId);
+  return { recipe, batch };
+}
+
+function getBatchIngredientGroups(selection) {
+  const { batch } = getSelectedRecipeData(selection);
+  if (!batch) return [];
+
+  const groups = [{ label: "Ingredients", ingredients: batch.ingredients }];
+  batch.choices.forEach(choice => {
+    const option = getSelectedOption(choice, selection);
+    if (option) groups.push({ label: `${choice.label}: ${option.label}`, ingredients: option.ingredients });
+  });
+  return groups;
 }
 
 function setActiveTab(tabName) {
@@ -233,199 +244,451 @@ function setActiveTab(tabName) {
   });
 }
 
-function renderPlanSelect() {
-  const select = document.getElementById("planSelect");
-  select.innerHTML = getAllPlans().map(plan => {
-    const label = `${plan.title} (${plan.days.length}-day)`;
-    return `<option value="${plan.id}">${label}</option>`;
-  }).join("");
-  select.value = selectedPlanId;
+function addRecipeToWeek(recipeId, batchId) {
+  const recipe = recipesById[recipeId];
+  const batch = getBatch(recipe, batchId);
+  if (!recipe || !batch) return;
+
+  const existing = getSelection(recipeId);
+  if (existing) {
+    existing.batchId = batch.id;
+    existing.choiceSelections = normaliseChoiceSelections(batch, existing.choiceSelections);
+  } else {
+    currentWeek.selections.push({
+      recipeId,
+      batchId: batch.id,
+      cooked: false,
+      choiceSelections: normaliseChoiceSelections(batch)
+    });
+  }
+
+  saveCurrentWeek();
+  renderAll();
+}
+
+function changeRecipeBatch(recipeId, batchId) {
+  const selection = getSelection(recipeId);
+  const recipe = recipesById[recipeId];
+  const batch = getBatch(recipe, batchId);
+  if (!selection || !batch) return;
+
+  selection.batchId = batch.id;
+  selection.choiceSelections = normaliseChoiceSelections(batch, selection.choiceSelections);
+  saveCurrentWeek();
+  renderAll();
+}
+
+function removeRecipeFromWeek(recipeId) {
+  currentWeek.selections = currentWeek.selections.filter(selection => selection.recipeId !== recipeId);
+  saveCurrentWeek();
+  renderAll();
+}
+
+function startNewWeek() {
+  const hasState = currentWeek.selections.length > 0 || currentWeek.boughtIngredientIds.length > 0;
+  if (hasState && !window.confirm("Start a new week? This clears the current plan, cooked ticks and bought ticks.")) {
+    return;
+  }
+
+  currentWeek = createEmptyWeek();
+  saveCurrentWeek();
+  renderAll();
+}
+
+function batchSelectMarkup(recipe, selectedBatchId, className, labelText = "Choose batch size") {
+  const options = recipe.batchOptions.map(batch => `
+    <option value="${escapeHtml(batch.id)}" ${batch.id === selectedBatchId ? "selected" : ""}>
+      ${escapeHtml(batch.label)} — ${escapeHtml(formatYield(batch))}
+    </option>
+  `).join("");
+
+  return `
+    <label class="field-label">
+      <span>${escapeHtml(labelText)}</span>
+      <select class="${className}" data-recipe-id="${escapeHtml(recipe.id)}">${options}</select>
+    </label>
+  `;
+}
+
+function storageMarkup(batch) {
+  const spaceWarning = batch.storage.size === "large_batch"
+    ? `<p class="warning">Check you have enough fridge/freezer space.</p>`
+    : "";
+  const freezerLabel = batch.storage.freezer.charAt(0).toUpperCase() + batch.storage.freezer.slice(1);
+  return `${spaceWarning}<p class="meta">Freezer: ${escapeHtml(freezerLabel)}</p>`;
+}
+
+function choiceControlsMarkup(selection, batch) {
+  if (!batch.choices.length) return "";
+
+  return `<div class="choice-controls">${batch.choices.map(choice => {
+    const selected = selection.choiceSelections?.[choice.id] || choice.defaultOptionId || "";
+    const emptyOption = choice.required ? "" : `<option value="">Not selected</option>`;
+    const options = choice.options.map(option => `
+      <option value="${escapeHtml(option.id)}" ${option.id === selected ? "selected" : ""}>${escapeHtml(option.label)}</option>
+    `).join("");
+
+    return `
+      <label class="field-label">
+        <span>${escapeHtml(choice.label)}${choice.required || /optional/i.test(choice.label) ? "" : " (optional)"}</span>
+        <select class="choice-select" data-recipe-id="${escapeHtml(selection.recipeId)}" data-choice-id="${escapeHtml(choice.id)}">
+          ${emptyOption}${options}
+        </select>
+      </label>
+    `;
+  }).join("")}</div>`;
 }
 
 function renderPlan() {
-  const plan = getSelectedPlan();
-  const lookup = recipeById();
-  const mealTicks = getStoredObject(STORAGE_KEYS.mealTicks);
   const summary = document.getElementById("planSummary");
-  const list = document.getElementById("mealList");
+  const weekList = document.getElementById("weekList");
 
-  if (!plan) {
-    summary.innerHTML = `<div class="card empty">No plan selected.</div>`;
-    list.innerHTML = "";
-    return;
+  if (!currentWeek.selections.length) {
+    summary.textContent = "No recipes selected yet.";
+    weekList.innerHTML = `<div class="card empty">Add recipes below to build this week.</div>`;
+  } else {
+    const totals = currentWeek.selections.reduce((result, selection) => {
+      const { batch } = getSelectedRecipeData(selection);
+      result.min += batch.yield.min;
+      result.max += batch.yield.max;
+      return result;
+    }, { min: 0, max: 0 });
+    const portions = totals.min === totals.max ? totals.min : `${totals.min}–${totals.max}`;
+    summary.textContent = `${currentWeek.selections.length} recipe${currentWeek.selections.length === 1 ? "" : "s"} · about ${portions} portions`;
+
+    weekList.innerHTML = currentWeek.selections.map(selection => {
+      const { recipe, batch } = getSelectedRecipeData(selection);
+      return `
+        <article class="card plan-item">
+          <div class="section-heading">
+            <div>
+              <h3>${escapeHtml(recipe.title)}</h3>
+              <p class="meta">${escapeHtml(recipe.group)} · ${escapeHtml(batch.label)} · ${escapeHtml(formatYield(batch))}</p>
+            </div>
+            <button class="ghost small" type="button" data-action="remove-recipe" data-recipe-id="${escapeHtml(recipe.id)}">Remove</button>
+          </div>
+          ${recipe.batchOptions.length > 1
+            ? batchSelectMarkup(recipe, batch.id, "plan-batch-select", "Change batch")
+            : `<p class="batch-label"><strong>${escapeHtml(batch.label)}</strong> · ${escapeHtml(formatYield(batch))}</p>`}
+          ${choiceControlsMarkup(selection, batch)}
+          ${storageMarkup(batch)}
+        </article>
+      `;
+    }).join("");
   }
 
-  const mealKeys = plan.days.map(day => `${plan.id}:${day.day}:${day.meal}`);
-  const completedCount = mealKeys.filter(key => mealTicks[key]).length;
-  const progressPercent = plan.days.length ? Math.round((completedCount / plan.days.length) * 100) : 0;
-  const nextUntickedIndex = plan.days.findIndex(day => !mealTicks[`${plan.id}:${day.day}:${day.meal}`]);
+  renderPlanRecipeBrowser();
+}
 
-  const fillers = plan.fillers?.length
-    ? `<h3>Fillers</h3><ul class="filler-list">${plan.fillers.map(filler => `<li>${filler}</li>`).join("")}</ul>`
-    : "";
+function recipeSearchBlob(recipe) {
+  const ingredientNames = recipe.batchOptions.flatMap(batch => [
+    ...batch.ingredients,
+    ...batch.choices.flatMap(choice => choice.options.flatMap(option => option.ingredients))
+  ]).map(reference => ingredientsById[reference.ingredientId]?.name || reference.ingredientId);
 
-  summary.innerHTML = `
-    <div class="card">
-      <h2>${plan.title}</h2>
-      <span class="plan-kind">${plan.days.length}-day plan</span>
-      <p>${plan.days.length} planned food pack days.</p>
-      <div class="progress-wrap" aria-label="Food pack progress">
-        <div class="progress-text">Food pack progress: ${completedCount} / ${plan.days.length} food packs (${progressPercent}%)</div>
-        <div class="progress-track"><div class="progress-fill" style="width:${progressPercent}%"></div></div>
-      </div>
-      ${nextUntickedIndex >= 0 ? `<p class="next-meal-note">Next food pack: ${lookup[plan.days[nextUntickedIndex].meal]?.title || plan.days[nextUntickedIndex].meal}</p>` : `<p class="next-meal-note">All planned food packs ticked off.</p>`}
-      ${plan.notes ? `
-        <div class="prep-notes">
-          <strong>Prep notes</strong>
-          <p class="meta">${plan.notes}</p>
-        </div>
-      ` : ""}
-      ${fillers}
-    </div>
-  `;
+  return [recipe.title, recipe.group, ...(recipe.tags || []), ...ingredientNames].join(" ").toLowerCase();
+}
 
-  list.innerHTML = plan.days.map((day, index) => {
-    const recipe = lookup[day.meal];
-    if (!recipe) {
-      return `<div class="card">Missing recipe: ${day.meal}</div>`;
-    }
+function matchesSearch(recipe, query) {
+  const tokens = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  if (!tokens.length) return true;
+  const searchable = recipeSearchBlob(recipe);
+  return tokens.every(token => searchable.includes(token));
+}
 
-    const tickKey = `${plan.id}:${day.day}:${recipe.id}`;
-    const checked = mealTicks[tickKey] ? "checked" : "";
-    const nextClass = index === nextUntickedIndex ? " next-meal" : "";
-    const hasLighterIdeas = recipe.tags?.includes("lighter-ideas");
-
-    return `
-      <article class="card meal-card${nextClass}">
-        <input class="checkbox meal-check" type="checkbox" ${checked} data-key="${tickKey}" aria-label="Mark ${recipe.title} as prepared">
-        <div>
-          <p class="meta">${day.day}</p>
-          <h3 class="meal-title">${recipe.title}</h3>
-          <p class="meta">${recipe.servings || 1} portion${recipe.servings === 1 ? "" : "s"} · ${recipe.group || "Recipe"}</p>
-          <p class="pack-note">${(recipe.servings || 1) >= 2 ? "2+ portions → lunch + dinner." : "1 portion → add side or combine."}</p>
-          ${hasLighterIdeas ? `<span class="tag light-tag">🌿 Lighter ideas</span>` : ""}
-
-          <button class="details-toggle plan-details-toggle" type="button" data-target="plan-details-${plan.id}-${index}" aria-expanded="false">Details</button>
-
-          <div id="plan-details-${plan.id}-${index}" class="recipe-details-panel hidden">
-            <section class="recipe-detail-block">
-              <h4>Ingredients</h4>
-              <ul>
-                ${recipe.ingredients
-                  .filter(ingredient => typeof shouldSkipIngredient === "function" ? !shouldSkipIngredient(ingredient) : true)
-                  .map(ingredient => `
-                    <li>${formatQuantity(ingredient.quantity)} ${ingredient.unit || ""} ${ingredient.item}${ingredient.optional ? " (optional)" : ""}</li>
-                  `).join("")}
-              </ul>
-            </section>
-
-            <section class="recipe-detail-block">
-              <h4>Steps</h4>
-              <ol class="steps">
-                ${recipe.steps.map(step => `<li>${step}</li>`).join("")}
-              </ol>
-            </section>
-
-            ${recipe.notes?.length ? `
-              <section class="recipe-detail-block">
-                <h4>Notes</h4>
-                <ul>
-                  ${recipe.notes.map(note => `<li>${note}</li>`).join("")}
-                </ul>
-              </section>
-            ` : ""}
-          </div>
-        </div>
-      </article>
+function addRecipeCardMarkup(recipe, source) {
+  const selection = getSelection(recipe.id);
+  const defaultBatch = recipe.batchOptions[0];
+  const control = selection
+    ? `<button class="secondary in-plan-button" type="button" data-action="view-plan">In this week's plan</button>`
+    : `
+      ${recipe.batchOptions.length > 1 ? batchSelectMarkup(recipe, defaultBatch.id, "add-batch-select") : ""}
+      <button type="button" data-action="add-recipe" data-recipe-id="${escapeHtml(recipe.id)}" data-source="${escapeHtml(source)}">
+        Add to week${recipe.batchOptions.length === 1 ? ` · ${escapeHtml(defaultBatch.label)}` : ""}
+      </button>
     `;
-  }).join("");
 
-  document.querySelectorAll(".meal-check").forEach(input => {
-    input.addEventListener("change", event => {
-      const ticks = getStoredObject(STORAGE_KEYS.mealTicks);
-      ticks[event.target.dataset.key] = event.target.checked;
-      setStoredObject(STORAGE_KEYS.mealTicks, ticks);
-      renderPlan();
+  return `
+    <article class="card recipe-card" data-recipe-card="${escapeHtml(recipe.id)}">
+      <div class="section-heading">
+        <div>
+          <h3>${escapeHtml(recipe.title)}</h3>
+          <p class="meta">${escapeHtml(recipe.group)} · ${recipe.batchOptions.length} batch option${recipe.batchOptions.length === 1 ? "" : "s"}</p>
+        </div>
+        ${recipe.trial ? `<span class="tag trial-tag">Trial</span>` : ""}
+      </div>
+      <div class="tags">${recipe.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
+      <div class="recipe-action">${control}</div>
+      ${recipeDetailsMarkup(recipe)}
+    </article>
+  `;
+}
+
+function renderPlanRecipeBrowser() {
+  const query = document.getElementById("planRecipeSearch").value;
+  const group = document.getElementById("planGroupFilter").value;
+  const filtered = recipes.filter(recipe =>
+    matchesSearch(recipe, query) && (group === "all" || recipe.group === group)
+  );
+
+  document.getElementById("planRecipeList").innerHTML = filtered
+    .map(recipe => addRecipeCardMarkup(recipe, "plan"))
+    .join("") || `<div class="card empty">No recipes found.</div>`;
+}
+
+function recipeDetailsMarkup(recipe) {
+  return `
+    <details class="recipe-details">
+      <summary>Recipe details</summary>
+      ${recipe.batchOptions.map(batch => `
+        <section class="recipe-detail-block">
+          <h4>${escapeHtml(batch.label)} · ${escapeHtml(formatYield(batch))}</h4>
+          ${storageMarkup(batch)}
+          <h5>Ingredients</h5>
+          <ul>${batch.ingredients.map(ingredientLineMarkup).join("")}</ul>
+          ${batch.choices.map(choice => `
+            <div class="choice-description">
+              <h5>${escapeHtml(choice.label)}${choice.required || /optional/i.test(choice.label) ? "" : " (optional)"}</h5>
+              ${choice.options.map(option => `
+                <p><strong>${escapeHtml(option.label)}:</strong> ${option.ingredients.map(item => escapeHtml(item.display)).join(", ")}</p>
+              `).join("")}
+            </div>
+          `).join("")}
+          ${(batch.notes || []).length ? `<h5>Batch notes</h5><ul>${batch.notes.map(note => `<li>${escapeHtml(note)}</li>`).join("")}</ul>` : ""}
+        </section>
+      `).join("")}
+      <section class="recipe-detail-block">
+        <h4>Steps</h4>
+        <ol class="steps">${recipe.steps.map(step => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
+      </section>
+      ${recipe.notes.length ? `<section class="recipe-detail-block"><h4>Notes</h4><ul>${recipe.notes.map(note => `<li>${escapeHtml(note)}</li>`).join("")}</ul></section>` : ""}
+    </details>
+  `;
+}
+
+function ingredientLineMarkup(reference) {
+  const needsOptionalLabel = reference.status === "optional" && !/optional|if using|if needed|to taste/i.test(reference.display);
+  return `<li>${escapeHtml(reference.display)}${needsOptionalLabel ? ` <span class="optional-label">Optional</span>` : ""}</li>`;
+}
+
+function collectShoppingEntries() {
+  const entries = new Map();
+
+  currentWeek.selections.forEach(selection => {
+    const { recipe } = getSelectedRecipeData(selection);
+    getBatchIngredientGroups(selection).forEach(group => {
+      group.ingredients.forEach(reference => {
+        const ingredient = ingredientsById[reference.ingredientId];
+        if (!ingredient?.shopping || reference.shoppingBehaviour === "leftover") return;
+
+        if (!entries.has(ingredient.id)) {
+          entries.set(ingredient.id, {
+            ingredient,
+            requiredAmount: 0,
+            optionalAmount: 0,
+            requiredPresence: false,
+            optionalPresence: false,
+            requiredSources: new Set(),
+            optionalSources: new Set(),
+            preferredPackIds: new Set()
+          });
+        }
+
+        const entry = entries.get(ingredient.id);
+        const isOptional = reference.status === "optional";
+        const amountKey = isOptional ? "optionalAmount" : "requiredAmount";
+        const presenceKey = isOptional ? "optionalPresence" : "requiredPresence";
+        const sources = isOptional ? entry.optionalSources : entry.requiredSources;
+
+        if (ingredient.aggregation.mode === "sum" && typeof reference.amount === "number") {
+          entry[amountKey] += reference.amount;
+        } else {
+          entry[presenceKey] = true;
+        }
+
+        sources.add(recipe.title);
+        if (reference.preferredPackId) entry.preferredPackIds.add(reference.preferredPackId);
+      });
     });
   });
+
+  return [...entries.values()].sort((a, b) => {
+    const categoryDifference = categoryRank(a.ingredient.category) - categoryRank(b.ingredient.category);
+    return categoryDifference || a.ingredient.name.localeCompare(b.ingredient.name);
+  });
+}
+
+function optimisePacks(requiredAmount, packs, preferredPackIds) {
+  if (!packs.length || requiredAmount <= 0) return null;
+  const smallest = Math.min(...packs.map(pack => pack.amount));
+  const maxCount = Math.ceil(requiredAmount / smallest) + 1;
+  let best = null;
+
+  function search(index, counts, totalAmount, totalCount, preferredCount) {
+    if (index === packs.length) {
+      if (totalAmount < requiredAmount || totalCount === 0) return;
+      const candidate = {
+        counts: [...counts],
+        excess: totalAmount - requiredAmount,
+        totalCount,
+        preferredCount
+      };
+      if (!best || candidate.excess < best.excess ||
+        (candidate.excess === best.excess && candidate.totalCount < best.totalCount) ||
+        (candidate.excess === best.excess && candidate.totalCount === best.totalCount && candidate.preferredCount > best.preferredCount)) {
+        best = candidate;
+      }
+      return;
+    }
+
+    for (let count = 0; count <= maxCount; count += 1) {
+      counts[index] = count;
+      search(
+        index + 1,
+        counts,
+        totalAmount + (packs[index].amount * count),
+        totalCount + count,
+        preferredCount + (preferredPackIds.has(packs[index].id) || packs[index].preferred ? count : 0)
+      );
+    }
+  }
+
+  search(0, Array(packs.length).fill(0), 0, 0, 0);
+  return best;
+}
+
+function packRecommendation(entry, amount = entry.requiredAmount) {
+  const packs = entry.ingredient.packs || [];
+  const unit = entry.ingredient.aggregation.unit;
+  const compatiblePacks = packs.filter(pack =>
+    typeof pack.amount === "number" && pack.unit === unit
+  );
+
+  if (entry.ingredient.aggregation.mode === "sum" && amount > 0 && compatiblePacks.length) {
+    const result = optimisePacks(amount, compatiblePacks, entry.preferredPackIds);
+    if (result) {
+      const parts = result.counts
+        .map((count, index) => count ? `${count} × ${compatiblePacks[index].label}` : "")
+        .filter(Boolean);
+      return `Buy ${parts.join(" + ")}`;
+    }
+  }
+
+  const preferred = packs.find(pack => entry.preferredPackIds.has(pack.id)) || packs.find(pack => pack.preferred);
+  return preferred ? `Suggested pack: ${preferred.label}` : "";
+}
+
+function entryHasRequired(entry) {
+  return entry.requiredAmount > 0 || entry.requiredPresence;
+}
+
+function shoppingRequirementMarkup(entry) {
+  const unit = entry.ingredient.aggregation.unit;
+  const required = entry.requiredAmount > 0
+    ? `${formatAmount(entry.requiredAmount, unit)} required`
+    : entry.requiredPresence ? "Required" : "";
+  const optional = entry.optionalAmount > 0
+    ? `${formatAmount(entry.optionalAmount, unit)} optional`
+    : entry.optionalPresence ? "Optional" : "";
+  const optionalSources = [...entry.optionalSources];
+
+  return `
+    ${required ? `<span>${escapeHtml(required)}</span>` : ""}
+    ${optional && !required ? `<span>${escapeHtml(optional)}</span>` : ""}
+    ${optionalSources.length ? `<small class="meta">Optional for ${escapeHtml(optionalSources.join(", "))}</small>` : ""}
+  `;
+}
+
+function shoppingEntryMarkup(entry, section) {
+  const ingredientId = entry.ingredient.id;
+  const bought = currentWeek.boughtIngredientIds.includes(ingredientId);
+  const amountForPack = entryHasRequired(entry) ? entry.requiredAmount : entry.optionalAmount;
+  const pack = packRecommendation(entry, amountForPack);
+  const sourceSet = new Set([...entry.requiredSources, ...entry.optionalSources]);
+
+  return `
+    <div class="shopping-item ${section === "home" ? "home-item" : ""} ${bought ? "done" : ""}">
+      ${section === "home" ? "" : `<input class="checkbox bought-check" type="checkbox" data-ingredient-id="${escapeHtml(ingredientId)}" ${bought ? "checked" : ""} aria-label="Mark ${escapeHtml(entry.ingredient.name)} as bought">`}
+      <div class="shopping-item-copy">
+        <strong>${escapeHtml(entry.ingredient.name)}</strong>
+        <div class="requirement-line">${shoppingRequirementMarkup(entry)}</div>
+        ${pack && section !== "home" ? `<small class="pack-recommendation">${escapeHtml(pack)}</small>` : ""}
+        <small class="meta">Used in: ${escapeHtml([...sourceSet].join(", "))}</small>
+      </div>
+      <button class="ghost small stock-button" type="button" data-action="${section === "home" ? "remove-home" : "mark-home"}" data-ingredient-id="${escapeHtml(ingredientId)}">
+        ${section === "home" ? "Need to buy" : "At home"}
+      </button>
+    </div>
+  `;
+}
+
+function shoppingSectionMarkup(title, items, section, emptyText) {
+  const groups = groupByCategory(items);
+  return `
+    <section class="shopping-section" aria-labelledby="${section}-heading">
+      <h2 id="${section}-heading" class="shopping-section-title">${escapeHtml(title)} <span>${items.length}</span></h2>
+      ${items.length ? orderedCategoryEntries(groups).map(([category, categoryItems]) => `
+        <section class="card shopping-category">
+          <h3 class="category-title">${escapeHtml(category)}</h3>
+          ${categoryItems.map(item => shoppingEntryMarkup(item, section)).join("")}
+        </section>
+      `).join("") : `<div class="card empty">${escapeHtml(emptyText)}</div>`}
+    </section>
+  `;
 }
 
 function renderShoppingList() {
-  const plan = getSelectedPlan();
-  const shoppingTicks = getStoredObject(STORAGE_KEYS.shoppingTicks);
+  const allEntries = collectShoppingEntries();
+  const atHomeIds = new Set(atHome.ingredientIds);
+  const boughtIds = new Set(currentWeek.boughtIngredientIds);
   const hideBought = localStorage.getItem(STORAGE_KEYS.hideBought) === "true";
-  const container = document.getElementById("shoppingList");
 
-  if (!plan) {
-    container.innerHTML = `<div class="card empty">Choose a plan first.</div>`;
-    return;
-  }
+  const atHomeItems = allEntries.filter(entry => atHomeIds.has(entry.ingredient.id));
+  const toBuyAll = allEntries.filter(entry => !atHomeIds.has(entry.ingredient.id) && entryHasRequired(entry));
+  const optionalAll = allEntries.filter(entry => !atHomeIds.has(entry.ingredient.id) && !entryHasRequired(entry));
+  const toBuy = hideBought ? toBuyAll.filter(entry => !boughtIds.has(entry.ingredient.id)) : toBuyAll;
+  const optional = hideBought ? optionalAll.filter(entry => !boughtIds.has(entry.ingredient.id)) : optionalAll;
+  const shoppingCount = toBuyAll.length + optionalAll.length;
+  const boughtCount = [...toBuyAll, ...optionalAll].filter(entry => boughtIds.has(entry.ingredient.id)).length;
 
-  const allItems = buildShoppingList(plan);
-  const visibleItems = hideBought
-    ? allItems.filter(item => !shoppingTicks[shoppingItemKey(plan, item)])
-    : allItems;
-  const groups = groupByCategory(visibleItems);
+  document.getElementById("shoppingStatus").textContent = currentWeek.selections.length
+    ? `Bought ${boughtCount} of ${shoppingCount} · ${atHomeItems.length} at home`
+    : "Build this week's plan to create a list.";
 
-  const totalCount = allItems.length;
-  const boughtCount = allItems.filter(item => shoppingTicks[shoppingItemKey(plan, item)]).length;
-  const status = document.getElementById("shoppingStatus");
-  if (status) status.textContent = `Bought: ${boughtCount} / ${totalCount}`;
+  document.getElementById("shoppingList").innerHTML = currentWeek.selections.length
+    ? [
+        shoppingSectionMarkup("To buy", toBuy, "buy", hideBought && toBuyAll.length ? "All required items are bought." : "Nothing required to buy."),
+        shoppingSectionMarkup("At home", atHomeItems, "home", "No required items are marked At home."),
+        shoppingSectionMarkup("Optional", optional, "optional", hideBought && optionalAll.length ? "All optional items are bought." : "No optional items this week.")
+      ].join("")
+    : `<div class="card empty">Add recipes in Plan to build the shopping list.</div>`;
+}
 
-  container.innerHTML = orderedCategoryEntries(groups).map(([category, groupItems]) => `
-    <section class="card">
-      <h3 class="category-title">${category}</h3>
-      ${groupItems.map(item => {
-        const key = shoppingItemKey(plan, item);
-        const checked = shoppingTicks[key] ? "checked" : "";
-        const doneClass = shoppingTicks[key] ? "done" : "";
-        const sources = [...new Set(item.sources)].slice(0, 3).join(", ");
-        return `
-          <label class="shopping-item ${doneClass}">
-            <input class="checkbox shopping-check" type="checkbox" ${checked} data-key="${key}">
-            <span>
-              <strong>${displayIngredientLine(item)}</strong>
-              <br><small class="meta">Used in: ${sources}${item.sources.length > 3 ? "..." : ""}</small>
-            </span>
-          </label>
-        `;
-      }).join("")}
-    </section>
-  `).join("") || `<div class="card empty">All shopping items are ticked off.</div>`;
-
-  document.querySelectorAll(".shopping-check").forEach(input => {
-    input.addEventListener("change", event => {
-      const ticks = getStoredObject(STORAGE_KEYS.shoppingTicks);
-      ticks[event.target.dataset.key] = event.target.checked;
-      setStoredObject(STORAGE_KEYS.shoppingTicks, ticks);
-      renderShoppingList();
-    });
-  });
+function shoppingTextLine(entry) {
+  const container = document.createElement("div");
+  container.innerHTML = shoppingRequirementMarkup(entry);
+  const requirement = container.textContent.trim();
+  const pack = packRecommendation(entry, entryHasRequired(entry) ? entry.requiredAmount : entry.optionalAmount);
+  return `- ${entry.ingredient.name}${requirement ? ` — ${requirement}` : ""}${pack ? ` (${pack})` : ""}`;
 }
 
 function buildShoppingListText() {
-  const plan = getSelectedPlan();
-  if (!plan) return "";
+  const atHomeIds = new Set(atHome.ingredientIds);
+  const entries = collectShoppingEntries().filter(entry => !atHomeIds.has(entry.ingredient.id));
+  const required = entries.filter(entryHasRequired);
+  const optional = entries.filter(entry => !entryHasRequired(entry));
+  const lines = ["THIS WEEK", "", "TO BUY"];
 
-  const items = buildShoppingList(plan);
-  const groups = groupByCategory(items);
-  const lines = [plan.title.toUpperCase(), ""];
-
-  orderedCategoryEntries(groups).forEach(([category, groupItems]) => {
-    lines.push(category.toUpperCase());
-    groupItems.forEach(item => lines.push(`- ${displayIngredientLine(item)}`));
-    lines.push("");
-  });
-
+  required.forEach(entry => lines.push(shoppingTextLine(entry)));
+  lines.push("", "OPTIONAL");
+  optional.forEach(entry => lines.push(shoppingTextLine(entry)));
   return lines.join("\n").trim();
 }
 
 async function copyShoppingList() {
-  const text = buildShoppingListText();
-  if (!text) return;
-
+  if (!currentWeek.selections.length) return;
   try {
-    await navigator.clipboard.writeText(text);
+    await navigator.clipboard.writeText(buildShoppingListText());
     showCopyStatus("Copied");
   } catch {
     showCopyStatus("Copy failed");
@@ -434,312 +697,75 @@ async function copyShoppingList() {
 
 function showCopyStatus(message) {
   const status = document.getElementById("copyStatus");
-  if (!status) return;
   status.textContent = message;
   window.setTimeout(() => { status.textContent = ""; }, 1800);
 }
 
+function renderCook() {
+  const cookedCount = currentWeek.selections.filter(selection => selection.cooked).length;
+  document.getElementById("cookSummary").textContent = currentWeek.selections.length
+    ? `${cookedCount} of ${currentWeek.selections.length} cooking occasion${currentWeek.selections.length === 1 ? "" : "s"} completed.`
+    : "Only recipes in this week's plan appear here.";
 
-const RECIPE_FILTERS = [
-  { key: "all", label: "All" },
-  { key: "light", label: "Light" },
-  { key: "chicken", label: "Chicken" },
-  { key: "turkey", label: "Turkey" },
-  { key: "fish", label: "Fish" },
-  { key: "egg", label: "Eggs" },
-  { key: "vegetarian", label: "Vegetarian" },
-  { key: "no-cook", label: "No-cook" },
-  { key: "quick", label: "Quick" }
-];
-
-function recipeMatchesFilter(recipe, filterKey) {
-  if (filterKey === "all") return true;
-
-  const searchable = [
-    recipe.title,
-    recipe.group,
-    ...(recipe.tags || [])
-  ].join(" ").toLowerCase();
-
-  if (filterKey === "fish") {
-    return searchable.includes("fish") || searchable.includes("tuna") || searchable.includes("salmon") || searchable.includes("sardine");
-  }
-
-  if (filterKey === "egg") {
-    return searchable.includes("egg");
-  }
-
-  return searchable.includes(filterKey);
+  document.getElementById("cookList").innerHTML = currentWeek.selections.length
+    ? currentWeek.selections.map(selection => {
+        const { recipe, batch } = getSelectedRecipeData(selection);
+        const ingredientGroups = getBatchIngredientGroups(selection);
+        return `
+          <article class="card cook-card ${selection.cooked ? "cooked" : ""}">
+            <div class="section-heading">
+              <div>
+                <h2>${escapeHtml(recipe.title)}</h2>
+                <p class="meta">${escapeHtml(batch.label)} · ${escapeHtml(formatYield(batch))}</p>
+              </div>
+              <label class="cook-toggle">
+                <input class="checkbox cooked-check" type="checkbox" data-recipe-id="${escapeHtml(recipe.id)}" ${selection.cooked ? "checked" : ""}>
+                <span>${selection.cooked ? "Cooked" : "Mark cooked"}</span>
+              </label>
+            </div>
+            ${storageMarkup(batch)}
+            ${ingredientGroups.map(group => `
+              <section class="recipe-detail-block">
+                <h3>${escapeHtml(group.label)}</h3>
+                <ul>${group.ingredients.map(ingredientLineMarkup).join("")}</ul>
+              </section>
+            `).join("")}
+            <section class="recipe-detail-block">
+              <h3>Steps</h3>
+              <ol class="steps">${recipe.steps.map(step => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
+            </section>
+            ${(batch.notes || []).length || recipe.notes.length ? `
+              <section class="recipe-detail-block">
+                <h3>Notes</h3>
+                <ul>${[...(batch.notes || []), ...recipe.notes].map(note => `<li>${escapeHtml(note)}</li>`).join("")}</ul>
+              </section>
+            ` : ""}
+          </article>
+        `;
+      }).join("")
+    : `<div class="card empty">Add recipes in Plan before you start cooking.</div>`;
 }
 
 function renderRecipeFilters() {
-  const container = document.getElementById("recipeFilters");
-  if (!container) return;
-
-  container.innerHTML = RECIPE_FILTERS.map(filter => `
-    <button class="filter-chip ${activeRecipeFilter === filter.key ? "active" : ""}" data-filter="${filter.key}">
-      ${filter.label}
+  const groups = ["all", ...new Set(recipes.map(recipe => recipe.group))];
+  document.getElementById("recipeFilters").innerHTML = groups.map(group => `
+    <button class="filter-chip ${activeRecipeFilter === group ? "active" : ""}" type="button" data-action="filter-recipes" data-filter="${escapeHtml(group)}">
+      ${escapeHtml(group === "all" ? "All" : group)}
     </button>
   `).join("");
-
-  container.querySelectorAll(".filter-chip").forEach(button => {
-    button.addEventListener("click", () => {
-      activeRecipeFilter = button.dataset.filter;
-      renderRecipes();
-    });
-  });
 }
 
 function renderRecipes() {
   renderRecipeFilters();
+  const query = document.getElementById("recipeSearch").value;
+  const filtered = recipes.filter(recipe =>
+    matchesSearch(recipe, query) && (activeRecipeFilter === "all" || recipe.group === activeRecipeFilter)
+  );
 
-  const query = document.getElementById("recipeSearch").value.trim().toLowerCase();
-  const filtered = recipes.filter(recipe => {
-    const blob = [
-      recipe.title,
-      recipe.group,
-      ...(recipe.tags || []),
-      ...(recipe.ingredients || []).map(i => i.item)
-    ].join(" ").toLowerCase();
-
-    return blob.includes(query) && recipeMatchesFilter(recipe, activeRecipeFilter);
-  });
-
-  const container = document.getElementById("recipeList");
-
-  container.innerHTML = filtered.map(recipe => {
-    const usedIn = typeof findPlansUsingRecipe === "function" ? findPlansUsingRecipe(recipe.id) : [];
-    return `
-      <article class="card recipe-card">
-        <h3>${recipe.title}</h3>
-        <p>${recipe.servings || 1} portion${recipe.servings === 1 ? "" : "s"} · ${recipe.group || "Recipe"}</p>
-        <p class="pack-note">${(recipe.servings || 1) >= 2 ? "2+ portions → lunch + dinner." : "1 portion → add side or combine."}</p>
-        ${usedIn.length ? `<p class="meta">Used in: ${usedIn.slice(0, 3).join(", ")}${usedIn.length > 3 ? "..." : ""}</p>` : ""}
-        <div class="tags">${(recipe.tags || []).includes("lighter-ideas") ? `<span class="tag light-tag">🌿 Lighter ideas</span>` : ""}${(recipe.tags || []).filter(tag => tag !== "lighter-ideas").slice(0, 6).map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
-
-        <button class="details-toggle" type="button" data-target="recipe-details-${recipe.id}" aria-expanded="false">Details</button>
-
-        <div id="recipe-details-${recipe.id}" class="recipe-details-panel hidden">
-          <section class="recipe-detail-block">
-            <h4>Ingredients</h4>
-            <ul>
-              ${recipe.ingredients
-                .filter(ingredient => typeof shouldSkipIngredient === "function" ? !shouldSkipIngredient(ingredient) : true)
-                .map(ingredient => `
-                  <li>${formatQuantity(ingredient.quantity)} ${ingredient.unit || ""} ${ingredient.item}${ingredient.optional ? " (optional)" : ""}</li>
-                `).join("")}
-            </ul>
-          </section>
-
-          <section class="recipe-detail-block">
-            <h4>Steps</h4>
-            <ol class="steps">
-              ${recipe.steps.map(step => `<li>${step}</li>`).join("")}
-            </ol>
-          </section>
-
-          ${recipe.notes?.length ? `
-            <section class="recipe-detail-block">
-              <h4>Notes</h4>
-              <ul>
-                ${recipe.notes.map(note => `<li>${note}</li>`).join("")}
-              </ul>
-            </section>
-          ` : ""}
-        </div>
-      </article>
-    `;
-  }).join("") || `<div class="card empty">No recipes found.</div>`;
+  document.getElementById("recipeList").innerHTML = filtered
+    .map(recipe => addRecipeCardMarkup(recipe, "recipes"))
+    .join("") || `<div class="card empty">No recipes found.</div>`;
 }
-
-
-function classifyRecipe(recipe) {
-  const group = (recipe.group || "").toLowerCase();
-  const tags = (recipe.tags || []).join(" ").toLowerCase();
-  const title = (recipe.title || "").toLowerCase();
-
-  if (group.includes("chicken") || tags.includes("chicken") || title.includes("chicken")) return "chicken";
-  if (group.includes("turkey") || tags.includes("turkey") || title.includes("turkey")) return "turkey";
-  if (group.includes("fish") || tags.includes("tuna") || tags.includes("salmon") || title.includes("tuna") || title.includes("fish") || title.includes("salmon")) return "fish";
-  return "vegetarian";
-}
-
-function scoreCandidate(recipe, selected, targetCounts) {
-  const type = classifyRecipe(recipe);
-  const selectedTypes = selected.map(classifyRecipe);
-  let score = 0;
-
-  score += (targetCounts[type] || 0) * 10;
-  score -= selectedTypes.filter(t => t === type).length * 6;
-
-  const lastType = selectedTypes[selectedTypes.length - 1];
-  if (lastType && lastType === type) score -= 4;
-
-  if ((recipe.servings || 1) >= 2) score += 8;
-  if ((recipe.tags || []).includes("meal-prep")) score += 3;
-  if ((recipe.tags || []).includes("budget")) score += 2;
-  if ((recipe.tags || []).includes("quick")) score += 1;
-  if ((recipe.tags || []).includes("light")) score += 1;
-
-  return score;
-}
-
-function buildBalancedPlan(dayCount, mustHaveIds) {
-  const lookup = recipeById();
-  const selected = [];
-
-  mustHaveIds.filter(Boolean).forEach(id => {
-    const recipe = lookup[id];
-    if (recipe && !selected.some(item => item.id === recipe.id)) selected.push(recipe);
-  });
-
-  const targetCounts = dayCount === 5
-    ? { chicken: 2, turkey: 1, fish: 1, vegetarian: 1 }
-    : { chicken: 2, turkey: 1, fish: 1, vegetarian: 2 };
-
-  while (selected.length < dayCount) {
-    const candidates = recipes.filter(recipe => !selected.some(item => item.id === recipe.id));
-    if (!candidates.length) break;
-
-    const selectedTypeCounts = selected.reduce((acc, recipe) => {
-      const type = classifyRecipe(recipe);
-      acc[type] = (acc[type] || 0) + 1;
-      return acc;
-    }, {});
-
-    const remainingTargets = { ...targetCounts };
-    Object.keys(selectedTypeCounts).forEach(type => {
-      remainingTargets[type] = Math.max(0, (remainingTargets[type] || 0) - selectedTypeCounts[type]);
-    });
-
-    candidates.sort((a, b) => scoreCandidate(b, selected, remainingTargets) - scoreCandidate(a, selected, remainingTargets));
-    selected.push(candidates[0]);
-  }
-
-  const ordered = orderGeneratedRecipes(selected);
-
-  return {
-    id: `generated_plan_${Date.now()}`,
-    title: `Generated ${dayCount}-Day Food Pack Plan`,
-    generated: true,
-    days: ordered.slice(0, dayCount).map((recipe, index) => ({
-      day: `Day ${index + 1}`,
-      meal: recipe.id
-    })),
-    notes: "Generated locally on this device. Designed as daily food packs: prepare the evening before and pack lunch + dinner where portions allow. Fresh meat and fish are placed earlier where possible."
-  };
-}
-
-function orderGeneratedRecipes(selected) {
-  const priority = recipe => {
-    const type = classifyRecipe(recipe);
-    if (type === "fish") return 1;
-    if (type === "chicken") return 2;
-    if (type === "turkey") return 3;
-    return 4;
-  };
-
-  return [...selected].sort((a, b) => priority(a) - priority(b));
-}
-
-function populateBuilderRecipeSelects() {
-  const options = recipes
-    .slice()
-    .sort((a, b) => a.title.localeCompare(b.title))
-    .map(recipe => `<option value="${recipe.id}">${recipe.title}</option>`)
-    .join("");
-
-  ["mustHaveOne", "mustHaveTwo", "mustHaveThree"].forEach(id => {
-    const select = document.getElementById(id);
-    const current = select.value;
-    select.innerHTML = `<option value="">No preference</option>${options}`;
-    select.value = current;
-  });
-}
-
-function renderGeneratedPlanPreview(plan) {
-  const lookup = recipeById();
-  const container = document.getElementById("generatedPlanPreview");
-
-  if (!plan) {
-    container.innerHTML = "";
-    return;
-  }
-
-  container.innerHTML = `
-    <div class="card">
-      <h2>${plan.title}</h2>
-      <span class="plan-kind">${plan.days.length}-day plan</span>
-      <p class="meta">${plan.notes}</p>
-    </div>
-    ${plan.days.map(day => {
-      const recipe = lookup[day.meal];
-      return `
-        <article class="card preview-meal">
-          <p class="meta">${day.day}</p>
-          <h3>${recipe?.title || day.meal}</h3>
-          <p class="meta">${recipe ? `${recipe.servings || 1} portion${recipe.servings === 1 ? "" : "s"} · ${recipe.group || "Recipe"}` : ""}</p>
-          <div class="tags">${(recipe?.tags || []).slice(0, 5).map(tag => `<span class="tag">${tag}</span>`).join("")}</div>
-        </article>
-      `;
-    }).join("")}
-  `;
-}
-
-let pendingGeneratedPlan = null;
-
-function generateQuickPlan() {
-  const dayCount = Number(document.getElementById("builderDays").value);
-  const mustHaveIds = [
-    document.getElementById("mustHaveOne").value,
-    document.getElementById("mustHaveTwo").value,
-    document.getElementById("mustHaveThree").value
-  ].filter(Boolean);
-
-  if (mustHaveIds.length !== new Set(mustHaveIds).size) {
-    document.getElementById("builderMessage").textContent = "Choose different must-have recipes, or leave one or more blank.";
-    pendingGeneratedPlan = null;
-    renderGeneratedPlanPreview(null);
-    document.getElementById("useGeneratedPlanBtn").disabled = true;
-    return;
-  }
-
-  pendingGeneratedPlan = buildBalancedPlan(dayCount, mustHaveIds);
-  renderGeneratedPlanPreview(pendingGeneratedPlan);
-  document.getElementById("useGeneratedPlanBtn").disabled = false;
-  document.getElementById("builderMessage").textContent = "Plan generated. Review it, then use it if it looks right.";
-}
-
-function useGeneratedPlan() {
-  if (!pendingGeneratedPlan) return;
-
-  localStorage.setItem(STORAGE_KEYS.generatedPlan, JSON.stringify(pendingGeneratedPlan));
-  selectedPlanId = pendingGeneratedPlan.id;
-  localStorage.setItem(STORAGE_KEYS.selectedPlan, selectedPlanId);
-  localStorage.removeItem(STORAGE_KEYS.mealTicks);
-  localStorage.removeItem(STORAGE_KEYS.shoppingTicks);
-
-  renderAll();
-  setActiveTab("plan");
-}
-
-
-function setupDetailsDelegation() {
-  document.addEventListener("click", event => {
-    const button = event.target.closest(".details-toggle");
-    if (!button) return;
-
-    const panelId = button.dataset.target;
-    const panel = panelId ? document.getElementById(panelId) : button.parentElement.querySelector(".recipe-details-panel");
-    if (!panel) return;
-
-    const isHidden = panel.classList.toggle("hidden");
-    button.textContent = isHidden ? "Details" : "Hide details";
-    button.setAttribute("aria-expanded", String(!isHidden));
-  });
-}
-
-
 
 function getWeightEntries() {
   try {
@@ -752,43 +778,34 @@ function getWeightEntries() {
 function saveWeightEntry() {
   const input = document.getElementById("weightInput");
   const message = document.getElementById("weightMessage");
-  if (!input) return;
-
   const value = Number(input.value);
+
   if (!value || value < 30 || value > 250) {
-    if (message) message.textContent = "Enter a sensible weight in kg.";
+    message.textContent = "Enter a sensible weight in kg.";
     return;
   }
 
   const entries = getWeightEntries();
-  entries.push({
-    date: new Date().toISOString(),
-    weight: Math.round(value * 10) / 10
-  });
-
+  entries.push({ date: new Date().toISOString(), weight: Math.round(value * 10) / 10 });
   localStorage.setItem(STORAGE_KEYS.weightEntries, JSON.stringify(entries));
   input.value = "";
   renderWeightCheckIn();
 }
 
 function renderWeightCheckIn() {
-  const container = document.getElementById("weightCheckIn");
-  if (!container) return;
-
   const entries = getWeightEntries();
   const last = entries[entries.length - 1];
   const previous = entries[entries.length - 2];
-
   let summary = "No weight recorded yet.";
+
   if (last && previous) {
     const change = Math.round((last.weight - previous.weight) * 10) / 10;
-    const sign = change > 0 ? "+" : "";
-    summary = `Last: ${last.weight} kg · Previous change: ${sign}${change} kg`;
+    summary = `Last: ${last.weight} kg · Previous change: ${change > 0 ? "+" : ""}${change} kg`;
   } else if (last) {
     summary = `Last: ${last.weight} kg`;
   }
 
-  container.innerHTML = `
+  document.getElementById("weightCheckIn").innerHTML = `
     <div class="card weight-card">
       <h2>Weight check-in</h2>
       <p class="meta">Optional, private and saved only on this device.</p>
@@ -796,49 +813,49 @@ function renderWeightCheckIn() {
         <input id="weightInput" type="number" inputmode="decimal" step="0.1" min="30" max="250" placeholder="kg">
         <button id="saveWeightBtn" class="secondary" type="button">Save</button>
       </div>
-      <p id="weightSummary" class="meta">${summary}</p>
-      <p id="weightMessage" class="meta"></p>
+      <p class="meta">${escapeHtml(summary)}</p>
+      <p id="weightMessage" class="meta" aria-live="polite"></p>
     </div>
   `;
-
   document.getElementById("saveWeightBtn").addEventListener("click", saveWeightEntry);
 }
 
-
 function renderAll() {
-  renderPlanSelect();
   renderPlan();
   renderShoppingList();
+  renderCook();
   renderRecipes();
   renderWeightCheckIn();
 }
 
-async function init() {
-  [recipes, plans] = await Promise.all([
-    loadJson(DATA_PATHS.recipes),
-    loadJson(DATA_PATHS.plans)
-  ]);
+function markIngredientAtHome(ingredientId) {
+  if (!atHome.ingredientIds.includes(ingredientId)) atHome.ingredientIds.push(ingredientId);
+  currentWeek.boughtIngredientIds = currentWeek.boughtIngredientIds.filter(id => id !== ingredientId);
+  saveAtHome();
+  saveCurrentWeek();
+  renderShoppingList();
+}
 
-  selectedPlanId = localStorage.getItem(STORAGE_KEYS.selectedPlan) || getAllPlans()[0]?.id || null;
+function removeIngredientAtHome(ingredientId) {
+  atHome.ingredientIds = atHome.ingredientIds.filter(id => id !== ingredientId);
+  saveAtHome();
+  renderShoppingList();
+}
 
-  document.getElementById("planSelect").addEventListener("change", event => {
-    selectedPlanId = event.target.value;
-    localStorage.setItem(STORAGE_KEYS.selectedPlan, selectedPlanId);
-    renderPlan();
-    renderShoppingList();
-  });
-
+function setupEvents() {
   document.querySelectorAll(".tab").forEach(tab => {
     tab.addEventListener("click", () => setActiveTab(tab.dataset.tab));
   });
 
-  document.getElementById("resetProgressBtn").addEventListener("click", () => {
-    localStorage.removeItem(STORAGE_KEYS.mealTicks);
-    renderPlan();
-  });
+  document.getElementById("newWeekBtn").addEventListener("click", startNewWeek);
+  document.getElementById("planRecipeSearch").addEventListener("input", renderPlanRecipeBrowser);
+  document.getElementById("planGroupFilter").addEventListener("change", renderPlanRecipeBrowser);
+  document.getElementById("recipeSearch").addEventListener("input", renderRecipes);
+  document.getElementById("copyShoppingBtn").addEventListener("click", copyShoppingList);
 
   document.getElementById("resetShoppingBtn").addEventListener("click", () => {
-    localStorage.removeItem(STORAGE_KEYS.shoppingTicks);
+    currentWeek.boughtIngredientIds = [];
+    saveCurrentWeek();
     renderShoppingList();
   });
 
@@ -847,24 +864,81 @@ async function init() {
     renderShoppingList();
   });
 
-  document.getElementById("copyShoppingBtn").addEventListener("click", copyShoppingList);
+  document.addEventListener("click", event => {
+    const button = event.target.closest("button[data-action]");
+    if (!button) return;
 
-  document.getElementById("clearPlanBtn").addEventListener("click", () => {
-    localStorage.removeItem(STORAGE_KEYS.selectedPlan);
-    localStorage.removeItem(STORAGE_KEYS.mealTicks);
-    localStorage.removeItem(STORAGE_KEYS.shoppingTicks);
-    selectedPlanId = getAllPlans()[0]?.id || null;
-    renderAll();
+    const action = button.dataset.action;
+    const recipeId = button.dataset.recipeId;
+    const ingredientId = button.dataset.ingredientId;
+
+    if (action === "add-recipe") {
+      const card = button.closest("[data-recipe-card]");
+      const selectedBatch = card?.querySelector(".add-batch-select")?.value;
+      addRecipeToWeek(recipeId, selectedBatch);
+    } else if (action === "remove-recipe") {
+      removeRecipeFromWeek(recipeId);
+    } else if (action === "mark-home") {
+      markIngredientAtHome(ingredientId);
+    } else if (action === "remove-home") {
+      removeIngredientAtHome(ingredientId);
+    } else if (action === "view-plan") {
+      setActiveTab("plan");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (action === "filter-recipes") {
+      activeRecipeFilter = button.dataset.filter;
+      renderRecipes();
+    }
   });
 
-  document.getElementById("recipeSearch").addEventListener("input", renderRecipes);
-  document.getElementById("generatePlanBtn").addEventListener("click", generateQuickPlan);
-  document.getElementById("useGeneratedPlanBtn").addEventListener("click", useGeneratedPlan);
+  document.addEventListener("change", event => {
+    if (event.target.matches(".plan-batch-select")) {
+      changeRecipeBatch(event.target.dataset.recipeId, event.target.value);
+    } else if (event.target.matches(".choice-select")) {
+      const selection = getSelection(event.target.dataset.recipeId);
+      if (!selection) return;
+      if (event.target.value) selection.choiceSelections[event.target.dataset.choiceId] = event.target.value;
+      else delete selection.choiceSelections[event.target.dataset.choiceId];
+      saveCurrentWeek();
+      renderAll();
+    } else if (event.target.matches(".bought-check")) {
+      const ingredientId = event.target.dataset.ingredientId;
+      const bought = new Set(currentWeek.boughtIngredientIds);
+      if (event.target.checked) bought.add(ingredientId);
+      else bought.delete(ingredientId);
+      currentWeek.boughtIngredientIds = [...bought];
+      saveCurrentWeek();
+      renderShoppingList();
+    } else if (event.target.matches(".cooked-check")) {
+      const selection = getSelection(event.target.dataset.recipeId);
+      if (!selection) return;
+      selection.cooked = event.target.checked;
+      saveCurrentWeek();
+      renderCook();
+    }
+  });
+}
 
+async function init() {
+  [recipes, ingredients] = await Promise.all([
+    loadJson(DATA_PATHS.recipes),
+    loadJson(DATA_PATHS.ingredients)
+  ]);
+
+  recipesById = Object.fromEntries(recipes.map(recipe => [recipe.id, recipe]));
+  ingredientsById = Object.fromEntries(ingredients.map(ingredient => [ingredient.id, ingredient]));
+  currentWeek = normaliseCurrentWeek(getStoredJson(STORAGE_KEYS.currentWeek, null));
+  atHome = normaliseAtHome(getStoredJson(STORAGE_KEYS.atHome, null));
+  saveCurrentWeek();
+  saveAtHome();
+
+  const groups = [...new Set(recipes.map(recipe => recipe.group))];
+  document.getElementById("planGroupFilter").innerHTML = ["all", ...groups]
+    .map(group => `<option value="${escapeHtml(group)}">${escapeHtml(group === "all" ? "All groups" : group)}</option>`)
+    .join("");
   document.getElementById("hideBoughtToggle").checked = localStorage.getItem(STORAGE_KEYS.hideBought) === "true";
 
-  populateBuilderRecipeSelects();
-  setupDetailsDelegation();
+  setupEvents();
   renderAll();
 
   if ("serviceWorker" in navigator) {
@@ -873,5 +947,5 @@ async function init() {
 }
 
 init().catch(error => {
-  document.body.innerHTML = `<main class="app-shell"><div class="card"><h1>Could not load app</h1><p>${error.message}</p></div></main>`;
+  document.body.innerHTML = `<main class="app-shell"><div class="card"><h1>Could not load app</h1><p>${escapeHtml(error.message)}</p></div></main>`;
 });

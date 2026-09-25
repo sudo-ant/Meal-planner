@@ -2,9 +2,21 @@
 
 ## Unreleased
 
+- Replaced predefined plans and the automatic Builder with manual weekly recipe selection.
+- Added explicit recipe batch selection, approximate weekly yields, and recipe choices.
+- Replaced Shopping with a canonical-ingredient Shop flow containing To buy, At home, and Optional sections.
+- Added weekly pack recommendations calculated after ingredient aggregation.
+- Added persistent At-home markers and week-specific Bought state.
+- Added a Cook view containing only the current week's selected recipes.
+- Updated recipe search to use multi-word AND matching across recipe and ingredient data.
+- Replaced the recipe catalogue with the approved 43-recipe v2 data and added 68 canonical ingredients.
+- Retired `data/plans.json` from the runtime and repository.
+- Updated data validation for batches, choices, yields, storage, packs, tags, and ingredient references.
+- Updated the service-worker cache for the redesigned runtime and data files.
+- Preserved existing local Weight history and ignored legacy plan storage keys.
 - Added repository-level development guidance in `AGENTS.md`.
 - Added a current product and architecture reference in `PROJECT.md`.
-- Added a zero-dependency validator for recipe and plan data.
+- Added a zero-dependency data validator, now updated for v2 recipe and ingredient data.
 - Reworked the README as concise current documentation and moved historical release notes here.
 
 This is repository and documentation foundation work, not a new user-facing feature release.

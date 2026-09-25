@@ -13,106 +13,78 @@
     <div>
       <p class="eyebrow">Mobile meal planner</p>
       <h1>Maia's Recipe & Meal Planner</h1>
-      <p class="subtitle">Choose a weekly plan, prep daily food packs, shop once, and reset for next week.</p>
+      <p class="subtitle">Plan what to cook, shop once, and keep the week's recipes close at hand.</p>
     </div>
   </header>
 
   <main class="app-shell">
-    <section class="card controls-card">
-      <label for="planSelect">Choose a food pack plan</label>
-      <select id="planSelect"></select>
-      <div class="button-row">
-        <button id="resetProgressBtn" class="secondary">Reset ticks</button>
-        <button id="clearPlanBtn" class="ghost">Clear plan</button>
-      </div>
-    </section>
-
     <nav class="tabs" aria-label="Main sections">
-      <button class="tab active" data-tab="plan">Plan</button>
-      <button class="tab" data-tab="shopping">Shopping</button>
-      <button class="tab" data-tab="builder">Builder</button>
-      <button class="tab" data-tab="recipes">Recipes</button>
-      <button class="tab" data-tab="weight">Weight</button>
+      <button class="tab active" type="button" data-tab="plan">Plan</button>
+      <button class="tab" type="button" data-tab="shop">Shop</button>
+      <button class="tab" type="button" data-tab="cook">Cook</button>
+      <button class="tab" type="button" data-tab="recipes">Recipes</button>
+      <button class="tab" type="button" data-tab="weight">Weight</button>
     </nav>
 
     <section id="planPanel" class="panel active">
-      <div id="planSummary"></div>
-      <div id="mealList" class="stack"></div>
+      <section class="card section-intro">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow dark">Current week</p>
+            <h2>This week</h2>
+            <p id="planSummary" class="meta">No recipes selected yet.</p>
+          </div>
+          <button id="newWeekBtn" class="ghost small" type="button">New week</button>
+        </div>
+      </section>
+      <div id="weekList" class="stack"></div>
+
+      <section class="card browse-controls">
+        <h2>Add a recipe</h2>
+        <label for="planRecipeSearch">Search recipes</label>
+        <input id="planRecipeSearch" type="search" placeholder="Search chicken, curry, quick...">
+        <label for="planGroupFilter">Recipe group</label>
+        <select id="planGroupFilter"></select>
+      </section>
+      <div id="planRecipeList" class="stack"></div>
     </section>
 
-    <section id="shoppingPanel" class="panel">
-      <div class="card">
+    <section id="shopPanel" class="panel">
+      <section class="card section-intro">
         <div class="section-heading">
           <div>
             <h2>Shopping list</h2>
-            <p>Hybrid counts: fresh items are counted, dry/tinned goods are summed where useful.</p>
-            <p id="shoppingStatus" class="meta">Bought: 0 / 0</p>
+            <p id="shoppingStatus" class="meta">Build this week's plan to create a list.</p>
           </div>
-          <button id="resetShoppingBtn" class="secondary small">Untick shopping</button>
+          <button id="resetShoppingBtn" class="secondary small" type="button">Untick bought</button>
         </div>
         <div class="shopping-tools">
           <label class="toggle-row">
             <input id="hideBoughtToggle" type="checkbox">
-            <span>Hide bought items</span>
+            <span>Hide bought</span>
           </label>
-          <button id="copyShoppingBtn" class="secondary small">Copy list</button>
+          <button id="copyShoppingBtn" class="secondary small" type="button">Copy list</button>
           <span id="copyStatus" class="copy-status" aria-live="polite"></span>
         </div>
-      </div>
+      </section>
       <div id="shoppingList" class="stack"></div>
     </section>
 
-    <section id="builderPanel" class="panel">
-      <div class="card">
-        <h2>Quick Plan Builder</h2>
-        <p>Choose 5 or 6 food pack days, optionally lock in 1–2 recipes, then let the app fill the rest.</p>
-
-        <div class="builder-grid">
-          <div>
-            <label for="builderDays">Number of days</label>
-            <select id="builderDays">
-              <option value="5">5-day plan</option>
-              <option value="6">6-day plan</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="mustHaveOne">Must-have recipe 1</label>
-            <select id="mustHaveOne">
-              <option value="">No preference</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="mustHaveTwo">Must-have recipe 2</label>
-            <select id="mustHaveTwo">
-              <option value="">No preference</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="mustHaveThree">Must-have recipe 3</label>
-            <select id="mustHaveThree">
-              <option value="">No preference</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="button-row">
-          <button id="generatePlanBtn">Generate plan</button>
-          <button id="useGeneratedPlanBtn" class="secondary" disabled>Use this plan</button>
-        </div>
-        <p id="builderMessage" class="meta"></p>
-      </div>
-      <div id="generatedPlanPreview" class="stack"></div>
+    <section id="cookPanel" class="panel">
+      <section class="card section-intro">
+        <h2>Cook this week</h2>
+        <p id="cookSummary" class="meta">Only recipes in this week's plan appear here.</p>
+      </section>
+      <div id="cookList" class="stack"></div>
     </section>
 
     <section id="recipesPanel" class="panel">
-      <div class="card">
+      <section class="card browse-controls">
+        <h2>All recipes</h2>
         <label for="recipeSearch">Search recipes</label>
-        <input id="recipeSearch" type="search" placeholder="Search chicken, lentils, quick...">
+        <input id="recipeSearch" type="search" placeholder="Search chicken curry, one pot...">
         <div id="recipeFilters" class="filter-row" aria-label="Recipe filters"></div>
-      </div>
+      </section>
       <div id="recipeList" class="stack"></div>
     </section>
 
@@ -122,7 +94,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>Works offline after first load. Data is saved only on this device.</p>
+    <p>Works offline after first load. Your plan and weight history stay on this device.</p>
   </footer>
 
   <script src="app.js"></script>

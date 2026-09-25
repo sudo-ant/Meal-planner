@@ -1,0 +1,957 @@
+[
+  {
+    "id": "chicken_breast",
+    "name": "Chicken breast",
+    "category": "Meat",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "chicken_breast_700g",
+        "label": "Chicken breast pack — about 700 g",
+        "shopHint": "Peito de Frango Continente",
+        "amount": 700,
+        "unit": "g",
+        "preferred": true
+      },
+      {
+        "id": "chicken_breast_1200g",
+        "label": "Chicken breast pack — about 1.2 kg",
+        "amount": 1200,
+        "unit": "g"
+      }
+    ]
+  },
+  {
+    "id": "turkey_strips",
+    "name": "Turkey strips",
+    "category": "Meat",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "turkey_strips_500g",
+        "label": "Turkey strips / Strogonoff de Peru — about 500 g",
+        "shopHint": "Strogonoff de Peru Continente",
+        "amount": 500,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "turkey_jardineira",
+    "name": "Turkey Jardineira",
+    "category": "Meat",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "turkey_jardineira_600g",
+        "label": "Jardineira de Peru — about 600 g",
+        "shopHint": "Jardineira de Peru Continente",
+        "amount": 600,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "beef_mince",
+    "name": "Beef mince",
+    "category": "Meat",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "beef_mince_465g",
+        "label": "Prepared beef mince — 465 g",
+        "shopHint": "Preparado de Carne Picada de Bovino Continente",
+        "amount": 465,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "tuna_natural",
+    "name": "Tuna",
+    "category": "Fish",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "tuna_small_85g_drained",
+        "label": "Small tuna tin — 120 g / about 85 g drained",
+        "shopHint": "Atum ao Natural Continente",
+        "amount": 85,
+        "unit": "g"
+      },
+      {
+        "id": "tuna_large_270g_drained",
+        "label": "Large tuna tin — about 385 g / 270 g drained",
+        "shopHint": "Atum ao Natural Continente",
+        "amount": 270,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "frozen_hake_medallions",
+    "name": "Frozen hake medallions",
+    "category": "Fish",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "hake_medallions_400g",
+        "label": "Frozen hake medallions — 400 g",
+        "shopHint": "Medalhões de Pescada do Cabo Ultracongelados Continente",
+        "amount": 400,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "frozen_salmon_portions",
+    "name": "Frozen salmon portions",
+    "category": "Fish",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "salmon_250g",
+        "label": "Frozen salmon — 250 g (2 × 125 g)",
+        "amount": 250,
+        "unit": "g",
+        "preferred": true
+      },
+      {
+        "id": "salmon_500g",
+        "label": "Frozen salmon — 500 g (4 × 125 g)",
+        "amount": 500,
+        "unit": "g"
+      }
+    ]
+  },
+  {
+    "id": "sardines",
+    "name": "Sardines",
+    "category": "Fish",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "tin"
+    }
+  },
+  {
+    "id": "eggs",
+    "name": "Eggs",
+    "category": "Eggs",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "piece"
+    }
+  },
+  {
+    "id": "chickpeas",
+    "name": "Chickpeas",
+    "category": "Pulses",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "chickpeas_400g_drained",
+        "label": "Cooked chickpeas — 540 g / about 400 g drained",
+        "amount": 400,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "black_beans",
+    "name": "Black beans",
+    "category": "Pulses",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "black_beans_260g_drained",
+        "label": "Cooked black beans — 420 g / about 260 g drained",
+        "amount": 260,
+        "unit": "g"
+      },
+      {
+        "id": "black_beans_520g_drained",
+        "label": "Cooked black beans — 820 g / about 520 g drained",
+        "amount": 520,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "red_lentils",
+    "name": "Red lentils",
+    "category": "Pulses",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "mug"
+    },
+    "packs": [
+      {
+        "id": "red_lentils_500g",
+        "label": "Red lentils — 500 g pack",
+        "amount": 500,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "green_lentils",
+    "name": "Green/brown lentils",
+    "category": "Pulses",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "mug"
+    },
+    "packs": [
+      {
+        "id": "green_lentils_500g",
+        "label": "Dry green/brown lentils — 500 g pack",
+        "amount": 500,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "cooked_lentils",
+    "name": "Cooked lentils",
+    "category": "Pulses",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "cooked_lentils_390g",
+        "label": "Cooked lentils — 3 × 130 g drained",
+        "amount": 390,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "rice",
+    "name": "Rice",
+    "category": "Dry goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "mug"
+    }
+  },
+  {
+    "id": "dry_pasta",
+    "name": "Dry pasta",
+    "category": "Dry goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "dry_pasta_500g",
+        "label": "Pasta — 500 g pack",
+        "amount": 500,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "dry_noodles",
+    "name": "Noodles",
+    "category": "Dry goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    }
+  },
+  {
+    "id": "rice_noodles",
+    "name": "Rice noodles",
+    "category": "Dry goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    }
+  },
+  {
+    "id": "tortilla_wraps",
+    "name": "Tortilla wraps",
+    "category": "Dry goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "piece"
+    }
+  },
+  {
+    "id": "rice_paper_wrappers",
+    "name": "Rice-paper wrappers",
+    "category": "Dry goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "piece"
+    }
+  },
+  {
+    "id": "garlic_parsley_breadcrumbs",
+    "name": "Garlic & parsley breadcrumbs",
+    "category": "Dry goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    },
+    "packs": [
+      {
+        "id": "garlic_parsley_breadcrumbs_240g",
+        "label": "Garlic & parsley breadcrumbs — 240 g",
+        "shopHint": "Pão Ralado de Alho e Salsa Continente",
+        "amount": 240,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "chopped_tomatoes",
+    "name": "Chopped tomatoes",
+    "category": "Tinned goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "chopped_tomatoes_400g",
+        "label": "Chopped tomatoes — 400 g tin",
+        "amount": 400,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "coconut_milk",
+    "name": "Coconut milk",
+    "category": "Tinned goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "ml"
+    },
+    "packs": [
+      {
+        "id": "coconut_milk_400ml",
+        "label": "Coconut milk — 400 ml tin",
+        "amount": 400,
+        "unit": "ml",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "cooking_cream",
+    "name": "Cooking cream",
+    "category": "Dairy",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "ml"
+    },
+    "packs": [
+      {
+        "id": "cooking_cream_200ml",
+        "label": "Cooking cream — 200 ml pack",
+        "amount": 200,
+        "unit": "ml",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "mythos_yoghurt",
+    "name": "Mythos natural Greek yoghurt",
+    "category": "Dairy",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "mythos_yoghurt_500g",
+        "label": "Mythos Natural Greek yoghurt — 500 g (4 × 125 g)",
+        "shopHint": "Iogurte Grego Mythos Natural Continente",
+        "amount": 500,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "frozen_mixed_vegetables",
+    "name": "Frozen mixed vegetables",
+    "category": "Frozen",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    }
+  },
+  {
+    "id": "frozen_oriental_vegetables",
+    "name": "Frozen Oriental vegetables",
+    "category": "Frozen",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "oriental_veg_750g",
+        "label": "Frozen Oriental vegetables — 750 g bag",
+        "amount": 750,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "frozen_jardineira_vegetables",
+    "name": "Frozen Jardineira vegetables",
+    "category": "Frozen",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "jardineira_veg_750g",
+        "label": "Frozen Jardineira vegetables — 750 g bag",
+        "amount": 750,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "frozen_spinach",
+    "name": "Frozen spinach",
+    "category": "Frozen",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "frozen_spinach_750g",
+        "label": "Frozen spinach — 750 g bag",
+        "amount": 750,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "frozen_peas",
+    "name": "Frozen peas",
+    "category": "Frozen",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    }
+  },
+  {
+    "id": "edamame",
+    "name": "Shelled edamame",
+    "category": "Frozen",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "edamame_400g",
+        "label": "Shelled edamame — 400 g bag",
+        "amount": 400,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "potatoes",
+    "name": "Potatoes",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    }
+  },
+  {
+    "id": "green_beans",
+    "name": "Green beans",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    }
+  },
+  {
+    "id": "onion",
+    "name": "Onion",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "piece"
+    }
+  },
+  {
+    "id": "garlic",
+    "name": "Garlic",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "clove"
+    }
+  },
+  {
+    "id": "mushrooms",
+    "name": "Mushrooms",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    }
+  },
+  {
+    "id": "salad_leaves",
+    "name": "Salad leaves",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "bag"
+    }
+  },
+  {
+    "id": "cucumber",
+    "name": "Cucumber",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "piece"
+    }
+  },
+  {
+    "id": "fresh_tomato",
+    "name": "Tomato",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "piece"
+    }
+  },
+  {
+    "id": "chucha_tomatoes",
+    "name": "Tomate chucha",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "piece"
+    }
+  },
+  {
+    "id": "carrot",
+    "name": "Carrot",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "piece"
+    }
+  },
+  {
+    "id": "bell_pepper",
+    "name": "Pepper",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "piece"
+    }
+  },
+  {
+    "id": "pumpkin",
+    "name": "Pumpkin",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    }
+  },
+  {
+    "id": "lemon",
+    "name": "Lemon",
+    "category": "Fruit",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "piece"
+    }
+  },
+  {
+    "id": "lime",
+    "name": "Lime",
+    "category": "Fruit",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "piece"
+    }
+  },
+  {
+    "id": "fresh_chilli",
+    "name": "Fresh/frozen chilli",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "ginger",
+    "name": "Ginger",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "fresh_mint",
+    "name": "Mint",
+    "category": "Herbs",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "fresh_coriander",
+    "name": "Coriander",
+    "category": "Herbs",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "olives",
+    "name": "Olives",
+    "category": "Tinned goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "sweetcorn",
+    "name": "Sweetcorn",
+    "category": "Tinned goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "stock_cube",
+    "name": "Stock cube",
+    "category": "Seasoning",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "olive_oil",
+    "name": "Olive oil",
+    "category": "Oil & cooking fats",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "vegetable_oil",
+    "name": "Vegetable oil",
+    "category": "Oil & cooking fats",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "soy_sauce",
+    "name": "Soy sauce",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "fish_sauce",
+    "name": "Fish sauce",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "thai_green_curry_paste",
+    "name": "Thai green curry paste",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "curry_powder",
+    "name": "Curry powder",
+    "category": "Seasoning",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "paprika",
+    "name": "Paprika",
+    "category": "Seasoning",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "cumin",
+    "name": "Cumin",
+    "category": "Seasoning",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "oregano",
+    "name": "Oregano",
+    "category": "Seasoning",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "black_pepper",
+    "name": "Black pepper",
+    "category": "Seasoning",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "salt",
+    "name": "Salt",
+    "category": "Seasoning",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "mustard",
+    "name": "Mustard",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "bay_leaf",
+    "name": "Bay leaf",
+    "category": "Seasoning",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "vinegar",
+    "name": "Vinegar",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "cheese",
+    "name": "Cheese",
+    "category": "Dairy",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "water",
+    "name": "Water",
+    "category": "Other",
+    "shopping": false,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "none"
+    }
+  }
+]

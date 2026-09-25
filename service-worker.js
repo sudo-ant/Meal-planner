@@ -1,4 +1,4 @@
-const CACHE_NAME = "student-food-planner-v56-fixed";
+const CACHE_NAME = "maia-meal-planner-v2-2";
 const ASSETS = [
   "./",
   "index.html",
@@ -6,18 +6,22 @@ const ASSETS = [
   "app.js",
   "manifest.json",
   "data/recipes.json",
-  "data/plans.json"
+  "data/ingredients.json"
 ];
 
 self.addEventListener("install", event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)));
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(ASSETS))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)))
-    )
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))))
+      .then(() => self.clients.claim())
   );
 });
 

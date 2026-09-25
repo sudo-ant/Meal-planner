@@ -4,7 +4,7 @@ This document describes the application's current product state and existing dec
 
 ## Purpose
 
-Maia's Recipe & Meal Planner supports planning practical meals from food packs, turning a selected or generated plan into recipe guidance and a combined shopping list. It is designed for straightforward personal use rather than multi-user administration.
+Maia's Recipe & Meal Planner supports choosing the recipes Maia intends to cook during a week, consolidating their ingredients into a practical shopping list, and keeping the selected cooking instructions easy to reach. It is designed for straightforward personal use rather than multi-user administration.
 
 ## Product principles
 
@@ -17,76 +17,78 @@ Maia's Recipe & Meal Planner supports planning practical meals from food packs, 
 
 ## Current user journey
 
-1. Choose an existing plan or create one with Builder.
-2. Review the planned food packs.
-3. Use the generated shopping list.
-4. Prepare meals and tick food packs off.
-5. Browse recipes when required.
-6. Optionally record weight locally.
+1. Add recipes to the current week and choose an approved batch for each.
+2. Review the combined Shop list and mark ingredients as Bought or At home.
+3. Use Cook for the selected recipes, choices, ingredients, and instructions.
+4. Browse the complete recipe library when required.
+5. Optionally record weight locally.
+6. Start a New week while keeping persistent At-home and Weight data.
 
 ## Current areas
 
 ### Plan
 
-Selects and displays a premade or generated plan. Each food pack can be expanded for recipe details and ticked off as it is used.
+Plan is a manual list of recipes to cook during the current week. Recipes can be searched and added without weekday assignments. Each recipe appears once, has an explicit approved batch size, and can include required or optional recipe choices.
 
-### Shopping
+### Shop
 
-Builds a categorized list from the active plan, aggregates compatible quantities, supports bought-item ticks and hiding bought items, and can copy the list to the clipboard.
+Shop aggregates requirements from the selected recipes by canonical ingredient ID. It separates required To buy items, persistent At home items, and Optional items. Compatible supermarket pack sizes are recommended after weekly aggregation. Bought ticks belong only to the current week.
 
-### Builder
+### Cook
 
-Creates a five- or six-day plan from the recipe collection. It supports optional must-have recipes and uses current scoring and ordering rules to produce a practical mix.
+Cook contains only recipes selected for the current week. It shows the chosen batch, approximate yield, selected choices, approved ingredient display text, steps, notes, storage metadata, and a cooked tick.
 
 ### Recipes
 
-Provides searchable, filterable access to the full recipe collection, with ingredients, steps, and notes available in expandable details.
+Recipes contains the complete 43-recipe library. Search uses AND token matching across titles, groups, tags, and ingredient names. Recipes can be added directly to the current week, and recipe details expose the approved batches and instructions.
 
 ### Weight
 
-Provides an optional minimal weight check-in. Entries and the latest change are stored only in the current browser.
+Weight provides an optional minimal weight check-in. Existing entries and the latest change are stored only in the current browser.
 
-## Food-pack concept
+## Batch model
 
-The current product generally treats a recipe with two or more portions as supporting lunch plus dinner. A one-portion recipe may need a side or combination with another item. Builder favours practical meal-prep recipes, and generated ordering currently puts fish and meat earlier where practical. These are descriptions of current behaviour, not immutable product rules.
+Recipes define one or more explicit `batchOptions`. Each batch has its own approximate yield, ingredients, choices, storage metadata, and optional notes. The application does not automatically scale recipes or infer substitutions from prose.
+
+## Shopping and At home
+
+Ingredients have canonical identities in `data/ingredients.json`. Weekly requirements are aggregated before compatible supermarket pack recommendations are calculated. Presence items such as spices are not quantity-optimised.
+
+At home is a persistent yes/no marker, not inventory tracking. Marking an ingredient At home removes it from To buy and clears its Bought state. Starting a New week preserves At home but clears Bought state.
+
+Required and optional quantities remain separate. Leftover-only requirements do not create new shopping items.
 
 ## Data
 
-- `data/recipes.json` contains recipe definitions, ingredients, steps, tags, servings, and related display information.
-- `data/plans.json` contains the premade plans.
-- Plan days reference recipes by recipe ID.
+- `data/recipes.json` contains 43 recipes, explicit batches, ingredients, choices, yields, storage metadata, steps, and notes.
+- `data/ingredients.json` contains canonical ingredient identities, shopping metadata, aggregation rules, and supermarket packs.
 
-Run `node scripts/validate-data.mjs` to check the current structural requirements and recipe references.
+Run `node scripts/validate-data.mjs` to validate both files and all cross-references.
 
 ## Local state
 
-The application currently keeps the following state in `localStorage`:
+The application keeps the following current state in `localStorage`:
 
-- selected plan
-- meal ticks
-- shopping ticks
-- hide-bought preference
-- generated plan
-- weight entries
+- `studentFoodPlanner.currentWeek`: selected recipes, batches, choices, cooked ticks, and Bought state
+- `studentFoodPlanner.atHome`: persistent At-home ingredient IDs
+- `studentFoodPlanner.hideBought`: persistent hide-bought preference
+- `studentFoodPlanner.weightEntries`: existing local Weight history
 
-This means there is no account, cloud storage, or cross-device synchronisation. Clearing browser or site data can remove the saved state. That device-local model is an intentional part of the application's current simplicity rather than a defect.
+There is no account, backend, cloud storage, or cross-device synchronisation. Clearing browser or site data can remove saved state. Legacy predefined-plan keys may remain for compatibility but no longer drive the application.
+
+## New week
+
+New week clears selected recipes, batches, choices, cooked ticks, and Bought state. It preserves At home, Weight history, and the hide-bought preference. Confirmation is requested only when current-week state would be lost.
 
 ## Offline behaviour
 
-The service worker caches the application shell and JSON data. After the required resources have been cached, the app can load without a network connection. Runtime or data changes need an appropriate cache/update strategy; documentation-only changes do not require a cache bump.
+The service worker caches the application shell, recipes, and ingredient catalogue. Cache names must change whenever cached runtime files or data change so installed copies receive the new application.
 
 ## Known review areas
 
-These areas are recorded for future product review, not resolved by this documentation foundation:
-
-- Builder behaviour and scoring
-- Builder must-have behaviour
-- Meaning of Clear Plan
-- Clear Plan and generated-plan persistence
-- Scope and meaning of reset actions
-- Multi-word recipe search
-- Shopping-list aggregation
-- Usefulness and scope of Weight
-- Generated-plan history and persistence
-- Whether cross-device storage is ever needed
-- Safe handling if future content becomes user-entered
+- Practical usefulness of supermarket pack recommendations after real shopping trips
+- Whether optional ingredients need additional selection controls
+- How often At-home markers become stale in real use
+- Whether recipe filters need refinement as the catalogue grows
+- Whether cooked history is useful beyond the current week
+- Safe rendering if future content becomes user-entered

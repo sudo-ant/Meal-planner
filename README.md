@@ -1,20 +1,24 @@
 # Maia's Recipe & Meal Planner
 
-A lightweight, mobile-first personal meal-planning PWA for choosing or generating food-pack plans, preparing a shopping list, following recipes, and optionally recording weight locally.
+A lightweight, mobile-first personal meal-planning PWA for choosing what to cook this week, building a consolidated shopping list, and keeping cooking instructions close at hand.
 
 ## Features
 
-- Choose from premade five- and six-day plans.
-- Generate a plan with optional must-have recipes.
-- Review recipes and tick completed food packs.
-- Generate, group, copy, and tick off shopping-list items.
-- Search and filter the recipe collection.
-- Record optional weight check-ins on the current device.
+- Build the current week manually from a 43-recipe catalogue.
+- Choose explicit recipe-specific batch sizes and substitutions.
+- See approximate weekly yield without assigning recipes to weekdays.
+- Aggregate required ingredients by canonical identity.
+- Calculate supermarket pack recommendations after weekly aggregation.
+- Keep persistent At-home markers without tracking inventory quantities.
+- Tick Bought items, hide bought items, and copy To buy plus Optional lists.
+- Cook from a focused view containing only this week's recipes.
+- Search recipes using multi-word AND matching.
+- Preserve optional local Weight history.
 - Install and use the app offline after its resources are cached.
 
 ## Architecture
 
-The project intentionally uses static HTML, vanilla JavaScript, CSS, JSON data, `localStorage`, and a service worker. It has no dependencies, package manager, build step, backend, or database, and is designed for GitHub Pages.
+The project intentionally uses static HTML, vanilla JavaScript, CSS, JSON data, `localStorage`, and a service worker. It has no dependencies, package manager, build step, backend, database, account, or cloud synchronisation. It is designed for GitHub Pages.
 
 ## Repository structure
 
@@ -26,14 +30,14 @@ Meal-planner/
 |- README.md                 Repository overview and operating instructions
 |- index.html                Application shell
 |- styles.css                Application styles
-|- app.js                    Rendering, interactions, and local state
+|- app.js                    Rendering, shopping logic, and local state
 |- manifest.json             PWA metadata
 |- service-worker.js         Offline asset and data caching
 |- scripts/
-|  `- validate-data.mjs      Zero-dependency data validator
+|  `- validate-data.mjs      Zero-dependency v2 data validator
 |- data/
-|  |- recipes.json           Recipe collection
-|  `- plans.json             Premade plans
+|  |- recipes.json           Approved recipe and batch catalogue
+|  `- ingredients.json       Canonical ingredients and supermarket packs
 `- icons/                    PWA icons
 ```
 
@@ -51,11 +55,13 @@ Then open `http://localhost:8000/`.
 
 ## Data
 
-Recipes are stored in `data/recipes.json`. Premade plans are stored in `data/plans.json`, with each plan day referencing a recipe by its recipe ID.
+`data/recipes.json` contains explicit approved batches, approximate yields, ingredient requirements, choices, storage metadata, steps, and notes. `data/ingredients.json` provides stable ingredient identities, aggregation rules, shopping flags, and supermarket pack metadata.
+
+Recipe amounts are not scaled automatically. The application always uses one of the batch options supplied in the data.
 
 ## Data validation
 
-With Node.js available, validate both data files and their plan-to-recipe references with:
+With Node.js available, validate both data files and their references with:
 
 ```sh
 node scripts/validate-data.mjs
@@ -65,15 +71,17 @@ The validator uses only built-in Node.js functionality and requires no installat
 
 ## Local storage
 
-Plan selection, completion ticks, shopping state, the hide-bought preference, generated plans, and weight entries are stored in the current browser with `localStorage`. There is no account or cross-device synchronisation, and clearing browser or site data can remove this state.
+The current week, At-home ingredient markers, hide-bought preference, and Weight entries are stored in the current browser. New week clears only current-week selections and progress. Existing `studentFoodPlanner.weightEntries` data is preserved unchanged.
+
+Legacy predefined-plan keys are ignored by the current runtime and may remain for one release.
 
 ## Offline/PWA behaviour
 
-The service worker caches the application shell and JSON data for offline use. Changes to cached runtime files or data should account for the cache/update strategy. Documentation-only changes do not require a cache bump.
+The service worker caches the application shell, recipe catalogue, and ingredient catalogue for offline use. Runtime or data changes require a cache version update.
 
 ## Deployment
 
-The repository can be served directly with GitHub Pages. Publish the repository root and preserve the existing relative file paths, including `data/recipes.json` and `data/plans.json`. No build command or generated output is required.
+The repository can be served directly with GitHub Pages. Publish the repository root and preserve the existing relative paths. No build command or generated output is required.
 
 ## Development guidance
 
