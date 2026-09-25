@@ -40,7 +40,7 @@ Cook contains only recipes selected for the current week. It shows the chosen ba
 
 ### Recipes
 
-Recipes contains the complete 43-recipe library. Search uses AND token matching across titles, groups, tags, and ingredient names. Recipes can be added directly to the current week, and recipe details expose the approved batches and instructions.
+Recipes is a browse-only reference library containing the complete 43-recipe catalogue. Search uses AND token matching across titles, groups, tags, and ingredient names, while recipe details expose the approved batches and instructions. Weekly recipe selection remains in Plan.
 
 ### Weight
 

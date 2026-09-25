@@ -860,7 +860,7 @@
         "label": "Full chicken pack",
         "yield": {
           "min": 6,
-          "max": 6
+          "max": 8
         },
         "storage": {
           "size": "large_batch",

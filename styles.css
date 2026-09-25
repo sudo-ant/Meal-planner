@@ -83,6 +83,21 @@ select {
   position: relative;
 }
 
+.plan-area {
+  margin: 0 -6px 18px;
+  padding: 14px 6px 2px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.current-week-area {
+  background: #eef5f0;
+}
+
+.recipe-picker-area {
+  background: #f1f4f7;
+}
+
 h2,
 h3,
 h4,
@@ -232,6 +247,11 @@ select {
   margin-top: 12px;
 }
 
+.filter-label {
+  margin: 14px 0 0;
+  font-weight: 700;
+}
+
 .plan-item .section-heading button {
   flex: 0 0 auto;
 }
@@ -239,6 +259,65 @@ select {
 .batch-label {
   margin: 12px 0 0;
   color: var(--accent);
+}
+
+.batch-options {
+  min-width: 0;
+  margin: 12px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.batch-options legend {
+  margin-bottom: 7px;
+  padding: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.batch-option-list {
+  display: grid;
+  gap: 8px;
+}
+
+.batch-option {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+}
+
+.batch-option:has(input:checked) {
+  border-color: #80ad8d;
+  background: var(--success-soft);
+}
+
+.batch-option:focus-within {
+  outline: 3px solid rgba(32, 55, 77, 0.3);
+  outline-offset: 2px;
+}
+
+.batch-option input {
+  flex: 0 0 auto;
+  width: auto;
+  min-height: auto;
+  margin: 3px 0 0;
+  accent-color: var(--success);
+}
+
+.batch-option-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.batch-option-copy small {
+  color: var(--muted);
 }
 
 .choice-controls {
@@ -287,6 +366,15 @@ select {
 
 .recipe-action .field-label {
   margin: 0;
+}
+
+.recipe-action .batch-options {
+  margin: 0;
+}
+
+.selected-recipe {
+  border-color: #b8d4c0;
+  background: #f1f8f2;
 }
 
 .in-plan-button {
@@ -352,13 +440,10 @@ select {
 
 .filter-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
-  overflow-x: auto;
   padding: 12px 0 2px;
-  scrollbar-width: none;
 }
-
-.filter-row::-webkit-scrollbar { display: none; }
 
 .filter-chip {
   flex: 0 0 auto;
@@ -495,6 +580,32 @@ select {
   font-size: 0.86rem;
 }
 
+.cook-details {
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.cook-details summary {
+  min-height: 44px;
+  padding: 12px 0 8px;
+  color: var(--accent);
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.hide-recipe-label,
+.cook-details[open] .show-recipe-label {
+  display: none;
+}
+
+.cook-details[open] .hide-recipe-label {
+  display: inline;
+}
+
+.cook-details-body {
+  padding-top: 4px;
+}
+
 .steps {
   margin: 0;
   padding-left: 22px;
@@ -524,6 +635,10 @@ select {
   .choice-controls {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
+  }
+
+  .batch-option-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .recipe-action {

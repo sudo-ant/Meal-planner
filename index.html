@@ -27,26 +27,30 @@
     </nav>
 
     <section id="planPanel" class="panel active">
-      <section class="card section-intro">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow dark">Current week</p>
-            <h2>This week</h2>
-            <p id="planSummary" class="meta">No recipes selected yet.</p>
+      <section class="plan-area current-week-area" aria-labelledby="currentWeekHeading">
+        <section class="card section-intro">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow dark">Current week</p>
+              <h2 id="currentWeekHeading">This week</h2>
+              <p id="planSummary" class="meta">No recipes selected yet.</p>
+            </div>
+            <button id="newWeekBtn" class="ghost small" type="button">New week</button>
           </div>
-          <button id="newWeekBtn" class="ghost small" type="button">New week</button>
-        </div>
+        </section>
+        <div id="weekList" class="stack"></div>
       </section>
-      <div id="weekList" class="stack"></div>
 
-      <section class="card browse-controls">
-        <h2>Add a recipe</h2>
-        <label for="planRecipeSearch">Search recipes</label>
-        <input id="planRecipeSearch" type="search" placeholder="Search chicken, curry, quick...">
-        <label for="planGroupFilter">Recipe group</label>
-        <select id="planGroupFilter"></select>
+      <section class="plan-area recipe-picker-area" aria-labelledby="recipePickerHeading">
+        <section class="card browse-controls">
+          <h2 id="recipePickerHeading">Add a recipe</h2>
+          <label for="planRecipeSearch">Search recipes</label>
+          <input id="planRecipeSearch" type="search" placeholder="Search chicken, curry, quick...">
+          <p class="filter-label">Recipe group</p>
+          <div id="planRecipeFilters" class="filter-row" aria-label="Plan recipe group filters"></div>
+        </section>
+        <div id="planRecipeList" class="stack"></div>
       </section>
-      <div id="planRecipeList" class="stack"></div>
     </section>
 
     <section id="shopPanel" class="panel">

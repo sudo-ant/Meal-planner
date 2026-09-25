@@ -28,12 +28,23 @@ const CATEGORY_ORDER = [
   "Other"
 ];
 
+const RECIPE_GROUPS = [
+  "all",
+  "Chicken",
+  "Turkey",
+  "Beef",
+  "Fish",
+  "Vegetarian / Eggs",
+  "Light / Summer"
+];
+
 let recipes = [];
 let ingredients = [];
 let recipesById = {};
 let ingredientsById = {};
 let currentWeek = null;
 let atHome = null;
+let activePlanFilter = "all";
 let activeRecipeFilter = "all";
 
 function loadJson(path) {
@@ -295,18 +306,22 @@ function startNewWeek() {
   renderAll();
 }
 
-function batchSelectMarkup(recipe, selectedBatchId, className, labelText = "Choose batch size") {
+function batchOptionsMarkup(recipe, selectedBatchId, className, groupName, labelText = "Choose batch size") {
   const options = recipe.batchOptions.map(batch => `
-    <option value="${escapeHtml(batch.id)}" ${batch.id === selectedBatchId ? "selected" : ""}>
-      ${escapeHtml(batch.label)} — ${escapeHtml(formatYield(batch))}
-    </option>
+    <label class="batch-option">
+      <input type="radio" class="${className}" name="${escapeHtml(groupName)}" value="${escapeHtml(batch.id)}" data-recipe-id="${escapeHtml(recipe.id)}" ${batch.id === selectedBatchId ? "checked" : ""}>
+      <span class="batch-option-copy">
+        <strong>${escapeHtml(batch.label)}</strong>
+        <small>${escapeHtml(formatYield(batch))}</small>
+      </span>
+    </label>
   `).join("");
 
   return `
-    <label class="field-label">
-      <span>${escapeHtml(labelText)}</span>
-      <select class="${className}" data-recipe-id="${escapeHtml(recipe.id)}">${options}</select>
-    </label>
+    <fieldset class="batch-options">
+      <legend>${escapeHtml(labelText)}</legend>
+      <div class="batch-option-list">${options}</div>
+    </fieldset>
   `;
 }
 
@@ -359,7 +374,7 @@ function renderPlan() {
     weekList.innerHTML = currentWeek.selections.map(selection => {
       const { recipe, batch } = getSelectedRecipeData(selection);
       return `
-        <article class="card plan-item">
+        <article class="card plan-item selected-recipe">
           <div class="section-heading">
             <div>
               <h3>${escapeHtml(recipe.title)}</h3>
@@ -368,7 +383,7 @@ function renderPlan() {
             <button class="ghost small" type="button" data-action="remove-recipe" data-recipe-id="${escapeHtml(recipe.id)}">Remove</button>
           </div>
           ${recipe.batchOptions.length > 1
-            ? batchSelectMarkup(recipe, batch.id, "plan-batch-select", "Change batch")
+            ? batchOptionsMarkup(recipe, batch.id, "plan-batch-option", `plan-batch-${recipe.id}`, "Change batch")
             : `<p class="batch-label"><strong>${escapeHtml(batch.label)}</strong> · ${escapeHtml(formatYield(batch))}</p>`}
           ${choiceControlsMarkup(selection, batch)}
           ${storageMarkup(batch)}
@@ -396,20 +411,23 @@ function matchesSearch(recipe, query) {
   return tokens.every(token => searchable.includes(token));
 }
 
-function addRecipeCardMarkup(recipe, source) {
-  const selection = getSelection(recipe.id);
+function recipeCardMarkup(recipe, source) {
+  const isPlanPicker = source === "plan";
+  const selection = isPlanPicker ? getSelection(recipe.id) : null;
   const defaultBatch = recipe.batchOptions[0];
-  const control = selection
-    ? `<button class="secondary in-plan-button" type="button" data-action="view-plan">In this week's plan</button>`
-    : `
-      ${recipe.batchOptions.length > 1 ? batchSelectMarkup(recipe, defaultBatch.id, "add-batch-select") : ""}
-      <button type="button" data-action="add-recipe" data-recipe-id="${escapeHtml(recipe.id)}" data-source="${escapeHtml(source)}">
-        Add to week${recipe.batchOptions.length === 1 ? ` · ${escapeHtml(defaultBatch.label)}` : ""}
-      </button>
-    `;
+  const control = isPlanPicker
+    ? selection
+      ? `<button class="secondary in-plan-button" type="button" data-action="view-plan">In this week's plan</button>`
+      : `
+        ${recipe.batchOptions.length > 1 ? batchOptionsMarkup(recipe, defaultBatch.id, "add-batch-option", `add-batch-${source}-${recipe.id}`) : ""}
+        <button type="button" data-action="add-recipe" data-recipe-id="${escapeHtml(recipe.id)}" data-source="${escapeHtml(source)}">
+          Add to week${recipe.batchOptions.length === 1 ? ` · ${escapeHtml(defaultBatch.label)} · ${escapeHtml(formatYield(defaultBatch))}` : ""}
+        </button>
+      `
+    : "";
 
   return `
-    <article class="card recipe-card" data-recipe-card="${escapeHtml(recipe.id)}">
+    <article class="card recipe-card ${selection ? "selected-recipe" : ""}" ${isPlanPicker ? `data-recipe-card="${escapeHtml(recipe.id)}"` : ""}>
       <div class="section-heading">
         <div>
           <h3>${escapeHtml(recipe.title)}</h3>
@@ -418,7 +436,7 @@ function addRecipeCardMarkup(recipe, source) {
         ${recipe.trial ? `<span class="tag trial-tag">Trial</span>` : ""}
       </div>
       <div class="tags">${recipe.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
-      <div class="recipe-action">${control}</div>
+      ${control ? `<div class="recipe-action">${control}</div>` : ""}
       ${recipeDetailsMarkup(recipe)}
     </article>
   `;
@@ -426,13 +444,13 @@ function addRecipeCardMarkup(recipe, source) {
 
 function renderPlanRecipeBrowser() {
   const query = document.getElementById("planRecipeSearch").value;
-  const group = document.getElementById("planGroupFilter").value;
+  renderGroupFilters("planRecipeFilters", activePlanFilter, "filter-plan-recipes");
   const filtered = recipes.filter(recipe =>
-    matchesSearch(recipe, query) && (group === "all" || recipe.group === group)
+    matchesSearch(recipe, query) && (activePlanFilter === "all" || recipe.group === activePlanFilter)
   );
 
   document.getElementById("planRecipeList").innerHTML = filtered
-    .map(recipe => addRecipeCardMarkup(recipe, "plan"))
+    .map(recipe => recipeCardMarkup(recipe, "plan"))
     .join("") || `<div class="card empty">No recipes found.</div>`;
 }
 
@@ -656,10 +674,10 @@ function renderShoppingList() {
     : "Build this week's plan to create a list.";
 
   document.getElementById("shoppingList").innerHTML = currentWeek.selections.length
-    ? [
+      ? [
         shoppingSectionMarkup("To buy", toBuy, "buy", hideBought && toBuyAll.length ? "All required items are bought." : "Nothing required to buy."),
-        shoppingSectionMarkup("At home", atHomeItems, "home", "No required items are marked At home."),
-        shoppingSectionMarkup("Optional", optional, "optional", hideBought && optionalAll.length ? "All optional items are bought." : "No optional items this week.")
+        shoppingSectionMarkup("Optional", optional, "optional", hideBought && optionalAll.length ? "All optional items are bought." : "No optional items this week."),
+        shoppingSectionMarkup("At home", atHomeItems, "home", "No required items are marked At home.")
       ].join("")
     : `<div class="card empty">Add recipes in Plan to build the shopping list.</div>`;
 }
@@ -701,11 +719,15 @@ function showCopyStatus(message) {
   window.setTimeout(() => { status.textContent = ""; }, 1800);
 }
 
-function renderCook() {
+function renderCookSummary() {
   const cookedCount = currentWeek.selections.filter(selection => selection.cooked).length;
   document.getElementById("cookSummary").textContent = currentWeek.selections.length
     ? `${cookedCount} of ${currentWeek.selections.length} cooking occasion${currentWeek.selections.length === 1 ? "" : "s"} completed.`
     : "Only recipes in this week's plan appear here.";
+}
+
+function renderCook() {
+  renderCookSummary();
 
   document.getElementById("cookList").innerHTML = currentWeek.selections.length
     ? currentWeek.selections.map(selection => {
@@ -724,46 +746,50 @@ function renderCook() {
               </label>
             </div>
             ${storageMarkup(batch)}
-            ${ingredientGroups.map(group => `
-              <section class="recipe-detail-block">
-                <h3>${escapeHtml(group.label)}</h3>
-                <ul>${group.ingredients.map(ingredientLineMarkup).join("")}</ul>
-              </section>
-            `).join("")}
-            <section class="recipe-detail-block">
-              <h3>Steps</h3>
-              <ol class="steps">${recipe.steps.map(step => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
-            </section>
-            ${(batch.notes || []).length || recipe.notes.length ? `
-              <section class="recipe-detail-block">
-                <h3>Notes</h3>
-                <ul>${[...(batch.notes || []), ...recipe.notes].map(note => `<li>${escapeHtml(note)}</li>`).join("")}</ul>
-              </section>
-            ` : ""}
+            <details class="cook-details">
+              <summary><span class="show-recipe-label">Show recipe</span><span class="hide-recipe-label">Hide recipe</span></summary>
+              <div class="cook-details-body">
+                ${ingredientGroups.map(group => `
+                  <section class="recipe-detail-block">
+                    <h3>${escapeHtml(group.label)}</h3>
+                    <ul>${group.ingredients.map(ingredientLineMarkup).join("")}</ul>
+                  </section>
+                `).join("")}
+                <section class="recipe-detail-block">
+                  <h3>Steps</h3>
+                  <ol class="steps">${recipe.steps.map(step => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
+                </section>
+                ${(batch.notes || []).length || recipe.notes.length ? `
+                  <section class="recipe-detail-block">
+                    <h3>Notes</h3>
+                    <ul>${[...(batch.notes || []), ...recipe.notes].map(note => `<li>${escapeHtml(note)}</li>`).join("")}</ul>
+                  </section>
+                ` : ""}
+              </div>
+            </details>
           </article>
         `;
       }).join("")
     : `<div class="card empty">Add recipes in Plan before you start cooking.</div>`;
 }
 
-function renderRecipeFilters() {
-  const groups = ["all", ...new Set(recipes.map(recipe => recipe.group))];
-  document.getElementById("recipeFilters").innerHTML = groups.map(group => `
-    <button class="filter-chip ${activeRecipeFilter === group ? "active" : ""}" type="button" data-action="filter-recipes" data-filter="${escapeHtml(group)}">
+function renderGroupFilters(containerId, activeFilter, action) {
+  document.getElementById(containerId).innerHTML = RECIPE_GROUPS.map(group => `
+    <button class="filter-chip ${activeFilter === group ? "active" : ""}" type="button" data-action="${escapeHtml(action)}" data-filter="${escapeHtml(group)}" aria-pressed="${activeFilter === group}">
       ${escapeHtml(group === "all" ? "All" : group)}
     </button>
   `).join("");
 }
 
 function renderRecipes() {
-  renderRecipeFilters();
+  renderGroupFilters("recipeFilters", activeRecipeFilter, "filter-recipes");
   const query = document.getElementById("recipeSearch").value;
   const filtered = recipes.filter(recipe =>
     matchesSearch(recipe, query) && (activeRecipeFilter === "all" || recipe.group === activeRecipeFilter)
   );
 
   document.getElementById("recipeList").innerHTML = filtered
-    .map(recipe => addRecipeCardMarkup(recipe, "recipes"))
+    .map(recipe => recipeCardMarkup(recipe, "recipes"))
     .join("") || `<div class="card empty">No recipes found.</div>`;
 }
 
@@ -849,7 +875,6 @@ function setupEvents() {
 
   document.getElementById("newWeekBtn").addEventListener("click", startNewWeek);
   document.getElementById("planRecipeSearch").addEventListener("input", renderPlanRecipeBrowser);
-  document.getElementById("planGroupFilter").addEventListener("change", renderPlanRecipeBrowser);
   document.getElementById("recipeSearch").addEventListener("input", renderRecipes);
   document.getElementById("copyShoppingBtn").addEventListener("click", copyShoppingList);
 
@@ -874,7 +899,7 @@ function setupEvents() {
 
     if (action === "add-recipe") {
       const card = button.closest("[data-recipe-card]");
-      const selectedBatch = card?.querySelector(".add-batch-select")?.value;
+      const selectedBatch = card?.querySelector(".add-batch-option:checked")?.value;
       addRecipeToWeek(recipeId, selectedBatch);
     } else if (action === "remove-recipe") {
       removeRecipeFromWeek(recipeId);
@@ -888,11 +913,14 @@ function setupEvents() {
     } else if (action === "filter-recipes") {
       activeRecipeFilter = button.dataset.filter;
       renderRecipes();
+    } else if (action === "filter-plan-recipes") {
+      activePlanFilter = button.dataset.filter;
+      renderPlanRecipeBrowser();
     }
   });
 
   document.addEventListener("change", event => {
-    if (event.target.matches(".plan-batch-select")) {
+    if (event.target.matches(".plan-batch-option")) {
       changeRecipeBatch(event.target.dataset.recipeId, event.target.value);
     } else if (event.target.matches(".choice-select")) {
       const selection = getSelection(event.target.dataset.recipeId);
@@ -914,7 +942,11 @@ function setupEvents() {
       if (!selection) return;
       selection.cooked = event.target.checked;
       saveCurrentWeek();
-      renderCook();
+      const card = event.target.closest(".cook-card");
+      card?.classList.toggle("cooked", selection.cooked);
+      const label = event.target.nextElementSibling;
+      if (label) label.textContent = selection.cooked ? "Cooked" : "Mark cooked";
+      renderCookSummary();
     }
   });
 }
@@ -932,10 +964,6 @@ async function init() {
   saveCurrentWeek();
   saveAtHome();
 
-  const groups = [...new Set(recipes.map(recipe => recipe.group))];
-  document.getElementById("planGroupFilter").innerHTML = ["all", ...groups]
-    .map(group => `<option value="${escapeHtml(group)}">${escapeHtml(group === "all" ? "All groups" : group)}</option>`)
-    .join("");
   document.getElementById("hideBoughtToggle").checked = localStorage.getItem(STORAGE_KEYS.hideBought) === "true";
 
   setupEvents();
