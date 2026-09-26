@@ -1,4 +1,4 @@
-const CACHE_NAME = "maia-meal-planner-v2-5";
+const CACHE_NAME = "maia-meal-planner-v2-7";
 const ASSETS = [
   "./",
   "index.html",

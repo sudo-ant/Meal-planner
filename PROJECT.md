@@ -40,7 +40,7 @@ Cook contains only recipes selected for the current week. It shows the chosen ba
 
 ### Recipes
 
-Recipes is a browse-only reference library containing the complete 43-recipe catalogue. Search uses AND token matching across titles, groups, tags, and ingredient names, while recipe details expose the approved batches and instructions. Weekly recipe selection remains in Plan.
+Recipes is a browse-only reference library containing the complete 48-recipe catalogue. Search uses AND token matching across titles, groups, tags, and ingredient names, while recipe details expose the approved batches and instructions. Weekly recipe selection remains in Plan.
 
 ### Weight
 
@@ -60,8 +60,8 @@ Required and optional quantities remain separate. Leftover-only requirements do 
 
 ## Data
 
-- `data/recipes.json` contains 43 recipes, explicit batches, ingredients, choices, yields, storage metadata, steps, and notes.
-- `data/ingredients.json` contains canonical ingredient identities, shopping metadata, aggregation rules, and supermarket packs.
+- `data/recipes.json` contains 48 recipes, explicit batches, ingredients, choices, yields, storage metadata, steps, and notes. The current catalogue includes eight trial recipes added during Maia's recipe review and excludes three recipes removed in that review.
+- `data/ingredients.json` contains 81 canonical ingredient identities, shopping metadata, aggregation rules, and supermarket packs.
 
 Run `node scripts/validate-data.mjs` to validate both files and all cross-references.
 

@@ -693,14 +693,24 @@
   },
   {
     "id": "pumpkin",
-    "name": "Pumpkin",
-    "category": "Vegetables",
+    "name": "Frozen pumpkin chunks",
+    "category": "Frozen",
     "shopping": true,
-    "atHomeCandidate": false,
+    "atHomeCandidate": true,
     "aggregation": {
       "mode": "sum",
       "unit": "g"
-    }
+    },
+    "packs": [
+      {
+        "id": "frozen_pumpkin_750g",
+        "label": "Frozen pumpkin chunks — 750 g",
+        "shopHint": "Abóbora aos Pedaços Continente",
+        "amount": 750,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
   },
   {
     "id": "lemon",
@@ -941,6 +951,204 @@
     "shopping": true,
     "atHomeCandidate": false,
     "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "grated_cheese_200g",
+        "label": "Grated cheese — 200 g",
+        "shopHint": "Queijo Ralado para Gratinar Continente",
+        "amount": 200,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "chicken_mince",
+    "name": "Chicken mince",
+    "category": "Meat",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "chicken_mince_400g",
+        "label": "Chicken mince — 400 g",
+        "shopHint": "Preparado de Carne Picada de Frango Lusiaves",
+        "amount": 400,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "risotto_rice",
+    "name": "Risotto rice",
+    "category": "Dry goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "risotto_rice_500g",
+        "label": "Risotto rice — 500 g",
+        "shopHint": "Arroz Risotto Continente",
+        "amount": 500,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "parmesan",
+    "name": "Parmesan",
+    "category": "Dairy",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "parmesan_60g",
+        "label": "Grated Parmesan — 60 g",
+        "shopHint": "Queijo Parmigiano Reggiano DOP Ralado Continente Seleção",
+        "amount": 60,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "fresh_basil",
+    "name": "Fresh basil",
+    "category": "Herbs",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "fresh_basil_20g",
+        "label": "Fresh basil — 20 g",
+        "shopHint": "Manjericão Fresco Continente",
+        "amount": 20,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "thai_red_curry_paste",
+    "name": "Thai red curry paste",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "oyster_sauce",
+    "name": "Oyster sauce",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    },
+    "packs": [
+      {
+        "id": "oyster_sauce_255g",
+        "label": "Oyster sauce — about 255 g",
+        "shopHint": "Molho de Ostras Premium Lee Kum Kee",
+        "amount": 255,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "plain_panko",
+    "name": "Plain panko",
+    "category": "Dry goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "plain_panko_150g",
+        "label": "Plain panko — 150 g",
+        "shopHint": "Farinha Panko Saitaku",
+        "amount": 150,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "plain_flour",
+    "name": "Plain flour",
+    "category": "Dry goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "plain_flour_1kg",
+        "label": "Plain flour — 1 kg",
+        "shopHint": "Farinha de Trigo T55 Sem Fermento Continente",
+        "amount": 1000,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "japanese_curry_roux",
+    "name": "Japanese curry roux",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "japanese_curry_roux_92g",
+        "label": "Japanese curry roux — 92 g",
+        "shopHint": "S&B Golden Curry Mix 92 g or similar — Asian supermarket",
+        "amount": 92,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "sugar",
+    "name": "Sugar",
+    "category": "Seasoning",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
       "mode": "presence"
     }
   },
@@ -952,6 +1160,58 @@
     "atHomeCandidate": false,
     "aggregation": {
       "mode": "none"
+    }
+  },
+  {
+    "id": "sun_dried_tomatoes",
+    "name": "Sun-dried tomatoes",
+    "category": "Tinned goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "sun_dried_tomatoes_115g",
+        "label": "Sun-dried tomatoes — about 115 g drained",
+        "shopHint": "Tomate Seco em Óleo — small jar, about 115 g drained",
+        "amount": 115,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "bacon",
+    "name": "Bacon",
+    "category": "Meat",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "bacon_150g",
+        "label": "Bacon strips — 150 g",
+        "shopHint": "Bacon em Tiras Continente or similar",
+        "amount": 150,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "dried_thyme",
+    "name": "Dried thyme",
+    "category": "Seasoning",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
     }
   }
 ]

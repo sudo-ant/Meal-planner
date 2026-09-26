@@ -1415,8 +1415,11 @@
           },
           {
             "ingredientId": "pumpkin",
-            "status": "optional",
-            "display": "Pumpkin, optional"
+            "status": "required",
+            "amount": 250,
+            "unit": "g",
+            "display": "250 g frozen pumpkin chunks",
+            "preferredPackId": "frozen_pumpkin_750g"
           },
           {
             "ingredientId": "vegetable_oil",
@@ -1512,8 +1515,11 @@
           },
           {
             "ingredientId": "pumpkin",
-            "status": "optional",
-            "display": "Pumpkin, optional"
+            "status": "required",
+            "amount": 500,
+            "unit": "g",
+            "display": "500 g frozen pumpkin chunks",
+            "preferredPackId": "frozen_pumpkin_750g"
           },
           {
             "ingredientId": "vegetable_oil",
@@ -1550,14 +1556,15 @@
     "steps": [
       "Heat the curry paste with a little oil for about 1 minute if needed.",
       "Add the coconut milk, water and stock cube and bring gently to a simmer.",
-      "Add the chicken and green beans.",
-      "If using pumpkin, add small cubes early enough to cook through.",
-      "Simmer until the chicken is cooked and the beans are tender.",
+      "Add the chicken and fresh green beans and simmer for about 5 minutes.",
+      "Add the frozen pumpkin directly from frozen.",
+      "Continue simmering for about 8–10 minutes, until the chicken is fully cooked, the beans are tender and the pumpkin is just tender.",
       "Add fish sauce at the end if using.",
       "Taste and add more curry paste only if needed."
     ],
     "notes": [
-      "This curry is intentionally very saucy. Fresh green beans are excellent; frozen green beans are also fine."
+      "This curry is intentionally very saucy. Fresh green beans are excellent; frozen green beans are also fine.",
+      "If using frozen green beans instead of fresh, add the frozen beans at the same time as the frozen pumpkin, not with the chicken."
     ]
   },
   {
@@ -1658,6 +1665,831 @@
     ],
     "notes": [
       "Use the 3 L non-stick pot if the frying pan feels too crowded."
+    ]
+  },
+  {
+    "id": "thai_chicken_meatballs_coconut_curry",
+    "title": "Thai Chicken Meatballs in Coconut Curry",
+    "group": "Chicken",
+    "tags": [
+      "one-pot",
+      "batch",
+      "freezer-friendly",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One 400 g mince pack",
+        "yield": {
+          "min": 4,
+          "max": 4
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "yes"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "chicken_mince",
+            "status": "required",
+            "amount": 400,
+            "unit": "g",
+            "display": "1 × 400 g pack chicken mince",
+            "preferredPackId": "chicken_mince_400g"
+          },
+          {
+            "ingredientId": "plain_panko",
+            "status": "required",
+            "amount": 30,
+            "unit": "g",
+            "display": "About 30 g plain panko",
+            "preferredPackId": "plain_panko_150g"
+          },
+          {
+            "ingredientId": "eggs",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 egg"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 2,
+            "unit": "clove",
+            "display": "2 garlic cloves, divided"
+          },
+          {
+            "ingredientId": "ginger",
+            "status": "required",
+            "display": "About 2 tsp grated ginger, divided"
+          },
+          {
+            "ingredientId": "thai_red_curry_paste",
+            "status": "required",
+            "amount": 2,
+            "unit": "tbsp",
+            "display": "2 tbsp Thai red curry paste, divided"
+          },
+          {
+            "ingredientId": "coconut_milk",
+            "status": "required",
+            "amount": 400,
+            "unit": "ml",
+            "display": "1 × 400 ml tin coconut milk",
+            "preferredPackId": "coconut_milk_400ml"
+          },
+          {
+            "ingredientId": "water",
+            "status": "required",
+            "amount": 0.75,
+            "unit": "mug",
+            "display": "¾ mug water"
+          },
+          {
+            "ingredientId": "stock_cube",
+            "status": "required",
+            "amount": 0.5,
+            "unit": "cube",
+            "display": "½ stock cube"
+          },
+          {
+            "ingredientId": "frozen_spinach",
+            "status": "required",
+            "amount": 250,
+            "unit": "g",
+            "display": "About 250 g frozen spinach"
+          },
+          {
+            "ingredientId": "lime",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 lime"
+          },
+          {
+            "ingredientId": "vegetable_oil",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp oil"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper"
+          },
+          {
+            "ingredientId": "fish_sauce",
+            "status": "optional",
+            "amount": 1,
+            "unit": "tbsp",
+            "display": "1 tbsp fish sauce, optional"
+          },
+          {
+            "ingredientId": "fresh_coriander",
+            "status": "optional",
+            "display": "Small handful coriander, optional"
+          }
+        ],
+        "choices": [
+          {
+            "id": "rice",
+            "label": "Optional rice",
+            "required": false,
+            "options": [
+              {
+                "id": "rice",
+                "label": "Rice",
+                "ingredients": [
+                  {
+                    "ingredientId": "rice",
+                    "status": "required",
+                    "amount": 0.5,
+                    "unit": "mug",
+                    "display": "½ mug uncooked rice"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "steps": [
+      "Mix the chicken mince with the panko, egg, 1 crushed garlic clove, half the ginger, 1 tbsp red curry paste and black pepper.",
+      "Shape into roughly 14–16 small meatballs.",
+      "Heat the oil in the 3 L pot. Add the remaining garlic, ginger and curry paste and cook for about 30 seconds.",
+      "Add the coconut milk, water and stock cube and bring gently to a simmer.",
+      "Add the meatballs carefully. Cover and simmer gently for about 15–18 minutes, turning once if needed, until completely cooked.",
+      "Add the frozen spinach and cook for another 4–5 minutes.",
+      "Stir in the lime juice and optional fish sauce. Taste before adding anything else.",
+      "Serve with optional rice and coriander."
+    ],
+    "notes": [
+      "The curry should have a generous amount of sauce.",
+      "Add a small splash of water if it becomes too thick.",
+      "Suitable for freezing in portions once cooled."
+    ]
+  },
+  {
+    "id": "basil_chicken_coconut_curry",
+    "title": "Basil Chicken in Coconut Curry Sauce",
+    "group": "Chicken",
+    "tags": [
+      "one-pot",
+      "batch",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "half_pack",
+        "label": "Half chicken pack",
+        "yield": {
+          "min": 3,
+          "max": 4
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "conditional"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "chicken_breast",
+            "status": "required",
+            "amount": 350,
+            "unit": "g",
+            "display": "½ of a 700 g chicken breast pack — about 350 g",
+            "preferredPackId": "chicken_breast_700g"
+          },
+          {
+            "ingredientId": "coconut_milk",
+            "status": "required",
+            "amount": 400,
+            "unit": "ml",
+            "display": "1 × 400 ml tin coconut milk"
+          },
+          {
+            "ingredientId": "fresh_basil",
+            "status": "required",
+            "amount": 20,
+            "unit": "g",
+            "display": "1 × 20 g pack fresh basil",
+            "preferredPackId": "fresh_basil_20g"
+          },
+          {
+            "ingredientId": "onion",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 small onion"
+          },
+          {
+            "ingredientId": "bell_pepper",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 pepper"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 2,
+            "unit": "clove",
+            "display": "2 garlic cloves"
+          },
+          {
+            "ingredientId": "ginger",
+            "status": "required",
+            "display": "About 1 tbsp grated ginger"
+          },
+          {
+            "ingredientId": "curry_powder",
+            "status": "required",
+            "amount": 2,
+            "unit": "tsp",
+            "display": "2 tsp curry powder"
+          },
+          {
+            "ingredientId": "cumin",
+            "status": "required",
+            "amount": 0.5,
+            "unit": "tsp",
+            "display": "½ tsp cumin"
+          },
+          {
+            "ingredientId": "paprika",
+            "status": "required",
+            "amount": 0.5,
+            "unit": "tsp",
+            "display": "½ tsp paprika"
+          },
+          {
+            "ingredientId": "vegetable_oil",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp oil"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper"
+          },
+          {
+            "ingredientId": "salt",
+            "status": "required",
+            "display": "Salt"
+          },
+          {
+            "ingredientId": "fresh_chilli",
+            "status": "optional",
+            "display": "Fresh chilli, optional"
+          }
+        ],
+        "choices": [
+          {
+            "id": "rice",
+            "label": "Optional rice",
+            "required": false,
+            "options": [
+              {
+                "id": "rice",
+                "label": "Rice",
+                "ingredients": [
+                  {
+                    "ingredientId": "rice",
+                    "status": "required",
+                    "amount": 0.5,
+                    "unit": "mug",
+                    "display": "½ mug uncooked rice"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "full_pack",
+        "label": "Full chicken pack",
+        "yield": {
+          "min": 6,
+          "max": 8
+        },
+        "storage": {
+          "size": "large_batch",
+          "freezer": "conditional"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "chicken_breast",
+            "status": "required",
+            "amount": 700,
+            "unit": "g",
+            "display": "1 × 700 g chicken breast pack",
+            "preferredPackId": "chicken_breast_700g"
+          },
+          {
+            "ingredientId": "coconut_milk",
+            "status": "required",
+            "amount": 800,
+            "unit": "ml",
+            "display": "2 × 400 ml tins coconut milk"
+          },
+          {
+            "ingredientId": "fresh_basil",
+            "status": "required",
+            "amount": 40,
+            "unit": "g",
+            "display": "2 × 20 g packs fresh basil",
+            "preferredPackId": "fresh_basil_20g"
+          },
+          {
+            "ingredientId": "onion",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 large onion"
+          },
+          {
+            "ingredientId": "bell_pepper",
+            "status": "required",
+            "amount": 2,
+            "unit": "piece",
+            "display": "2 peppers"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 4,
+            "unit": "clove",
+            "display": "4 garlic cloves"
+          },
+          {
+            "ingredientId": "ginger",
+            "status": "required",
+            "display": "About 2 tbsp grated ginger"
+          },
+          {
+            "ingredientId": "curry_powder",
+            "status": "required",
+            "amount": 4,
+            "unit": "tsp",
+            "display": "4 tsp curry powder"
+          },
+          {
+            "ingredientId": "cumin",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp cumin"
+          },
+          {
+            "ingredientId": "paprika",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp paprika"
+          },
+          {
+            "ingredientId": "vegetable_oil",
+            "status": "required",
+            "amount": 2,
+            "unit": "tsp",
+            "display": "2 tsp oil"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper"
+          },
+          {
+            "ingredientId": "salt",
+            "status": "required",
+            "display": "Salt"
+          },
+          {
+            "ingredientId": "fresh_chilli",
+            "status": "optional",
+            "display": "Fresh chilli, optional"
+          }
+        ],
+        "choices": [
+          {
+            "id": "rice",
+            "label": "Optional rice",
+            "required": false,
+            "options": [
+              {
+                "id": "rice",
+                "label": "Rice",
+                "ingredients": [
+                  {
+                    "ingredientId": "rice",
+                    "status": "required",
+                    "amount": 1,
+                    "unit": "mug",
+                    "display": "1 mug uncooked rice"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "steps": [
+      "Cut the chicken into bite-sized pieces and toss with the curry powder, cumin, paprika and black pepper.",
+      "Heat the oil in the pot and brown the chicken. For the large batch, do this in two rounds if necessary. Remove temporarily.",
+      "Cook the onion and pepper for about 4 minutes.",
+      "Add garlic, ginger and optional chilli and cook for about 30 seconds.",
+      "Return the chicken and add the coconut milk.",
+      "Simmer gently for about 10–12 minutes until the chicken is cooked and the sauce has reduced slightly.",
+      "Stir in the fresh basil for the final minute.",
+      "Taste and season. Serve alone or with the selected rice."
+    ],
+    "notes": [
+      "This is intentionally different from Thai Green Chicken Curry: curry powder and spices + fresh basil are the main flavour, not Thai green curry paste.",
+      "Thai basil from the Asian supermarket is excellent when available; normal fresh basil from Continente is a good practical substitute.",
+      "For freezing, preferably freeze the curry before adding fresh basil and add fresh basil when reheating."
+    ]
+  },
+  {
+    "id": "creamy_chicken_pea_lemon_risotto",
+    "title": "Creamy Chicken, Pea & Lemon Risotto",
+    "group": "Chicken",
+    "tags": [
+      "one-pot",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One batch",
+        "yield": {
+          "min": 4,
+          "max": 4
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "no"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "chicken_breast",
+            "status": "required",
+            "amount": 350,
+            "unit": "g",
+            "display": "½ of a 700 g chicken breast pack — about 350 g"
+          },
+          {
+            "ingredientId": "risotto_rice",
+            "status": "required",
+            "amount": 250,
+            "unit": "g",
+            "display": "½ of a 500 g pack risotto rice — 250 g",
+            "preferredPackId": "risotto_rice_500g"
+          },
+          {
+            "ingredientId": "frozen_peas",
+            "status": "required",
+            "amount": 200,
+            "unit": "g",
+            "display": "200 g frozen peas"
+          },
+          {
+            "ingredientId": "parmesan",
+            "status": "required",
+            "amount": 60,
+            "unit": "g",
+            "display": "1 × 60 g pack grated Parmesan",
+            "preferredPackId": "parmesan_60g"
+          },
+          {
+            "ingredientId": "lemon",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 lemon"
+          },
+          {
+            "ingredientId": "onion",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 small onion"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 1,
+            "unit": "clove",
+            "display": "1 garlic clove"
+          },
+          {
+            "ingredientId": "water",
+            "status": "required",
+            "amount": 3,
+            "unit": "mug",
+            "display": "3 mugs hot water"
+          },
+          {
+            "ingredientId": "stock_cube",
+            "status": "required",
+            "amount": 2,
+            "unit": "cube",
+            "display": "2 stock cubes"
+          },
+          {
+            "ingredientId": "olive_oil",
+            "status": "required",
+            "amount": 1,
+            "unit": "tbsp",
+            "display": "1 tbsp olive oil"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper"
+          },
+          {
+            "ingredientId": "salt",
+            "status": "required",
+            "display": "Salt, if needed"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Cut the chicken into small pieces.",
+      "Heat half the oil in the 3 L pot and cook the chicken until just cooked through. Remove to a plate.",
+      "Add the remaining oil and soften the onion for about 4 minutes. Add the garlic for the final 30 seconds.",
+      "Add the risotto rice and stir for about 1 minute.",
+      "Dissolve the stock cubes in the 3 mugs of hot water.",
+      "Add the stock gradually, stirring regularly and letting each addition absorb before adding more. Continue for about 18–20 minutes until the rice is creamy but still has a little bite.",
+      "During the final 4–5 minutes, return the chicken and add the peas.",
+      "Remove from the heat. Stir in the Parmesan, lemon zest and some of the lemon juice.",
+      "Taste, add more lemon if wanted, season with pepper and rest for 2 minutes before serving."
+    ],
+    "notes": [
+      "\"Creamy\" describes the risotto texture; no cream is required.",
+      "Best eaten freshly cooked.",
+      "Refrigerate leftovers promptly and reheat with a small splash of water.",
+      "Do not mark freezer-friendly."
+    ]
+  },
+  {
+    "id": "thai_drunken_noodles",
+    "title": "Thai Drunken Noodles (Pad Kee Mao)",
+    "group": "Chicken",
+    "tags": [
+      "pan",
+      "quick",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One pan batch",
+        "yield": {
+          "min": 3,
+          "max": 3
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "no"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "chicken_breast",
+            "status": "required",
+            "amount": 350,
+            "unit": "g",
+            "display": "½ of a 700 g chicken breast pack — about 350 g"
+          },
+          {
+            "ingredientId": "rice_noodles",
+            "status": "required",
+            "amount": 200,
+            "unit": "g",
+            "display": "About 200 g wide rice noodles"
+          },
+          {
+            "ingredientId": "fresh_basil",
+            "status": "required",
+            "amount": 20,
+            "unit": "g",
+            "display": "1 × 20 g pack fresh basil",
+            "preferredPackId": "fresh_basil_20g"
+          },
+          {
+            "ingredientId": "onion",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 small onion, sliced"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 3,
+            "unit": "clove",
+            "display": "3 garlic cloves"
+          },
+          {
+            "ingredientId": "fresh_chilli",
+            "status": "required",
+            "display": "1–2 fresh chillies, to taste"
+          },
+          {
+            "ingredientId": "oyster_sauce",
+            "status": "required",
+            "amount": 3,
+            "unit": "tbsp",
+            "display": "3 tbsp oyster sauce",
+            "preferredPackId": "oyster_sauce_255g"
+          },
+          {
+            "ingredientId": "soy_sauce",
+            "status": "required",
+            "amount": 2,
+            "unit": "tbsp",
+            "display": "2 tbsp soy sauce"
+          },
+          {
+            "ingredientId": "fish_sauce",
+            "status": "required",
+            "amount": 1,
+            "unit": "tbsp",
+            "display": "1 tbsp fish sauce"
+          },
+          {
+            "ingredientId": "sugar",
+            "status": "required",
+            "amount": 2,
+            "unit": "tsp",
+            "display": "2 tsp sugar"
+          },
+          {
+            "ingredientId": "vegetable_oil",
+            "status": "required",
+            "amount": 1,
+            "unit": "tbsp",
+            "display": "1 tbsp oil"
+          },
+          {
+            "ingredientId": "water",
+            "status": "required",
+            "amount": 2,
+            "unit": "tbsp",
+            "display": "2 tbsp water"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Prepare the rice noodles according to the packet, stopping while they still have a little bite. Drain.",
+      "Mix the oyster sauce, soy sauce, fish sauce, sugar and water before starting to fry.",
+      "Heat the 24 cm frying pan well.",
+      "Cook the chicken in two batches so the pan is not crowded, then remove it.",
+      "Add a little more of the measured oil if needed, then fry the garlic, chilli and onion for about 1–2 minutes.",
+      "Return the chicken and add the noodles and prepared sauce.",
+      "Toss over high heat for about 1–2 minutes until everything is hot and coated.",
+      "Turn off the heat, add the basil and toss just until wilted.",
+      "Serve immediately."
+    ],
+    "notes": [
+      "Have everything prepared before starting; this cooks very quickly.",
+      "Thai holy basil or Thai basil from the Chinese/Asian supermarket is ideal. Regular Continente basil is an acceptable fallback.",
+      "The batch is deliberately limited because Maia's frying pan is 24 cm.",
+      "Do not create a larger batch option.",
+      "Best eaten fresh; do not mark freezer-friendly."
+    ]
+  },
+  {
+    "id": "chicken_katsu_curry",
+    "title": "Chicken Katsu Curry",
+    "group": "Chicken",
+    "tags": [
+      "pan",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "half_pack",
+        "label": "Half chicken pack",
+        "yield": {
+          "min": 3,
+          "max": 3
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "conditional"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "chicken_breast",
+            "status": "required",
+            "amount": 350,
+            "unit": "g",
+            "display": "½ of a 700 g chicken breast pack — about 350 g"
+          },
+          {
+            "ingredientId": "plain_flour",
+            "status": "required",
+            "amount": 30,
+            "unit": "g",
+            "display": "About 30 g plain flour"
+          },
+          {
+            "ingredientId": "eggs",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 egg"
+          },
+          {
+            "ingredientId": "plain_panko",
+            "status": "required",
+            "amount": 50,
+            "unit": "g",
+            "display": "About 50 g plain panko",
+            "preferredPackId": "plain_panko_150g"
+          },
+          {
+            "ingredientId": "onion",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 small onion, sliced"
+          },
+          {
+            "ingredientId": "japanese_curry_roux",
+            "status": "required",
+            "amount": 55,
+            "unit": "g",
+            "display": "About 55 g Japanese curry roux — a little over half a 92 g box",
+            "preferredPackId": "japanese_curry_roux_92g"
+          },
+          {
+            "ingredientId": "water",
+            "status": "required",
+            "amount": 1.5,
+            "unit": "mug",
+            "display": "1½ mugs water"
+          },
+          {
+            "ingredientId": "vegetable_oil",
+            "status": "required",
+            "amount": 5,
+            "unit": "tbsp",
+            "display": "Oil for the curry and shallow-frying — about 5 tbsp total"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper"
+          },
+          {
+            "ingredientId": "salt",
+            "status": "required",
+            "display": "Salt"
+          },
+          {
+            "ingredientId": "rice",
+            "status": "required",
+            "amount": 0.5,
+            "unit": "mug",
+            "display": "½ mug uncooked rice"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Cook the rice separately.",
+      "For the curry sauce, heat about 1 tsp of the oil in a pot and cook the onion gently for about 5 minutes.",
+      "Add the water, bring to the boil, reduce the heat and simmer for about 10 minutes.",
+      "Turn the heat off. Add the Japanese curry roux and stir until fully dissolved. Return to a low heat for about 5 minutes, stirring until smooth and thickened.",
+      "Slice the chicken into roughly three thin cutlets and flatten any thick sections so they cook evenly. Season lightly.",
+      "Put the flour, beaten egg and panko into separate dishes.",
+      "Coat each chicken piece first in flour, then egg, then panko.",
+      "Heat a shallow layer of the remaining oil in the 24 cm frying pan. Fry the chicken in batches for about 3–4 minutes per side, or until golden and completely cooked through.",
+      "Drain briefly, slice and serve with the rice and curry sauce."
+    ],
+    "notes": [
+      "Japanese curry roux is intended as an Asian/Chinese-supermarket stock-up item; S&B Golden Curry 92 g is the reference pack but a similar Japanese curry roux is fine.",
+      "Plain panko can come from Continente or the Asian supermarket.",
+      "Curry sauce can be frozen; the fried katsu is best fresh. Therefore freezer status is conditional rather than yes."
     ]
   },
   {
@@ -3070,6 +3902,148 @@
     ]
   },
   {
+    "id": "cheesy_beef_tomato_rice",
+    "title": "Cheesy Beef & Tomato Rice",
+    "group": "Beef",
+    "tags": [
+      "one-pot",
+      "batch",
+      "freezer-friendly",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "full_pack",
+        "label": "Full mince pack",
+        "yield": {
+          "min": 4,
+          "max": 5
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "yes"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "beef_mince",
+            "status": "required",
+            "amount": 465,
+            "unit": "g",
+            "display": "1 × 465 g beef mince pack",
+            "preferredPackId": "beef_mince_465g"
+          },
+          {
+            "ingredientId": "rice",
+            "status": "required",
+            "amount": 0.75,
+            "unit": "mug",
+            "display": "¾ mug uncooked rice"
+          },
+          {
+            "ingredientId": "chopped_tomatoes",
+            "status": "required",
+            "amount": 400,
+            "unit": "g",
+            "display": "1 × 400 g tin chopped tomatoes",
+            "preferredPackId": "chopped_tomatoes_400g"
+          },
+          {
+            "ingredientId": "cheese",
+            "status": "required",
+            "amount": 200,
+            "unit": "g",
+            "display": "1 × 200 g pack grated cheese",
+            "preferredPackId": "grated_cheese_200g"
+          },
+          {
+            "ingredientId": "onion",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 medium onion"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 2,
+            "unit": "clove",
+            "display": "2 garlic cloves"
+          },
+          {
+            "ingredientId": "bell_pepper",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 pepper"
+          },
+          {
+            "ingredientId": "water",
+            "status": "required",
+            "amount": 1.5,
+            "unit": "mug",
+            "display": "1½ mugs water"
+          },
+          {
+            "ingredientId": "stock_cube",
+            "status": "required",
+            "amount": 1,
+            "unit": "cube",
+            "display": "1 stock cube"
+          },
+          {
+            "ingredientId": "paprika",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp paprika"
+          },
+          {
+            "ingredientId": "oregano",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp oregano"
+          },
+          {
+            "ingredientId": "olive_oil",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp oil"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper"
+          },
+          {
+            "ingredientId": "fresh_chilli",
+            "status": "optional",
+            "display": "Chilli, optional"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Heat the oil in the 3 L pot and soften the onion and pepper for about 4 minutes.",
+      "Add the beef and cook until browned, breaking it up as it cooks.",
+      "Add garlic, paprika, oregano and optional chilli and cook for about 30 seconds.",
+      "Stir in the rice, chopped tomatoes, water and stock cube.",
+      "Bring to the boil, reduce the heat, cover and simmer gently for about 15–18 minutes.",
+      "Check the rice. If still firm and the pot is dry, add a small splash of water and cook a little longer.",
+      "Turn off the heat and leave covered for 5 minutes.",
+      "Stir through about half the cheese.",
+      "Sprinkle the remaining cheese over the top, replace the lid and leave for 2–3 minutes until melted."
+    ],
+    "notes": [
+      "Designed around one complete 465 g beef-mince pack.",
+      "Deliberately not seasoned like the existing Beef & Black Bean Chilli.",
+      "Freezes well in portions."
+    ]
+  },
+  {
     "id": "tuna_veg_rice",
     "title": "Tuna & Vegetable Rice",
     "group": "Fish",
@@ -3704,6 +4678,144 @@
     ]
   },
   {
+    "id": "coconut_lime_tuna_rice",
+    "title": "Coconut-Lime Tuna Rice",
+    "group": "Fish",
+    "tags": [
+      "one-pot",
+      "batch",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One batch",
+        "yield": {
+          "min": 4,
+          "max": 4
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "no"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "tuna_natural",
+            "status": "required",
+            "amount": 270,
+            "unit": "g",
+            "display": "1 large tuna tin — about 385 g / 270 g drained",
+            "preferredPackId": "tuna_large_270g_drained"
+          },
+          {
+            "ingredientId": "rice",
+            "status": "required",
+            "amount": 1,
+            "unit": "mug",
+            "display": "1 mug uncooked rice"
+          },
+          {
+            "ingredientId": "coconut_milk",
+            "status": "required",
+            "amount": 400,
+            "unit": "ml",
+            "display": "1 × 400 ml tin coconut milk",
+            "preferredPackId": "coconut_milk_400ml"
+          },
+          {
+            "ingredientId": "water",
+            "status": "required",
+            "amount": 0.5,
+            "unit": "mug",
+            "display": "½ mug water"
+          },
+          {
+            "ingredientId": "stock_cube",
+            "status": "required",
+            "amount": 0.5,
+            "unit": "cube",
+            "display": "½ stock cube"
+          },
+          {
+            "ingredientId": "frozen_peas",
+            "status": "required",
+            "amount": 200,
+            "unit": "g",
+            "display": "200 g frozen peas"
+          },
+          {
+            "ingredientId": "onion",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 small onion"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 1,
+            "unit": "clove",
+            "display": "1 garlic clove"
+          },
+          {
+            "ingredientId": "lime",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 lime"
+          },
+          {
+            "ingredientId": "vegetable_oil",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp oil"
+          },
+          {
+            "ingredientId": "fresh_chilli",
+            "status": "optional",
+            "display": "Chilli, optional"
+          },
+          {
+            "ingredientId": "fresh_coriander",
+            "status": "optional",
+            "display": "Coriander, optional"
+          },
+          {
+            "ingredientId": "fish_sauce",
+            "status": "optional",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp fish sauce, optional"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Heat the oil in the pot and soften the onion for about 3–4 minutes.",
+      "Add the garlic and cook for about 30 seconds.",
+      "Add the rice, coconut milk, water and stock cube.",
+      "Bring to the boil, reduce to a gentle simmer, cover and cook until the rice is nearly tender.",
+      "Add the frozen peas for the final 5 minutes.",
+      "Turn off the heat and leave covered for 5 minutes.",
+      "Drain the tuna and fold it through gently.",
+      "Add the lime zest and juice, black pepper and optional chilli, coriander and fish sauce.",
+      "Replace the lid for 2–3 minutes so the tuna heats through, then serve."
+    ],
+    "notes": [
+      "If the liquid is absorbed before the rice is tender, add a small splash of water.",
+      "This is intentionally different from Tuna & Vegetable Rice: coconut and lime are the defining flavours.",
+      "Best fresh or refrigerated; do not mark freezer-friendly."
+    ]
+  },
+  {
     "id": "chickpea_spinach_curry",
     "title": "Chickpea & Spinach Curry",
     "group": "Vegetarian / Eggs",
@@ -4091,266 +5203,6 @@
     ]
   },
   {
-    "id": "lentil_vegetable_stew",
-    "title": "Lentil Vegetable Stew",
-    "group": "Vegetarian / Eggs",
-    "tags": [
-      "one-pot",
-      "batch",
-      "freezer-friendly"
-    ],
-    "trial": false,
-    "batchOptions": [
-      {
-        "id": "standard",
-        "label": "Standard batch",
-        "yield": {
-          "min": 4,
-          "max": 4
-        },
-        "storage": {
-          "size": "normal",
-          "freezer": "yes"
-        },
-        "ingredients": [
-          {
-            "ingredientId": "chopped_tomatoes",
-            "status": "required",
-            "amount": 400,
-            "unit": "g",
-            "display": "1 × 400 g tin chopped tomatoes",
-            "preferredPackId": "chopped_tomatoes_400g"
-          },
-          {
-            "ingredientId": "frozen_mixed_vegetables",
-            "status": "required",
-            "amount": 400,
-            "unit": "g",
-            "display": "400 g frozen vegetables"
-          },
-          {
-            "ingredientId": "garlic",
-            "status": "optional",
-            "amount": 1,
-            "unit": "clove",
-            "display": "1 garlic clove, optional"
-          },
-          {
-            "ingredientId": "paprika",
-            "status": "required",
-            "amount": 1,
-            "unit": "tsp",
-            "display": "1 tsp paprika"
-          },
-          {
-            "ingredientId": "cumin",
-            "status": "required",
-            "amount": 0.5,
-            "unit": "tsp",
-            "display": "½ tsp cumin"
-          },
-          {
-            "ingredientId": "black_pepper",
-            "status": "required",
-            "display": "Black pepper"
-          }
-        ],
-        "choices": [
-          {
-            "id": "lentil_type",
-            "label": "Choose lentils",
-            "required": true,
-            "options": [
-              {
-                "id": "red",
-                "label": "Red lentils",
-                "ingredients": [
-                  {
-                    "ingredientId": "red_lentils",
-                    "status": "required",
-                    "amount": 0.5,
-                    "unit": "mug",
-                    "display": "½ mug dry red lentils"
-                  },
-                  {
-                    "ingredientId": "water",
-                    "status": "required",
-                    "amount": 1.5,
-                    "unit": "mug",
-                    "display": "1½ mugs water"
-                  },
-                  {
-                    "ingredientId": "stock_cube",
-                    "status": "required",
-                    "amount": 0.5,
-                    "unit": "cube",
-                    "display": "½ stock cube"
-                  }
-                ]
-              },
-              {
-                "id": "green",
-                "label": "Green/brown lentils",
-                "ingredients": [
-                  {
-                    "ingredientId": "green_lentils",
-                    "status": "required",
-                    "amount": 0.5,
-                    "unit": "mug",
-                    "display": "½ mug dry green/brown lentils"
-                  },
-                  {
-                    "ingredientId": "water",
-                    "status": "required",
-                    "amount": 2,
-                    "unit": "mug",
-                    "display": "2 mugs water"
-                  },
-                  {
-                    "ingredientId": "stock_cube",
-                    "status": "required",
-                    "amount": 0.5,
-                    "unit": "cube",
-                    "display": "½ stock cube"
-                  }
-                ]
-              }
-            ],
-            "defaultOptionId": "red"
-          }
-        ]
-      },
-      {
-        "id": "large",
-        "label": "Large batch",
-        "yield": {
-          "min": 8,
-          "max": 8
-        },
-        "storage": {
-          "size": "large_batch",
-          "freezer": "yes"
-        },
-        "ingredients": [
-          {
-            "ingredientId": "chopped_tomatoes",
-            "status": "required",
-            "amount": 800,
-            "unit": "g",
-            "display": "2 × 400 g tins chopped tomatoes",
-            "preferredPackId": "chopped_tomatoes_400g"
-          },
-          {
-            "ingredientId": "frozen_mixed_vegetables",
-            "status": "required",
-            "amount": 750,
-            "unit": "g",
-            "display": "750 g frozen vegetables"
-          },
-          {
-            "ingredientId": "garlic",
-            "status": "optional",
-            "amount": 2,
-            "unit": "clove",
-            "display": "2 garlic cloves, optional"
-          },
-          {
-            "ingredientId": "paprika",
-            "status": "required",
-            "amount": 2,
-            "unit": "tsp",
-            "display": "2 tsp paprika"
-          },
-          {
-            "ingredientId": "cumin",
-            "status": "required",
-            "amount": 1,
-            "unit": "tsp",
-            "display": "1 tsp cumin"
-          },
-          {
-            "ingredientId": "black_pepper",
-            "status": "required",
-            "display": "Black pepper"
-          }
-        ],
-        "choices": [
-          {
-            "id": "lentil_type",
-            "label": "Choose lentils",
-            "required": true,
-            "options": [
-              {
-                "id": "red",
-                "label": "Red lentils",
-                "ingredients": [
-                  {
-                    "ingredientId": "red_lentils",
-                    "status": "required",
-                    "amount": 1,
-                    "unit": "mug",
-                    "display": "1 mug dry red lentils"
-                  },
-                  {
-                    "ingredientId": "water",
-                    "status": "required",
-                    "amount": 3,
-                    "unit": "mug",
-                    "display": "3 mugs water"
-                  },
-                  {
-                    "ingredientId": "stock_cube",
-                    "status": "required",
-                    "amount": 1,
-                    "unit": "cube",
-                    "display": "1 stock cube"
-                  }
-                ]
-              },
-              {
-                "id": "green",
-                "label": "Green/brown lentils",
-                "ingredients": [
-                  {
-                    "ingredientId": "green_lentils",
-                    "status": "required",
-                    "amount": 1,
-                    "unit": "mug",
-                    "display": "1 mug dry green/brown lentils"
-                  },
-                  {
-                    "ingredientId": "water",
-                    "status": "required",
-                    "amount": 4,
-                    "unit": "mug",
-                    "display": "4 mugs water"
-                  },
-                  {
-                    "ingredientId": "stock_cube",
-                    "status": "required",
-                    "amount": 1,
-                    "unit": "cube",
-                    "display": "1 stock cube"
-                  }
-                ]
-              }
-            ],
-            "defaultOptionId": "red"
-          }
-        ]
-      }
-    ],
-    "steps": [
-      "Rinse the selected lentils.",
-      "Put the lentils, chopped tomatoes, frozen vegetables, seasoning, water and stock into the pot.",
-      "Bring to the boil, then reduce to a gentle simmer.",
-      "Red lentils cook faster and thicken the stew; green lentils take longer and keep more texture.",
-      "Add another ½ mug water if needed before the lentils are tender.",
-      "Season with black pepper."
-    ],
-    "notes": []
-  },
-  {
     "id": "sopa_de_lentejas",
     "title": "Sopa de Lentejas",
     "group": "Vegetarian / Eggs",
@@ -4668,110 +5520,6 @@
     ]
   },
   {
-    "id": "chickpea_stir_fry",
-    "title": "Chickpea Stir-Fry",
-    "group": "Vegetarian / Eggs",
-    "tags": [
-      "pan",
-      "quick"
-    ],
-    "trial": false,
-    "batchOptions": [
-      {
-        "id": "standard",
-        "label": "One batch",
-        "yield": {
-          "min": 3,
-          "max": 3
-        },
-        "storage": {
-          "size": "normal",
-          "freezer": "no"
-        },
-        "ingredients": [
-          {
-            "ingredientId": "chickpeas",
-            "status": "required",
-            "amount": 400,
-            "unit": "g",
-            "display": "1 × 540 g tin chickpeas — about 400 g drained",
-            "preferredPackId": "chickpeas_400g_drained"
-          },
-          {
-            "ingredientId": "frozen_oriental_vegetables",
-            "status": "required",
-            "amount": 375,
-            "unit": "g",
-            "display": "350–400 g frozen Oriental vegetables",
-            "preferredPackId": "oriental_veg_750g"
-          },
-          {
-            "ingredientId": "soy_sauce",
-            "status": "required",
-            "amount": 2,
-            "unit": "tbsp",
-            "display": "2 tbsp soy sauce"
-          },
-          {
-            "ingredientId": "garlic",
-            "status": "required",
-            "amount": 1,
-            "unit": "clove",
-            "display": "1 garlic clove"
-          },
-          {
-            "ingredientId": "ginger",
-            "status": "optional",
-            "display": "Ginger, optional"
-          },
-          {
-            "ingredientId": "fresh_chilli",
-            "status": "optional",
-            "display": "Chilli, optional"
-          },
-          {
-            "ingredientId": "vegetable_oil",
-            "status": "required",
-            "amount": 1,
-            "unit": "tsp",
-            "display": "1 tsp oil"
-          }
-        ],
-        "choices": [
-          {
-            "id": "rice",
-            "label": "Optional rice",
-            "required": false,
-            "options": [
-              {
-                "id": "rice",
-                "label": "Rice",
-                "ingredients": [
-                  {
-                    "ingredientId": "rice",
-                    "status": "required",
-                    "amount": 0.4,
-                    "unit": "mug",
-                    "display": "⅓–½ mug uncooked rice"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "steps": [
-      "Drain the chickpeas well.",
-      "Heat the oil in the frying pan.",
-      "Add the chickpeas and cook for 2–3 minutes.",
-      "Add the frozen Oriental vegetables, garlic and optional ginger/chilli.",
-      "Cook until the vegetables are hot and excess water has evaporated.",
-      "Add the soy sauce and serve alone or with optional rice."
-    ],
-    "notes": []
-  },
-  {
     "id": "spanish_tortilla_vegetables",
     "title": "Spanish Tortilla + Vegetables",
     "group": "Vegetarian / Eggs",
@@ -4933,6 +5681,156 @@
     ],
     "notes": [
       "Leftover cooked rice works particularly well."
+    ]
+  },
+  {
+    "id": "french_style_green_lentil_stew",
+    "title": "French-Style Green Lentil Stew",
+    "group": "Vegetarian / Eggs",
+    "tags": [
+      "one-pot",
+      "batch",
+      "freezer-friendly",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One batch",
+        "yield": {
+          "min": 4,
+          "max": 4
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "yes"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "green_lentils",
+            "status": "required",
+            "amount": 1,
+            "unit": "mug",
+            "display": "1 mug dry green/brown lentils",
+            "preferredPackId": "green_lentils_500g"
+          },
+          {
+            "ingredientId": "onion",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 medium onion, chopped"
+          },
+          {
+            "ingredientId": "carrot",
+            "status": "required",
+            "amount": 2,
+            "unit": "piece",
+            "display": "2 carrots, diced or sliced"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 2,
+            "unit": "clove",
+            "display": "2 garlic cloves, chopped"
+          },
+          {
+            "ingredientId": "dried_thyme",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp dried thyme"
+          },
+          {
+            "ingredientId": "bay_leaf",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 bay leaf"
+          },
+          {
+            "ingredientId": "water",
+            "status": "required",
+            "amount": 3,
+            "unit": "mug",
+            "display": "3 mugs water"
+          },
+          {
+            "ingredientId": "stock_cube",
+            "status": "required",
+            "amount": 1,
+            "unit": "cube",
+            "display": "1 stock cube"
+          },
+          {
+            "ingredientId": "olive_oil",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp olive oil, especially if not using bacon"
+          },
+          {
+            "ingredientId": "mustard",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp Dijon-style mustard"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper"
+          },
+          {
+            "ingredientId": "sun_dried_tomatoes",
+            "status": "optional",
+            "amount": 100,
+            "unit": "g",
+            "display": "About 100 g sun-dried tomatoes, cut into halves or quarters"
+          },
+          {
+            "ingredientId": "bacon",
+            "status": "optional",
+            "amount": 150,
+            "unit": "g",
+            "display": "1 × 150 g pack bacon strips",
+            "preferredPackId": "bacon_150g"
+          },
+          {
+            "ingredientId": "vinegar",
+            "status": "optional",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp red-wine or other mild vinegar, optional"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Rinse the lentils.",
+      "If using bacon, put the full 150 g into the 3 L pot first and cook for about 3–4 minutes until starting to brown. Leave it in the pot.",
+      "Add the onion and carrots. If no bacon is being used, add the olive oil first. Cook for about 4–5 minutes.",
+      "Add the garlic and thyme and cook for about 30 seconds.",
+      "Add the lentils, bay leaf, water and stock cube.",
+      "If using the optional sun-dried tomatoes, add them now.",
+      "Bring to the boil, then reduce to a gentle simmer.",
+      "Part-cover and simmer for about 30–35 minutes, stirring occasionally, until the lentils are tender but still holding their shape.",
+      "If the stew becomes too dry before the lentils are tender, add up to another ½ mug water.",
+      "Remove the bay leaf.",
+      "Stir in the mustard and optional vinegar.",
+      "Add black pepper, taste, and adjust seasoning only after tasting because bacon, stock and sun-dried tomatoes can all add salt.",
+      "Rest for 5 minutes before serving."
+    ],
+    "notes": [
+      "This is deliberately based on the lentil character Maia likes in the family Slow-cooked Lamb with Green Lentils: green lentils and plenty of liquid, but without lamb or fresh mint.",
+      "Sun-dried tomatoes are optional rather than part of the base recipe.",
+      "Bacon is optional. If used, use one full 150 g pack and cook it first.",
+      "The vegetarian version should work as a complete meal on its own.",
+      "Green lentils vary in cooking time. If still firm after 35 minutes, continue simmering and add a little water if required.",
+      "Freezes well in portions."
     ]
   },
   {
@@ -5479,105 +6377,6 @@
       "Divide between two wraps.",
       "Add salad or spinach and tomato.",
       "Add optional chilli, cheese or yoghurt, then roll and serve."
-    ],
-    "notes": []
-  },
-  {
-    "id": "chickpea_salad",
-    "title": "Chickpea Salad",
-    "group": "Light / Summer",
-    "tags": [
-      "light",
-      "summer",
-      "quick"
-    ],
-    "trial": false,
-    "batchOptions": [
-      {
-        "id": "standard",
-        "label": "One batch",
-        "yield": {
-          "min": 3,
-          "max": 3
-        },
-        "storage": {
-          "size": "normal",
-          "freezer": "no"
-        },
-        "ingredients": [
-          {
-            "ingredientId": "chickpeas",
-            "status": "required",
-            "amount": 400,
-            "unit": "g",
-            "display": "1 × 540 g tin chickpeas — about 400 g drained",
-            "preferredPackId": "chickpeas_400g_drained"
-          },
-          {
-            "ingredientId": "cucumber",
-            "status": "required",
-            "amount": 0.5,
-            "unit": "piece",
-            "display": "½ cucumber"
-          },
-          {
-            "ingredientId": "fresh_tomato",
-            "status": "required",
-            "amount": 2,
-            "unit": "piece",
-            "display": "2 tomatoes"
-          },
-          {
-            "ingredientId": "lemon",
-            "status": "required",
-            "amount": 0.75,
-            "unit": "piece",
-            "display": "Juice of ½–1 lemon"
-          },
-          {
-            "ingredientId": "olive_oil",
-            "status": "required",
-            "amount": 1.5,
-            "unit": "tsp",
-            "display": "1–2 tsp olive oil"
-          },
-          {
-            "ingredientId": "black_pepper",
-            "status": "required",
-            "display": "Black pepper"
-          },
-          {
-            "ingredientId": "onion",
-            "status": "optional",
-            "amount": 0.5,
-            "unit": "piece",
-            "display": "¼–½ onion, optional"
-          },
-          {
-            "ingredientId": "bell_pepper",
-            "status": "optional",
-            "display": "Pepper, optional"
-          },
-          {
-            "ingredientId": "olives",
-            "status": "optional",
-            "display": "Olives, optional"
-          },
-          {
-            "ingredientId": "fresh_chilli",
-            "status": "optional",
-            "display": "Chilli, optional"
-          }
-        ],
-        "choices": []
-      }
-    ],
-    "steps": [
-      "Drain and rinse the chickpeas.",
-      "Chop the cucumber and tomatoes.",
-      "Mix everything together.",
-      "Add lemon juice, olive oil and black pepper.",
-      "Add any optional vegetables."
     ],
     "notes": []
   },

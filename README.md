@@ -4,7 +4,7 @@ A lightweight, mobile-first personal meal-planning PWA for choosing what to cook
 
 ## Features
 
-- Build the current week manually from a 43-recipe catalogue.
+- Build the current week manually from a 48-recipe catalogue.
 - Choose explicit recipe-specific batch sizes and substitutions.
 - See approximate weekly yield without assigning recipes to weekdays.
 - Aggregate required ingredients by canonical identity.
@@ -55,7 +55,7 @@ Then open `http://localhost:8000/`.
 
 ## Data
 
-`data/recipes.json` contains explicit approved batches, approximate yields, ingredient requirements, choices, storage metadata, steps, and notes. `data/ingredients.json` provides stable ingredient identities, aggregation rules, shopping flags, and supermarket pack metadata.
+`data/recipes.json` contains 48 recipes with explicit approved batches, approximate yields, ingredient requirements, choices, storage metadata, steps, and notes. The catalogue includes eight trial recipes added during Maia's recipe review and excludes three recipes removed in that review. `data/ingredients.json` provides 81 stable ingredient identities, aggregation rules, shopping flags, and supermarket pack metadata.
 
 Recipe amounts are not scaled automatically. The application always uses one of the batch options supplied in the data.
 

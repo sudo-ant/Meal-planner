@@ -64,6 +64,7 @@ function validateIngredients(ingredients) {
   }
 
   counters.ingredients = ingredients.length;
+  if (ingredients.length !== 81) errors.push(`data/ingredients.json: expected exactly 81 ingredients, found ${ingredients.length}`);
 
   ingredients.forEach((ingredient, index) => {
     const location = `data/ingredients.json ingredient ${index + 1}`;
@@ -169,7 +170,7 @@ function validateRecipes(recipes, ingredientMap) {
   }
 
   counters.recipes = recipes.length;
-  if (recipes.length !== 43) errors.push(`data/recipes.json: expected exactly 43 recipes, found ${recipes.length}`);
+  if (recipes.length !== 48) errors.push(`data/recipes.json: expected exactly 48 recipes, found ${recipes.length}`);
   const recipeIds = new Set();
 
   recipes.forEach((recipe, recipeIndex) => {

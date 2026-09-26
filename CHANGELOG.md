@@ -9,7 +9,10 @@
 - Added persistent At-home markers and week-specific Bought state.
 - Added a Cook view containing only the current week's selected recipes.
 - Updated recipe search to use multi-word AND matching across recipe and ingredient data.
-- Replaced the recipe catalogue with the approved 43-recipe v2 data and added 68 canonical ingredients.
+- Replaced the recipe catalogue with the approved 48-recipe v2 data and added 81 canonical ingredients.
+- Removed Lentil & Vegetable Stew, Chickpea Stir-Fry, and Chickpea Salad following Maia's recipe review.
+- Added eight trial recipes, including French-Style Green Lentil Stew, and the canonical ingredients needed for them.
+- Made frozen pumpkin chunks a standard required ingredient in Thai Green Chicken Curry and clarified its cooking timings.
 - Retired `data/plans.json` from the runtime and repository.
 - Updated data validation for batches, choices, yields, storage, packs, tags, and ingredient references.
 - Updated the service-worker cache for the redesigned runtime and data files.
