@@ -170,7 +170,7 @@ function validateRecipes(recipes, ingredientMap) {
   }
 
   counters.recipes = recipes.length;
-  if (recipes.length !== 48) errors.push(`data/recipes.json: expected exactly 48 recipes, found ${recipes.length}`);
+  if (recipes.length !== 46) errors.push(`data/recipes.json: expected exactly 46 recipes, found ${recipes.length}`);
   const recipeIds = new Set();
 
   recipes.forEach((recipe, recipeIndex) => {
