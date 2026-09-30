@@ -1397,9 +1397,9 @@
           {
             "ingredientId": "green_beans",
             "status": "required",
-            "amount": 500,
+            "amount": 375,
             "unit": "g",
-            "display": "500 g green beans"
+            "display": "375 g green beans"
           },
           {
             "ingredientId": "thai_green_curry_paste",
@@ -1497,9 +1497,9 @@
           {
             "ingredientId": "green_beans",
             "status": "required",
-            "amount": 1000,
+            "amount": 750,
             "unit": "g",
-            "display": "1 kg green beans"
+            "display": "750 g green beans"
           },
           {
             "ingredientId": "thai_green_curry_paste",
