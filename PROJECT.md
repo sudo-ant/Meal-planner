@@ -17,7 +17,7 @@ Maia's Recipe & Meal Planner supports choosing the recipes Maia intends to cook 
 
 ## Current user journey
 
-1. Add recipes to the current week and choose an approved batch for each.
+1. Add recipes to the current week, choose an approved batch, and optionally plan eligible recipes twice.
 2. Review the combined Shop list and mark ingredients as Bought or At home.
 3. Use Cook for the selected recipes, choices, ingredients, and instructions.
 4. Browse the complete recipe library when required.
@@ -28,15 +28,15 @@ Maia's Recipe & Meal Planner supports choosing the recipes Maia intends to cook 
 
 ### Plan
 
-Plan is a manual list of recipes to cook during the current week. Recipes can be searched and added without weekday assignments. Each recipe appears once, has an explicit approved batch size, and can include required or optional recipe choices.
+Plan is a manual list of recipes to cook during the current week. Recipes can be searched and added without weekday assignments. Each recipe appears once, has an explicit approved batch size, and can include required or optional recipe choices. Recipes whose every approved batch yields fewer than six portions can be planned once or twice as separate cooking occasions.
 
 ### Shop
 
-Shop aggregates requirements from the selected recipes by canonical ingredient ID. It separates required To buy items, persistent At home items, and Optional items. Compatible supermarket pack sizes are recommended after weekly aggregation. Bought ticks belong only to the current week.
+Shop aggregates requirements from the selected recipes by canonical ingredient ID. Repeated cooking occasions multiply numeric requirements before aggregation while presence requirements remain single entries. Shop separates required To buy items, persistent At home items, and Optional items. Compatible supermarket pack sizes are recommended after weekly aggregation. Bought ticks belong only to the current week.
 
 ### Cook
 
-Cook contains only recipes selected for the current week. It shows the chosen batch, approximate yield, selected choices, approved ingredient display text, steps, notes, storage metadata, and a cooked tick.
+Cook contains only recipes selected for the current week. It shows the chosen batch, approximate yield, selected choices, approved ingredient display text, steps, notes, storage metadata, and cooking-occasion progress. A repeated recipe keeps one instruction card while tracking up to two separate cooks.
 
 ### Recipes
 
@@ -49,6 +49,8 @@ Weight provides an optional minimal weight check-in. Existing entries and the la
 ## Batch model
 
 Recipes define one or more explicit `batchOptions`. Each batch has its own approximate yield, ingredients, choices, storage metadata, and optional notes. The application does not automatically scale recipes or infer substitutions from prose.
+
+Weekly repetition is separate from batch sizing. A recipe can be planned twice only when none of its batch options yields six or more portions. The same approved batch and recipe choices apply to both cooking occasions.
 
 ## Shopping and At home
 
@@ -69,7 +71,7 @@ Run `node scripts/validate-data.mjs` to validate both files and all cross-refere
 
 The application keeps the following current state in `localStorage`:
 
-- `studentFoodPlanner.currentWeek`: selected recipes, batches, choices, cooked ticks, and Bought state
+- `studentFoodPlanner.currentWeek`: selected recipes, batches, choices, repeat counts, completed cooking occasions, and Bought state
 - `studentFoodPlanner.atHome`: persistent At-home ingredient IDs
 - `studentFoodPlanner.hideBought`: persistent hide-bought preference
 - `studentFoodPlanner.weightEntries`: existing local Weight history

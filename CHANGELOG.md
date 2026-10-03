@@ -17,6 +17,7 @@
 - Standardised sweetcorn as frozen, added current pack metadata, and added the new canonical ingredients required by the salads.
 - Updated user-visible fish naming to Pescada do Cabo.
 - Corrected the Lemon Garlic Chicken full batch to a true 8-portion double batch.
+- Added optional twice-weekly planning for recipes without a 6+ portion batch, with multiplied shopping requirements and cooking-occasion progress.
 - Added eight trial recipes, including French-Style Green Lentil Stew, and the canonical ingredients needed for them.
 - Made frozen pumpkin chunks a standard required ingredient in Thai Green Chicken Curry and clarified its cooking timings.
 - Retired `data/plans.json` from the runtime and repository.

@@ -69,7 +69,7 @@ function setStoredJson(key, value) {
 
 function createEmptyWeek() {
   return {
-    version: 2,
+    version: 3,
     createdAt: new Date().toISOString(),
     selections: [],
     boughtIngredientIds: []
@@ -78,6 +78,19 @@ function createEmptyWeek() {
 
 function getBatch(recipe, batchId) {
   return recipe?.batchOptions.find(batch => batch.id === batchId) || recipe?.batchOptions[0] || null;
+}
+
+function canRepeatRecipe(recipe) {
+  return Boolean(recipe?.batchOptions.length) && recipe.batchOptions.every(batch => batch.yield.max < 6);
+}
+
+function normaliseRepeatCount(recipe, value) {
+  return canRepeatRecipe(recipe) && value === 2 ? 2 : 1;
+}
+
+function normaliseCookedCount(value, repeatCount) {
+  const cookedCount = Number.isInteger(value) ? value : 0;
+  return Math.min(repeatCount, Math.max(0, cookedCount));
 }
 
 function normaliseChoiceSelections(batch, values = {}) {
@@ -97,7 +110,7 @@ function normaliseChoiceSelections(batch, values = {}) {
 }
 
 function normaliseCurrentWeek(value) {
-  if (!value || value.version !== 2 || !Array.isArray(value.selections)) {
+  if (!value || ![2, 3].includes(value.version) || !Array.isArray(value.selections)) {
     return createEmptyWeek();
   }
 
@@ -111,17 +124,25 @@ function normaliseCurrentWeek(value) {
     const batch = getBatch(recipe, selection.batchId);
     if (!batch) return;
 
+    const repeatCount = value.version === 3
+      ? normaliseRepeatCount(recipe, selection.repeatCount)
+      : 1;
+    const cookedCount = value.version === 3
+      ? normaliseCookedCount(selection.cookedCount, repeatCount)
+      : selection.cooked ? 1 : 0;
+
     seenRecipes.add(recipe.id);
     selections.push({
       recipeId: recipe.id,
       batchId: batch.id,
-      cooked: Boolean(selection.cooked),
+      repeatCount,
+      cookedCount,
       choiceSelections: normaliseChoiceSelections(batch, selection.choiceSelections)
     });
   });
 
   return {
-    version: 2,
+    version: 3,
     createdAt: typeof value.createdAt === "string" ? value.createdAt : new Date().toISOString(),
     selections,
     boughtIngredientIds: Array.isArray(value.boughtIngredientIds)
@@ -268,7 +289,8 @@ function addRecipeToWeek(recipeId, batchId) {
     currentWeek.selections.push({
       recipeId,
       batchId: batch.id,
-      cooked: false,
+      repeatCount: 1,
+      cookedCount: 0,
       choiceSelections: normaliseChoiceSelections(batch)
     });
   }
@@ -287,6 +309,26 @@ function changeRecipeBatch(recipeId, batchId) {
   selection.choiceSelections = normaliseChoiceSelections(batch, selection.choiceSelections);
   saveCurrentWeek();
   renderAll();
+}
+
+function changeRecipeRepeatCount(recipeId, value) {
+  const selection = getSelection(recipeId);
+  const recipe = recipesById[recipeId];
+  if (!selection || !recipe) return;
+
+  selection.repeatCount = normaliseRepeatCount(recipe, Number(value));
+  selection.cookedCount = normaliseCookedCount(selection.cookedCount, selection.repeatCount);
+  saveCurrentWeek();
+  renderAll();
+}
+
+function changeCookedCount(recipeId, delta) {
+  const selection = getSelection(recipeId);
+  if (!selection) return;
+
+  selection.cookedCount = normaliseCookedCount(selection.cookedCount + delta, selection.repeatCount);
+  saveCurrentWeek();
+  renderCook();
 }
 
 function removeRecipeFromWeek(recipeId) {
@@ -322,6 +364,30 @@ function batchOptionsMarkup(recipe, selectedBatchId, className, groupName, label
       <legend>${escapeHtml(labelText)}</legend>
       <div class="batch-option-list">${options}</div>
     </fieldset>
+  `;
+}
+
+function repeatOptionsMarkup(recipe, selection, batch) {
+  if (!canRepeatRecipe(recipe)) return "";
+
+  const options = [1, 2].map(count => `
+    <label class="repeat-option">
+      <input type="radio" class="repeat-count-option" name="repeat-${escapeHtml(recipe.id)}" value="${count}" data-recipe-id="${escapeHtml(recipe.id)}" ${selection.repeatCount === count ? "checked" : ""}>
+      <span>${count}×</span>
+    </label>
+  `).join("");
+  const weeklyMin = batch.yield.min * selection.repeatCount;
+  const weeklyMax = batch.yield.max * selection.repeatCount;
+  const weeklyPortions = weeklyMin === weeklyMax ? weeklyMin : `${weeklyMin}–${weeklyMax}`;
+
+  return `
+    <fieldset class="repeat-options">
+      <legend>Times this week</legend>
+      <div class="repeat-option-list">${options}</div>
+    </fieldset>
+    ${selection.repeatCount === 2
+      ? `<p class="repeat-note">2 separate cooks · about ${escapeHtml(weeklyPortions)} portions across the week</p>`
+      : ""}
   `;
 }
 
@@ -364,12 +430,17 @@ function renderPlan() {
   } else {
     const totals = currentWeek.selections.reduce((result, selection) => {
       const { batch } = getSelectedRecipeData(selection);
-      result.min += batch.yield.min;
-      result.max += batch.yield.max;
+      result.min += batch.yield.min * selection.repeatCount;
+      result.max += batch.yield.max * selection.repeatCount;
+      result.occasions += selection.repeatCount;
       return result;
-    }, { min: 0, max: 0 });
+    }, { min: 0, max: 0, occasions: 0 });
     const portions = totals.min === totals.max ? totals.min : `${totals.min}–${totals.max}`;
-    summary.textContent = `${currentWeek.selections.length} recipe${currentWeek.selections.length === 1 ? "" : "s"} · about ${portions} portions`;
+    const recipeCount = currentWeek.selections.length;
+    const recipeLabel = `${recipeCount} recipe${recipeCount === 1 ? "" : "s"}`;
+    summary.textContent = totals.occasions > recipeCount
+      ? `${recipeLabel} · ${totals.occasions} cooking occasions · about ${portions} portions`
+      : `${recipeLabel} · about ${portions} portions`;
 
     weekList.innerHTML = currentWeek.selections.map(selection => {
       const { recipe, batch } = getSelectedRecipeData(selection);
@@ -385,6 +456,7 @@ function renderPlan() {
           ${recipe.batchOptions.length > 1
             ? batchOptionsMarkup(recipe, batch.id, "plan-batch-option", `plan-batch-${recipe.id}`, "Change batch")
             : `<p class="batch-label"><strong>${escapeHtml(batch.label)}</strong> · ${escapeHtml(formatYield(batch))}</p>`}
+          ${repeatOptionsMarkup(recipe, selection, batch)}
           ${choiceControlsMarkup(selection, batch)}
           ${storageMarkup(batch)}
         </article>
@@ -519,7 +591,7 @@ function collectShoppingEntries() {
         const sources = isOptional ? entry.optionalSources : entry.requiredSources;
 
         if (ingredient.aggregation.mode === "sum" && typeof reference.amount === "number") {
-          entry[amountKey] += reference.amount;
+          entry[amountKey] += reference.amount * selection.repeatCount;
         } else {
           entry[presenceKey] = true;
         }
@@ -720,9 +792,13 @@ function showCopyStatus(message) {
 }
 
 function renderCookSummary() {
-  const cookedCount = currentWeek.selections.filter(selection => selection.cooked).length;
+  const totals = currentWeek.selections.reduce((result, selection) => {
+    result.completed += selection.cookedCount;
+    result.occasions += selection.repeatCount;
+    return result;
+  }, { completed: 0, occasions: 0 });
   document.getElementById("cookSummary").textContent = currentWeek.selections.length
-    ? `${cookedCount} of ${currentWeek.selections.length} cooking occasion${currentWeek.selections.length === 1 ? "" : "s"} completed.`
+    ? `${totals.completed} of ${totals.occasions} cooking occasion${totals.occasions === 1 ? "" : "s"} completed.`
     : "Only recipes in this week's plan appear here.";
 }
 
@@ -731,20 +807,36 @@ function renderCook() {
 
   document.getElementById("cookList").innerHTML = currentWeek.selections.length
     ? currentWeek.selections.map(selection => {
-        const { recipe, batch } = getSelectedRecipeData(selection);
-        const ingredientGroups = getBatchIngredientGroups(selection);
-        return `
-          <article class="card cook-card ${selection.cooked ? "cooked" : ""}">
+      const { recipe, batch } = getSelectedRecipeData(selection);
+      const ingredientGroups = getBatchIngredientGroups(selection);
+      const isComplete = selection.cookedCount === selection.repeatCount;
+      const progressControl = selection.repeatCount === 2
+        ? `
+          <div class="cook-repeat-progress" aria-label="Cooking progress for ${escapeHtml(recipe.title)}">
+            <p class="repeat-frequency">2 times this week</p>
+            <p><strong>Cooked this week: ${selection.cookedCount} of 2</strong></p>
+            <div class="cook-progress-actions">
+              <button class="ghost small" type="button" data-action="undo-cooked" data-recipe-id="${escapeHtml(recipe.id)}" ${selection.cookedCount === 0 ? "disabled" : ""}>Undo</button>
+              <button class="secondary small" type="button" data-action="mark-one-cooked" data-recipe-id="${escapeHtml(recipe.id)}" ${selection.cookedCount === 2 ? "disabled" : ""}>Mark one cooked</button>
+            </div>
+          </div>
+        `
+        : "";
+      return `
+          <article class="card cook-card ${isComplete ? "cooked" : ""}">
             <div class="section-heading">
               <div>
                 <h2>${escapeHtml(recipe.title)}</h2>
                 <p class="meta">${escapeHtml(batch.label)} · ${escapeHtml(formatYield(batch))}</p>
               </div>
-              <label class="cook-toggle">
-                <input class="checkbox cooked-check" type="checkbox" data-recipe-id="${escapeHtml(recipe.id)}" ${selection.cooked ? "checked" : ""}>
-                <span>${selection.cooked ? "Cooked" : "Mark cooked"}</span>
-              </label>
+              ${selection.repeatCount === 1 ? `
+                <label class="cook-toggle">
+                  <input class="checkbox cooked-check" type="checkbox" data-recipe-id="${escapeHtml(recipe.id)}" ${isComplete ? "checked" : ""}>
+                  <span>${isComplete ? "Cooked" : "Mark cooked"}</span>
+                </label>
+              ` : ""}
             </div>
+            ${progressControl}
             ${storageMarkup(batch)}
             <details class="cook-details">
               <summary><span class="show-recipe-label">Show recipe</span><span class="hide-recipe-label">Hide recipe</span></summary>
@@ -910,6 +1002,10 @@ function setupEvents() {
     } else if (action === "view-plan") {
       setActiveTab("plan");
       window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (action === "mark-one-cooked") {
+      changeCookedCount(recipeId, 1);
+    } else if (action === "undo-cooked") {
+      changeCookedCount(recipeId, -1);
     } else if (action === "filter-recipes") {
       activeRecipeFilter = button.dataset.filter;
       renderRecipes();
@@ -922,6 +1018,8 @@ function setupEvents() {
   document.addEventListener("change", event => {
     if (event.target.matches(".plan-batch-option")) {
       changeRecipeBatch(event.target.dataset.recipeId, event.target.value);
+    } else if (event.target.matches(".repeat-count-option")) {
+      changeRecipeRepeatCount(event.target.dataset.recipeId, event.target.value);
     } else if (event.target.matches(".choice-select")) {
       const selection = getSelection(event.target.dataset.recipeId);
       if (!selection) return;
@@ -940,13 +1038,9 @@ function setupEvents() {
     } else if (event.target.matches(".cooked-check")) {
       const selection = getSelection(event.target.dataset.recipeId);
       if (!selection) return;
-      selection.cooked = event.target.checked;
+      selection.cookedCount = event.target.checked ? 1 : 0;
       saveCurrentWeek();
-      const card = event.target.closest(".cook-card");
-      card?.classList.toggle("cooked", selection.cooked);
-      const label = event.target.nextElementSibling;
-      if (label) label.textContent = selection.cooked ? "Cooked" : "Mark cooked";
-      renderCookSummary();
+      renderCook();
     }
   });
 }

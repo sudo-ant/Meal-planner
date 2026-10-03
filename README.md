@@ -6,12 +6,13 @@ A lightweight, mobile-first personal meal-planning PWA for choosing what to cook
 
 - Build the current week manually from a 49-recipe catalogue.
 - Choose explicit recipe-specific batch sizes and substitutions.
+- Plan eligible small or medium recipes once or twice as separate cooking occasions.
 - See approximate weekly yield without assigning recipes to weekdays.
-- Aggregate required ingredients by canonical identity.
+- Multiply repeated numeric requirements before aggregating ingredients by canonical identity.
 - Calculate supermarket pack recommendations after weekly aggregation.
 - Keep persistent At-home markers without tracking inventory quantities.
 - Tick Bought items, hide bought items, and copy To buy plus Optional lists.
-- Cook from a focused view containing only this week's recipes.
+- Cook from a focused view containing one recipe card per selection and track completed cooking occasions.
 - Search recipes using multi-word AND matching.
 - Preserve optional local Weight history.
 - Install and use the app offline after its resources are cached.
@@ -71,7 +72,7 @@ The validator uses only built-in Node.js functionality and requires no installat
 
 ## Local storage
 
-The current week, At-home ingredient markers, hide-bought preference, and Weight entries are stored in the current browser. New week clears only current-week selections and progress. Existing `studentFoodPlanner.weightEntries` data is preserved unchanged.
+The current week, repeat counts, cooking progress, At-home ingredient markers, hide-bought preference, and Weight entries are stored in the current browser. New week clears only current-week selections and progress. Existing `studentFoodPlanner.weightEntries` data is preserved unchanged. Recipes with any batch yielding six or more portions do not offer weekly repetition.
 
 Legacy predefined-plan keys are ignored by the current runtime and may remain for one release.
 
