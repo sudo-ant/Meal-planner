@@ -688,8 +688,8 @@
         "id": "full_pack",
         "label": "Full chicken pack",
         "yield": {
-          "min": 6,
-          "max": 7
+          "min": 8,
+          "max": 8
         },
         "storage": {
           "size": "large_batch",
@@ -707,16 +707,16 @@
           {
             "ingredientId": "potatoes",
             "status": "required",
-            "amount": 700,
+            "amount": 800,
             "unit": "g",
-            "display": "700 g potatoes"
+            "display": "800 g potatoes"
           },
           {
             "ingredientId": "green_beans",
             "status": "required",
-            "amount": 500,
+            "amount": 600,
             "unit": "g",
-            "display": "500 g green beans"
+            "display": "600 g green beans"
           },
           {
             "ingredientId": "garlic",
@@ -742,9 +742,9 @@
           {
             "ingredientId": "water",
             "status": "required",
-            "amount": 1.5,
+            "amount": 2,
             "unit": "mug",
-            "display": "1½ mugs water"
+            "display": "2 mugs water"
           },
           {
             "ingredientId": "stock_cube",
@@ -772,7 +772,8 @@
       "Add a little more water during cooking if needed."
     ],
     "notes": [
-      "Fresh or frozen green beans work."
+      "Fresh or frozen green beans work.",
+      "For the full 8-portion batch, use the 5 L pot."
     ]
   },
   {
@@ -4368,7 +4369,7 @@
   },
   {
     "id": "white_fish_potato_pan",
-    "title": "Hake, Potato & Vegetable Pot",
+    "title": "Pescada do Cabo, Potato & Vegetable Pot",
     "group": "Fish",
     "tags": [
       "one-pot",
@@ -4393,7 +4394,7 @@
             "status": "required",
             "amount": 400,
             "unit": "g",
-            "display": "1 × 400 g pack frozen hake medallions",
+            "display": "1 × 400 g pack Medalhões de Pescada do Cabo",
             "preferredPackId": "hake_medallions_400g"
           },
           {
@@ -4465,8 +4466,8 @@
       "Put the potatoes, water and stock cube into the pot.",
       "Bring to the boil, reduce the heat and cook for about 10 minutes.",
       "Add the frozen vegetables.",
-      "Place the hake medallions on top and add garlic, paprika and pepper.",
-      "Cover and cook gently until the potatoes are tender and the hake is cooked through and flakes easily.",
+      "Place the Pescada do Cabo medallions on top and add garlic, paprika and pepper.",
+      "Cover and cook gently until the potatoes are tender and the Pescada do Cabo is cooked through and flakes easily.",
       "Avoid stirring vigorously once the fish is cooking.",
       "Finish with lemon juice if wanted and add another ½ mug water if necessary."
     ],
@@ -4610,187 +4611,6 @@
       "If the liquid is absorbed before the rice is tender, add a small splash of water.",
       "This is intentionally different from Tuna & Vegetable Rice: coconut and lime are the defining flavours.",
       "Best fresh or refrigerated; do not mark freezer-friendly."
-    ]
-  },
-  {
-    "id": "chickpea_spinach_curry",
-    "title": "Chickpea & Spinach Curry",
-    "group": "Vegetarian / Eggs",
-    "tags": [
-      "one-pot",
-      "batch",
-      "freezer-friendly"
-    ],
-    "trial": false,
-    "batchOptions": [
-      {
-        "id": "standard",
-        "label": "Standard batch",
-        "yield": {
-          "min": 4,
-          "max": 4
-        },
-        "storage": {
-          "size": "normal",
-          "freezer": "yes"
-        },
-        "ingredients": [
-          {
-            "ingredientId": "chickpeas",
-            "status": "required",
-            "amount": 400,
-            "unit": "g",
-            "display": "1 × 540 g tin chickpeas — about 400 g drained",
-            "preferredPackId": "chickpeas_400g_drained"
-          },
-          {
-            "ingredientId": "frozen_spinach",
-            "status": "required",
-            "amount": 375,
-            "unit": "g",
-            "display": "½ of a 750 g bag frozen spinach",
-            "preferredPackId": "frozen_spinach_750g"
-          },
-          {
-            "ingredientId": "chopped_tomatoes",
-            "status": "required",
-            "amount": 400,
-            "unit": "g",
-            "display": "1 × 400 g tin chopped tomatoes",
-            "preferredPackId": "chopped_tomatoes_400g"
-          },
-          {
-            "ingredientId": "onion",
-            "status": "required",
-            "amount": 1,
-            "unit": "piece",
-            "display": "1 small onion"
-          },
-          {
-            "ingredientId": "garlic",
-            "status": "required",
-            "amount": 1,
-            "unit": "clove",
-            "display": "1 garlic clove"
-          },
-          {
-            "ingredientId": "curry_powder",
-            "status": "required",
-            "amount": 2,
-            "unit": "tsp",
-            "display": "2 tsp curry powder"
-          },
-          {
-            "ingredientId": "fresh_chilli",
-            "status": "optional",
-            "display": "Chilli, optional"
-          },
-          {
-            "ingredientId": "water",
-            "status": "required",
-            "amount": 0.5,
-            "unit": "mug",
-            "display": "½ mug water"
-          },
-          {
-            "ingredientId": "olive_oil",
-            "status": "required",
-            "amount": 1,
-            "unit": "tsp",
-            "display": "1 tsp oil"
-          }
-        ],
-        "choices": []
-      },
-      {
-        "id": "large",
-        "label": "Large batch",
-        "yield": {
-          "min": 8,
-          "max": 8
-        },
-        "storage": {
-          "size": "large_batch",
-          "freezer": "yes"
-        },
-        "ingredients": [
-          {
-            "ingredientId": "chickpeas",
-            "status": "required",
-            "amount": 800,
-            "unit": "g",
-            "display": "2 × 540 g tins chickpeas — about 800 g drained",
-            "preferredPackId": "chickpeas_400g_drained"
-          },
-          {
-            "ingredientId": "frozen_spinach",
-            "status": "required",
-            "amount": 750,
-            "unit": "g",
-            "display": "1 whole 750 g bag frozen spinach",
-            "preferredPackId": "frozen_spinach_750g"
-          },
-          {
-            "ingredientId": "chopped_tomatoes",
-            "status": "required",
-            "amount": 800,
-            "unit": "g",
-            "display": "2 × 400 g tins chopped tomatoes",
-            "preferredPackId": "chopped_tomatoes_400g"
-          },
-          {
-            "ingredientId": "onion",
-            "status": "required",
-            "amount": 1,
-            "unit": "piece",
-            "display": "1 large onion"
-          },
-          {
-            "ingredientId": "garlic",
-            "status": "required",
-            "amount": 2,
-            "unit": "clove",
-            "display": "2 garlic cloves"
-          },
-          {
-            "ingredientId": "curry_powder",
-            "status": "required",
-            "amount": 1,
-            "unit": "tbsp",
-            "display": "About 1 tbsp curry powder"
-          },
-          {
-            "ingredientId": "fresh_chilli",
-            "status": "optional",
-            "display": "Chilli, optional"
-          },
-          {
-            "ingredientId": "water",
-            "status": "required",
-            "amount": 1,
-            "unit": "mug",
-            "display": "1 mug water"
-          },
-          {
-            "ingredientId": "olive_oil",
-            "status": "required",
-            "amount": 2,
-            "unit": "tsp",
-            "display": "2 tsp oil"
-          }
-        ],
-        "choices": []
-      }
-    ],
-    "steps": [
-      "Heat the oil and cook the onion for 2–3 minutes.",
-      "Add garlic, curry powder and optional chilli and stir briefly.",
-      "Add chopped tomatoes, drained chickpeas, frozen spinach and water.",
-      "Cover and cook gently until the spinach has defrosted.",
-      "Stir everything together and simmer uncovered for another 5–10 minutes until the sauce reaches the preferred thickness."
-    ],
-    "notes": [
-      "Rice is optional. A spoonful of Mythos yoghurt can be added to individual servings if wanted."
     ]
   },
   {
@@ -5628,6 +5448,495 @@
       "The vegetarian version should work as a complete meal on its own.",
       "Green lentils vary in cooking time. If still firm after 35 minutes, continue simmering and add a little water if required.",
       "Freezes well in portions."
+    ]
+  },
+  {
+    "id": "mediterranean_chickpea_salad",
+    "title": "Mediterranean Chickpea Salad",
+    "group": "Light / Summer",
+    "tags": [
+      "light",
+      "summer",
+      "leftovers",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One batch",
+        "yield": {
+          "min": 4,
+          "max": 4
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "no"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "chickpeas",
+            "status": "required",
+            "amount": 400,
+            "unit": "g",
+            "display": "1 × 540 g tin chickpeas — about 400 g drained",
+            "preferredPackId": "chickpeas_400g_drained"
+          },
+          {
+            "ingredientId": "cucumber",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 cucumber, diced"
+          },
+          {
+            "ingredientId": "bell_pepper",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 red pepper, diced"
+          },
+          {
+            "ingredientId": "cherry_tomatoes",
+            "status": "required",
+            "amount": 250,
+            "unit": "g",
+            "display": "1 × 250 g pack cherry tomatoes, halved",
+            "preferredPackId": "cherry_tomatoes_250g"
+          },
+          {
+            "ingredientId": "red_onion",
+            "status": "required",
+            "amount": 0.5,
+            "unit": "piece",
+            "display": "½ small red onion, finely diced"
+          },
+          {
+            "ingredientId": "feta",
+            "status": "required",
+            "amount": 150,
+            "unit": "g",
+            "display": "1 × 150 g pack feta, crumbled",
+            "preferredPackId": "feta_150g"
+          },
+          {
+            "ingredientId": "fresh_parsley",
+            "status": "required",
+            "display": "About ½ pack fresh parsley, finely chopped",
+            "preferredPackId": "fresh_parsley_50g"
+          },
+          {
+            "ingredientId": "lemon",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "Juice of 1 lemon"
+          },
+          {
+            "ingredientId": "olive_oil",
+            "status": "required",
+            "amount": 2,
+            "unit": "tbsp",
+            "display": "2 tbsp olive oil"
+          },
+          {
+            "ingredientId": "mustard",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp Dijon-style mustard"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 1,
+            "unit": "clove",
+            "display": "1 small garlic clove, crushed"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper"
+          },
+          {
+            "ingredientId": "salt",
+            "status": "required",
+            "display": "Salt, to taste"
+          },
+          {
+            "ingredientId": "sugar",
+            "status": "optional",
+            "amount": 0.5,
+            "unit": "tsp",
+            "display": "½ tsp sugar, optional if the dressing is too sharp"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Drain and rinse the chickpeas well.",
+      "Dice the cucumber and red pepper, halve the cherry tomatoes and finely dice the red onion.",
+      "Finely chop the parsley and crumble the feta.",
+      "Whisk together the lemon juice, olive oil, mustard, garlic and black pepper.",
+      "Put the chickpeas and vegetables into a large bowl and toss with the dressing.",
+      "Gently mix through the feta and parsley.",
+      "Taste before adding salt. If the dressing tastes too sharp, add the optional small amount of sugar.",
+      "Chill before packing if making it for the following day."
+    ],
+    "notes": [
+      "Adapted from the Downshiftology Mediterranean Chickpea Salad for Maia's pack sizes and use as a main meal.",
+      "This type of salad stores well because there are no delicate salad leaves.",
+      "Keep refrigerated and use within a few days.",
+      "Do not freeze."
+    ]
+  },
+  {
+    "id": "pesto_chicken_pasta_salad",
+    "title": "Pesto Chicken Pasta Salad",
+    "group": "Light / Summer",
+    "tags": [
+      "summer",
+      "leftovers",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One batch",
+        "yield": {
+          "min": 4,
+          "max": 4
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "no"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "chicken_breast",
+            "status": "required",
+            "amount": 350,
+            "unit": "g",
+            "display": "½ of a 700 g chicken breast pack — about 350 g",
+            "preferredPackId": "chicken_breast_700g"
+          },
+          {
+            "ingredientId": "dry_pasta",
+            "status": "required",
+            "amount": 250,
+            "unit": "g",
+            "display": "250 g dry pasta — half a 500 g pack",
+            "preferredPackId": "dry_pasta_500g"
+          },
+          {
+            "ingredientId": "pesto",
+            "status": "required",
+            "amount": 95,
+            "unit": "g",
+            "display": "About ½ of a 190 g jar pesto — 95 g",
+            "preferredPackId": "pesto_190g"
+          },
+          {
+            "ingredientId": "mythos_yoghurt",
+            "status": "required",
+            "amount": 125,
+            "unit": "g",
+            "display": "1 × 125 g pot Mythos natural Greek yoghurt",
+            "preferredPackId": "mythos_yoghurt_500g"
+          },
+          {
+            "ingredientId": "frozen_peas",
+            "status": "required",
+            "amount": 200,
+            "unit": "g",
+            "display": "200 g frozen peas"
+          },
+          {
+            "ingredientId": "cherry_tomatoes",
+            "status": "required",
+            "amount": 250,
+            "unit": "g",
+            "display": "1 × 250 g pack cherry tomatoes, halved",
+            "preferredPackId": "cherry_tomatoes_250g"
+          },
+          {
+            "ingredientId": "lemon",
+            "status": "required",
+            "amount": 0.5,
+            "unit": "piece",
+            "display": "Juice of ½ lemon"
+          },
+          {
+            "ingredientId": "olive_oil",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp olive oil"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Cook the pasta according to the packet until just tender.",
+      "Add the frozen peas for the final 2–3 minutes of the pasta cooking time.",
+      "Drain well and leave the pasta and peas to cool.",
+      "Meanwhile, cut the chicken into bite-sized pieces.",
+      "Heat the oil in the frying pan and cook the chicken until completely cooked through. Leave it to cool.",
+      "Mix the pesto, yoghurt and lemon juice together.",
+      "Combine the cooled pasta and peas with the chicken and halved cherry tomatoes.",
+      "Fold through the pesto-yoghurt dressing and season with black pepper.",
+      "Chill promptly if keeping for later."
+    ],
+    "notes": [
+      "Based on established pesto pasta lunchbox salads, adapted to Maia's normal chicken, pasta and yoghurt pack sizes.",
+      "If the pasta absorbs too much dressing overnight, stir through a spoonful of yoghurt or a little extra pesto before eating.",
+      "Best refrigerated rather than frozen."
+    ]
+  },
+  {
+    "id": "abues_tuna_salad",
+    "title": "Abue's Tuna Salad",
+    "group": "Light / Summer",
+    "tags": [
+      "light",
+      "summer",
+      "leftovers"
+    ],
+    "trial": false,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One batch",
+        "yield": {
+          "min": 4,
+          "max": 4
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "no"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "tuna_olive_oil",
+            "status": "required",
+            "amount": 250,
+            "unit": "g",
+            "display": "1 × 385 g tin Atum em Azeite Continente — 250 g drained weight; DO NOT drain",
+            "preferredPackId": "tuna_olive_oil_250g_drained"
+          },
+          {
+            "ingredientId": "frozen_peas",
+            "status": "required",
+            "amount": 150,
+            "unit": "g",
+            "display": "1 cup frozen peas — about 150 g"
+          },
+          {
+            "ingredientId": "sweetcorn",
+            "status": "required",
+            "amount": 160,
+            "unit": "g",
+            "display": "1 cup frozen sweetcorn — about 160 g",
+            "preferredPackId": "frozen_sweetcorn_500g"
+          },
+          {
+            "ingredientId": "fresh_coriander",
+            "status": "required",
+            "amount": 50,
+            "unit": "g",
+            "display": "1 × 50 g pack fresh coriander, finely chopped",
+            "preferredPackId": "fresh_coriander_50g"
+          },
+          {
+            "ingredientId": "rice",
+            "status": "required",
+            "amount": 0.75,
+            "unit": "mug",
+            "display": "¾ mug uncooked rice"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Cook the rice separately and leave it ready for serving.",
+      "Bring a pot of water to the boil.",
+      "Add the frozen peas and frozen sweetcorn.",
+      "Bring the water back to the boil and simmer for a few minutes until the peas and corn are cooked.",
+      "Drain well and leave them to cool.",
+      "Finely chop the full pack of fresh coriander.",
+      "Open the tuna tin but DO NOT drain away the olive oil.",
+      "Using a fork, carefully break up the tuna so that the olive oil is absorbed back into the tuna.",
+      "Mix the cooled peas and corn, coriander and tuna together in a bowl.",
+      "Serve with the cooked rice."
+    ],
+    "notes": [
+      "This is Abue's family recipe.",
+      "Do not drain the tuna: the olive oil from the tin is part of the recipe.",
+      "Maia uses frozen sweetcorn, not canned sweetcorn.",
+      "Keep refrigerated.",
+      "Do not freeze."
+    ]
+  },
+  {
+    "id": "southwestern_chicken_black_bean_salad",
+    "title": "Southwestern Chicken & Black Bean Salad",
+    "group": "Light / Summer",
+    "tags": [
+      "light",
+      "summer",
+      "leftovers",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "Half chicken pack",
+        "yield": {
+          "min": 4,
+          "max": 4
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "no"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "chicken_breast",
+            "status": "required",
+            "amount": 350,
+            "unit": "g",
+            "display": "½ of a 700 g chicken breast pack — about 350 g",
+            "preferredPackId": "chicken_breast_700g"
+          },
+          {
+            "ingredientId": "black_beans",
+            "status": "required",
+            "amount": 260,
+            "unit": "g",
+            "display": "1 × 420 g tin black beans — about 260 g drained",
+            "preferredPackId": "black_beans_260g_drained"
+          },
+          {
+            "ingredientId": "sweetcorn",
+            "status": "required",
+            "amount": 200,
+            "unit": "g",
+            "display": "200 g frozen sweetcorn",
+            "preferredPackId": "frozen_sweetcorn_500g"
+          },
+          {
+            "ingredientId": "bell_pepper",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 red pepper, diced"
+          },
+          {
+            "ingredientId": "red_onion",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 small red onion, finely diced"
+          },
+          {
+            "ingredientId": "mythos_yoghurt",
+            "status": "required",
+            "amount": 125,
+            "unit": "g",
+            "display": "1 × 125 g pot Mythos natural Greek yoghurt",
+            "preferredPackId": "mythos_yoghurt_500g"
+          },
+          {
+            "ingredientId": "fresh_coriander",
+            "status": "required",
+            "display": "About ½ pack fresh coriander, chopped",
+            "preferredPackId": "fresh_coriander_50g"
+          },
+          {
+            "ingredientId": "cumin",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp ground cumin"
+          },
+          {
+            "ingredientId": "paprika",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp paprika — smoked paprika if available"
+          },
+          {
+            "ingredientId": "chilli_powder",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "½–1 tsp chilli powder, to taste"
+          },
+          {
+            "ingredientId": "lime",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "Juice of 1 lime"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper"
+          },
+          {
+            "ingredientId": "salt",
+            "status": "required",
+            "display": "Salt, to taste"
+          },
+          {
+            "ingredientId": "olive_oil",
+            "status": "required",
+            "amount": 1,
+            "unit": "tsp",
+            "display": "1 tsp oil for cooking the chicken"
+          },
+          {
+            "ingredientId": "avocado",
+            "status": "optional",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 avocado, optional — add just before eating"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Cut the chicken into pieces.",
+      "Season it with some of the cumin, paprika, chilli powder and black pepper.",
+      "Heat the oil in the frying pan and cook the chicken until completely cooked through. Leave it to cool, then chop or shred it.",
+      "Put the frozen sweetcorn into boiling water, bring back to the boil and simmer for a few minutes. Drain and leave to cool.",
+      "Drain and rinse the black beans.",
+      "Dice the red pepper and red onion and chop the coriander.",
+      "Mix the yoghurt with the remaining cumin, paprika, chilli powder, lime juice and black pepper.",
+      "Combine the chicken, beans, corn, pepper, onion and coriander.",
+      "Mix through the yoghurt dressing.",
+      "Taste and add salt only if needed.",
+      "If using avocado, dice it and add it to the individual portion just before eating rather than mixing it into the stored batch."
+    ],
+    "notes": [
+      "This version is based on the Southwestern Chicken & Black Bean Salad Maia specifically liked the look of.",
+      "It deliberately does not contain tomatoes.",
+      "The yoghurt quantity is one convenient 125 g pot rather than directly multiplying the original single-portion dressing quantity.",
+      "Add avocado only when serving because it does not store as well once cut.",
+      "Keep refrigerated and do not freeze."
     ]
   },
   {

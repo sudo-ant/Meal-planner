@@ -118,8 +118,29 @@
     ]
   },
   {
+    "id": "tuna_olive_oil",
+    "name": "Tuna in olive oil",
+    "category": "Fish",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "tuna_olive_oil_250g_drained",
+        "label": "Tuna in olive oil — 385 g / 250 g drained",
+        "shopHint": "Atum em Azeite Continente",
+        "amount": 250,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
     "id": "frozen_hake_medallions",
-    "name": "Frozen hake medallions",
+    "name": "Medalhões de Pescada do Cabo",
     "category": "Fish",
     "shopping": true,
     "atHomeCandidate": false,
@@ -130,7 +151,7 @@
     "packs": [
       {
         "id": "hake_medallions_400g",
-        "label": "Frozen hake medallions — 400 g",
+        "label": "Medalhões de Pescada do Cabo — 400 g",
         "shopHint": "Medalhões de Pescada do Cabo Ultracongelados Continente",
         "amount": 400,
         "unit": "g",
@@ -469,6 +490,27 @@
     ]
   },
   {
+    "id": "feta",
+    "name": "Feta",
+    "category": "Dairy",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "feta_150g",
+        "label": "Feta — 150 g",
+        "shopHint": "Queijo Feta DOP Continente",
+        "amount": 150,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
     "id": "frozen_mixed_vegetables",
     "name": "Frozen mixed vegetables",
     "category": "Frozen",
@@ -670,6 +712,38 @@
     }
   },
   {
+    "id": "cherry_tomatoes",
+    "name": "Cherry tomatoes",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "cherry_tomatoes_250g",
+        "label": "Cherry tomatoes — 250 g",
+        "shopHint": "Tomate Cherry — 250 g pack or similar",
+        "amount": 250,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "red_onion",
+    "name": "Red onion",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "piece"
+    }
+  },
+  {
     "id": "carrot",
     "name": "Carrot",
     "category": "Vegetables",
@@ -735,6 +809,17 @@
     }
   },
   {
+    "id": "avocado",
+    "name": "Avocado",
+    "category": "Fruit",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "piece"
+    }
+  },
+  {
     "id": "fresh_chilli",
     "name": "Fresh/frozen chilli",
     "category": "Vegetables",
@@ -772,7 +857,37 @@
     "atHomeCandidate": false,
     "aggregation": {
       "mode": "presence"
-    }
+    },
+    "packs": [
+      {
+        "id": "fresh_coriander_50g",
+        "label": "Fresh coriander — 50 g",
+        "shopHint": "Coentros Frescos Continente",
+        "amount": 50,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "fresh_parsley",
+    "name": "Fresh parsley",
+    "category": "Herbs",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "presence"
+    },
+    "packs": [
+      {
+        "id": "fresh_parsley_50g",
+        "label": "Fresh parsley — 50 g",
+        "shopHint": "Salsa Fresca Continente",
+        "amount": 50,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
   },
   {
     "id": "olives",
@@ -786,13 +901,24 @@
   },
   {
     "id": "sweetcorn",
-    "name": "Sweetcorn",
-    "category": "Tinned goods",
+    "name": "Frozen sweetcorn",
+    "category": "Frozen",
     "shopping": true,
-    "atHomeCandidate": true,
+    "atHomeCandidate": false,
     "aggregation": {
-      "mode": "presence"
-    }
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "frozen_sweetcorn_500g",
+        "label": "Frozen sweetcorn — 500 g",
+        "shopHint": "Milho Doce Continente",
+        "amount": 500,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
   },
   {
     "id": "stock_cube",
@@ -865,6 +991,16 @@
     }
   },
   {
+    "id": "chilli_powder",
+    "name": "Chilli powder",
+    "category": "Seasoning",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
     "id": "paprika",
     "name": "Paprika",
     "category": "Seasoning",
@@ -923,6 +1059,27 @@
     "aggregation": {
       "mode": "presence"
     }
+  },
+  {
+    "id": "pesto",
+    "name": "Pesto",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "pesto_190g",
+        "label": "Pesto — 190 g jar",
+        "shopHint": "Molho Pesto Continente",
+        "amount": 190,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
   },
   {
     "id": "bay_leaf",

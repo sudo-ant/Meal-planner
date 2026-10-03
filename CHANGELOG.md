@@ -9,9 +9,14 @@
 - Added persistent At-home markers and week-specific Bought state.
 - Added a Cook view containing only the current week's selected recipes.
 - Updated recipe search to use multi-word AND matching across recipe and ingredient data.
-- Replaced the recipe catalogue with the approved 46-recipe v2 data and added 81 canonical ingredients.
+- Replaced the recipe catalogue with the approved 49-recipe v2 data and added 89 canonical ingredients.
 - Removed Lentil & Vegetable Stew, Chickpea Stir-Fry, and Chickpea Salad following Maia's recipe review.
 - Removed Salmon & Veg Rice and Salmon & Edamame Rice Bowl from the catalogue.
+- Removed Chickpea & Spinach Curry from the catalogue.
+- Added Mediterranean Chickpea Salad, Pesto Chicken Pasta Salad, Abue's Tuna Salad, and Southwestern Chicken & Black Bean Salad.
+- Standardised sweetcorn as frozen, added current pack metadata, and added the new canonical ingredients required by the salads.
+- Updated user-visible fish naming to Pescada do Cabo.
+- Corrected the Lemon Garlic Chicken full batch to a true 8-portion double batch.
 - Added eight trial recipes, including French-Style Green Lentil Stew, and the canonical ingredients needed for them.
 - Made frozen pumpkin chunks a standard required ingredient in Thai Green Chicken Curry and clarified its cooking timings.
 - Retired `data/plans.json` from the runtime and repository.
