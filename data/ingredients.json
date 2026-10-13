@@ -1370,5 +1370,248 @@
     "aggregation": {
       "mode": "presence"
     }
+  },
+  {
+    "id": "frozen_lemongrass",
+    "name": "Frozen lemongrass",
+    "category": "Frozen",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "yellow_curry_paste",
+    "name": "Yellow curry paste",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "tamarind_paste",
+    "name": "Tamarind paste",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "chilli_oil",
+    "name": "Chilli oil",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "honey",
+    "name": "Honey",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "dried_dill",
+    "name": "Dried dill",
+    "category": "Seasoning",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "beef_steak",
+    "name": "Beef steak",
+    "category": "Meat",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "beef_steak_400g",
+        "label": "Beef steak — about 400 g",
+        "shopHint": "Bife Traseiro de Bovino Continente",
+        "amount": 400,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "broccoli",
+    "name": "Broccoli",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "broccoli_600g",
+        "label": "Fresh broccoli — about 600 g",
+        "shopHint": "Couve Brócolo Continente",
+        "amount": 600,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "dark_soy_sauce",
+    "name": "Dark soy sauce",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "cornflour",
+    "name": "Cornflour",
+    "category": "Dry goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    },
+    "packs": [
+      {
+        "id": "cornflour_400g",
+        "label": "Cornflour — 400 g",
+        "shopHint": "Farinha Amido de Milho Maizena",
+        "amount": 400,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "baking_soda",
+    "name": "Bicarbonate of soda",
+    "category": "Dry goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "shaoxing_wine",
+    "name": "Shaoxing wine",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "sesame_oil",
+    "name": "Sesame oil",
+    "category": "Oil & cooking fats",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    },
+    "packs": [
+      {
+        "id": "sesame_oil_250ml",
+        "label": "Sesame oil — 250 ml",
+        "shopHint": "Óleo de Sésamo Origens Bio",
+        "amount": 250,
+        "unit": "ml",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "chinese_five_spice",
+    "name": "Chinese five-spice",
+    "category": "Seasoning",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "white_pepper",
+    "name": "White pepper",
+    "category": "Seasoning",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "spring_onions",
+    "name": "Spring onions",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "piece"
+    }
+  },
+  {
+    "id": "sesame_seeds",
+    "name": "Sesame seeds",
+    "category": "Dry goods",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    },
+    "packs": [
+      {
+        "id": "sesame_seeds_200g",
+        "label": "Sesame seeds — 200 g",
+        "shopHint": "Sementes de Sésamo Continente",
+        "amount": 200,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "kaffir_lime_leaves",
+    "name": "Frozen kaffir lime leaves",
+    "category": "Frozen",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
+  },
+  {
+    "id": "galangal",
+    "name": "Frozen sliced galangal",
+    "category": "Frozen",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    }
   }
 ]

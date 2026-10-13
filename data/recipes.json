@@ -6963,5 +6963,631 @@
     "notes": [
       "Do not overfill the wrappers. Chicken is used rather than prawns. If the rolls prove fiddly, the same ingredients can be eaten as a noodle bowl."
     ]
+  },
+  {
+    "id": "lemongrass_beef_brothy_rice",
+    "title": "Lemongrass Beef Brothy Rice",
+    "group": "Beef",
+    "tags": [
+      "batch",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One mince pack",
+        "yield": {
+          "min": 4,
+          "max": 4
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "conditional"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "beef_mince",
+            "status": "required",
+            "amount": 465,
+            "unit": "g",
+            "display": "1 × 465 g beef mince pack",
+            "preferredPackId": "beef_mince_465g"
+          },
+          {
+            "ingredientId": "frozen_lemongrass",
+            "status": "required",
+            "display": "2 lemongrass stalks, divided — thaw slightly before finely mincing"
+          },
+          {
+            "ingredientId": "sugar",
+            "status": "required",
+            "display": "3 tbsp sugar, divided"
+          },
+          {
+            "ingredientId": "soy_sauce",
+            "status": "required",
+            "display": "2 tsp soy sauce"
+          },
+          {
+            "ingredientId": "fish_sauce",
+            "status": "required",
+            "display": "2 tbsp fish sauce, divided"
+          },
+          {
+            "ingredientId": "onion",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 small onion, finely diced"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 5,
+            "unit": "clove",
+            "display": "5 garlic cloves, divided"
+          },
+          {
+            "ingredientId": "lime",
+            "status": "required",
+            "amount": 2,
+            "unit": "piece",
+            "display": "2 limes"
+          },
+          {
+            "ingredientId": "chilli_oil",
+            "status": "optional",
+            "display": "1 tsp chilli oil, optional"
+          },
+          {
+            "ingredientId": "yellow_curry_paste",
+            "status": "required",
+            "display": "2–3 tbsp yellow curry paste, depending on strength"
+          },
+          {
+            "ingredientId": "ginger",
+            "status": "required",
+            "display": "About 2 tsp grated ginger or ginger paste"
+          },
+          {
+            "ingredientId": "coconut_milk",
+            "status": "required",
+            "amount": 400,
+            "unit": "ml",
+            "display": "1 × 400 ml tin coconut milk",
+            "preferredPackId": "coconut_milk_400ml"
+          },
+          {
+            "ingredientId": "water",
+            "status": "required",
+            "amount": 2,
+            "unit": "mug",
+            "display": "2 mugs water"
+          },
+          {
+            "ingredientId": "stock_cube",
+            "status": "required",
+            "amount": 1,
+            "unit": "cube",
+            "display": "1 chicken stock cube"
+          },
+          {
+            "ingredientId": "tamarind_paste",
+            "status": "optional",
+            "display": "1 tbsp tamarind paste, preferred; use extra lime if unavailable"
+          },
+          {
+            "ingredientId": "rice",
+            "status": "required",
+            "amount": 1,
+            "unit": "mug",
+            "display": "1 mug uncooked rice"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Cook the rice separately.",
+      "For the beef, combine the mince with 1 finely minced lemongrass stalk, 2 tbsp sugar, soy sauce, 1 tbsp fish sauce, the finely diced onion, 3 crushed garlic cloves, about 1½ tbsp lime juice and optional chilli oil.",
+      "Heat the 3 L non-stick pot and cook the beef mixture, breaking it up, until browned and completely cooked.",
+      "Transfer the beef temporarily to a bowl.",
+      "In the same pot, add the yellow curry paste, remaining finely minced lemongrass, remaining 2 garlic cloves and ginger. Cook for about 30 seconds.",
+      "Add the coconut milk, 2 mugs water, stock cube, remaining 1 tbsp fish sauce, remaining 1 tbsp sugar and optional tamarind paste.",
+      "Bring gently to the boil, then simmer for about 5 minutes.",
+      "Return the cooked beef to the broth and simmer for another 2–3 minutes.",
+      "Taste. Add lime juice until the broth has a good sweet-sour balance.",
+      "Divide the cooked rice between bowls and spoon over plenty of the beef and broth."
+    ],
+    "notes": [
+      "Adapted from Maia's Instagram recipe to one standard 465 g Continente beef-mince pack.",
+      "The original uses coconut sugar; ordinary sugar is used here so Maia does not need a separate specialist sweetener.",
+      "Tamarind gives the best sourness, but additional lime is a good practical substitute.",
+      "This should remain genuinely brothy rather than reducing to a curry.",
+      "Yellow curry paste, lemongrass and tamarind can be Asian-supermarket stock-up ingredients.",
+      "The beef/broth can be frozen; cook fresh rice separately when serving."
+    ]
+  },
+  {
+    "id": "greek_chicken_rice_bowls",
+    "title": "Greek Chicken & Rice Bowls",
+    "group": "Chicken",
+    "tags": [
+      "batch",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "Full chicken pack",
+        "yield": {
+          "min": 4,
+          "max": 4
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "no"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "chicken_breast",
+            "status": "required",
+            "amount": 700,
+            "unit": "g",
+            "display": "1 × 700 g chicken breast pack",
+            "preferredPackId": "chicken_breast_700g"
+          },
+          {
+            "ingredientId": "rice",
+            "status": "required",
+            "amount": 1,
+            "unit": "mug",
+            "display": "1 mug uncooked rice"
+          },
+          {
+            "ingredientId": "olive_oil",
+            "status": "required",
+            "display": "About 1½ tbsp olive oil, divided"
+          },
+          {
+            "ingredientId": "onion",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 small onion, finely diced"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 5,
+            "unit": "clove",
+            "display": "5 garlic cloves, divided"
+          },
+          {
+            "ingredientId": "oregano",
+            "status": "required",
+            "display": "About 1½ tbsp dried oregano, divided"
+          },
+          {
+            "ingredientId": "paprika",
+            "status": "required",
+            "display": "2 tsp paprika, divided"
+          },
+          {
+            "ingredientId": "salt",
+            "status": "required",
+            "display": "Salt, to taste"
+          },
+          {
+            "ingredientId": "fresh_parsley",
+            "status": "required",
+            "display": "1 × 50 g pack fresh parsley, divided between rice and salad",
+            "preferredPackId": "fresh_parsley_50g"
+          },
+          {
+            "ingredientId": "dried_dill",
+            "status": "required",
+            "display": "About 2 tsp dried dill, divided"
+          },
+          {
+            "ingredientId": "water",
+            "status": "required",
+            "amount": 1.5,
+            "unit": "mug",
+            "display": "1½ mugs water"
+          },
+          {
+            "ingredientId": "stock_cube",
+            "status": "required",
+            "amount": 1,
+            "unit": "cube",
+            "display": "1 chicken stock cube"
+          },
+          {
+            "ingredientId": "dried_thyme",
+            "status": "required",
+            "display": "1 tsp dried thyme"
+          },
+          {
+            "ingredientId": "lemon",
+            "status": "required",
+            "amount": 2,
+            "unit": "piece",
+            "display": "2 lemons"
+          },
+          {
+            "ingredientId": "honey",
+            "status": "required",
+            "display": "½ tbsp honey"
+          },
+          {
+            "ingredientId": "mythos_yoghurt",
+            "status": "required",
+            "amount": 250,
+            "unit": "g",
+            "display": "2 × 125 g pots Mythos natural Greek yoghurt",
+            "preferredPackId": "mythos_yoghurt_500g"
+          },
+          {
+            "ingredientId": "cucumber",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 cucumber, divided between tzatziki and salad"
+          },
+          {
+            "ingredientId": "cherry_tomatoes",
+            "status": "required",
+            "amount": 250,
+            "unit": "g",
+            "display": "1 × 250 g pack cherry tomatoes, halved",
+            "preferredPackId": "cherry_tomatoes_250g"
+          },
+          {
+            "ingredientId": "feta",
+            "status": "required",
+            "amount": 75,
+            "unit": "g",
+            "display": "½ of a 150 g feta pack — about 75 g",
+            "preferredPackId": "feta_150g"
+          },
+          {
+            "ingredientId": "red_onion",
+            "status": "required",
+            "amount": 0.5,
+            "unit": "piece",
+            "display": "½ red onion, thinly sliced"
+          },
+          {
+            "ingredientId": "olives",
+            "status": "required",
+            "display": "About 4 tbsp black olives, sliced"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Cut the chicken into manageable pieces or thick strips.",
+      "Mix the chicken with 2 tsp oregano, 1 tsp paprika, dried thyme, 2 crushed garlic cloves, zest of 1 lemon, about 3 tbsp lemon juice, honey, a little olive oil and a little salt.",
+      "Leave to marinate for at least 15–30 minutes.",
+      "Rinse the rice.",
+      "Heat about 1 tbsp olive oil in the 3 L pot and soften the onion for about 4 minutes.",
+      "Add 2 crushed garlic cloves, about 1 tbsp oregano and the remaining paprika. Cook briefly.",
+      "Add the rice, 1½ mugs water and stock cube.",
+      "Bring to the boil, cover and simmer gently until the rice is cooked. Rest covered for 5 minutes, then fluff and stir through about half the parsley and a little dried dill.",
+      "Cook the chicken in the 24 cm frying pan in two batches so it is not crowded. Cook until golden and completely cooked through, then rest briefly before slicing.",
+      "Make the tzatziki: grate half the cucumber and squeeze out excess liquid. Mix with the 250 g yoghurt, 1 crushed garlic clove, some dried dill, lemon juice and a little salt.",
+      "Make the salad: combine the cherry tomatoes, remaining sliced cucumber, feta, red onion, olives and remaining parsley. Dress with lemon juice and a small amount of olive oil.",
+      "Divide the rice between four bowls and top with chicken, Greek salad and a generous spoonful of tzatziki."
+    ],
+    "notes": [
+      "Adapted from the Instagram recipe around Maia's standard 700 g chicken breast pack and Continente pack sizes.",
+      "The original uses skinless chicken thighs. Boneless chicken thighs can also be used if Maia buys them, but chicken breast is the normal app shopping default.",
+      "Dried dill is used because fresh dill is not part of Maia's normal Continente herb range.",
+      "Best fresh or refrigerated; do not freeze the assembled bowls."
+    ]
+  },
+  {
+    "id": "beef_broccoli_fried_rice",
+    "title": "Beef & Broccoli Fried Rice",
+    "group": "Beef",
+    "tags": [
+      "pan",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One batch",
+        "yield": {
+          "min": 4,
+          "max": 4
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "no"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "beef_steak",
+            "status": "required",
+            "amount": 400,
+            "unit": "g",
+            "display": "1 × about 400 g pack lean beef steak, thinly sliced",
+            "preferredPackId": "beef_steak_400g"
+          },
+          {
+            "ingredientId": "oyster_sauce",
+            "status": "required",
+            "display": "3 tbsp oyster sauce, divided",
+            "preferredPackId": "oyster_sauce_255g"
+          },
+          {
+            "ingredientId": "dark_soy_sauce",
+            "status": "required",
+            "display": "1 tbsp + 2 tsp dark soy sauce, divided"
+          },
+          {
+            "ingredientId": "baking_soda",
+            "status": "required",
+            "display": "1 tsp bicarbonate of soda"
+          },
+          {
+            "ingredientId": "cornflour",
+            "status": "required",
+            "display": "2 tsp cornflour",
+            "preferredPackId": "cornflour_400g"
+          },
+          {
+            "ingredientId": "soy_sauce",
+            "status": "required",
+            "display": "2 tbsp soy sauce"
+          },
+          {
+            "ingredientId": "shaoxing_wine",
+            "status": "required",
+            "display": "1 tbsp Shaoxing wine"
+          },
+          {
+            "ingredientId": "sugar",
+            "status": "required",
+            "display": "1 tbsp sugar"
+          },
+          {
+            "ingredientId": "sesame_oil",
+            "status": "required",
+            "display": "1 tsp sesame oil",
+            "preferredPackId": "sesame_oil_250ml"
+          },
+          {
+            "ingredientId": "chinese_five_spice",
+            "status": "required",
+            "display": "½ tsp Chinese five-spice"
+          },
+          {
+            "ingredientId": "white_pepper",
+            "status": "required",
+            "display": "½ tsp ground white pepper"
+          },
+          {
+            "ingredientId": "water",
+            "status": "required",
+            "display": "2 tbsp water"
+          },
+          {
+            "ingredientId": "vegetable_oil",
+            "status": "required",
+            "display": "About ½ tbsp oil for frying"
+          },
+          {
+            "ingredientId": "rice",
+            "status": "required",
+            "amount": 1,
+            "unit": "mug",
+            "display": "1 mug uncooked rice, cooked ahead and chilled"
+          },
+          {
+            "ingredientId": "broccoli",
+            "status": "required",
+            "amount": 600,
+            "unit": "g",
+            "display": "1 fresh broccoli head — about 600 g before trimming",
+            "preferredPackId": "broccoli_600g"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 5,
+            "unit": "clove",
+            "display": "5 garlic cloves, minced"
+          },
+          {
+            "ingredientId": "ginger",
+            "status": "required",
+            "display": "About 2 tsp grated ginger or ginger paste"
+          },
+          {
+            "ingredientId": "spring_onions",
+            "status": "required",
+            "amount": 3,
+            "unit": "piece",
+            "display": "3 spring onions, sliced — whites and greens separated"
+          },
+          {
+            "ingredientId": "eggs",
+            "status": "required",
+            "amount": 4,
+            "unit": "piece",
+            "display": "4 eggs"
+          },
+          {
+            "ingredientId": "chilli_oil",
+            "status": "optional",
+            "display": "Chilli oil, optional, to serve"
+          },
+          {
+            "ingredientId": "sesame_seeds",
+            "status": "optional",
+            "display": "Sesame seeds, optional, to serve",
+            "preferredPackId": "sesame_seeds_200g"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Ideally cook the rice earlier, cool it promptly and refrigerate it until needed.",
+      "Thinly slice the beef.",
+      "Mix the beef with 1 tbsp oyster sauce, 2 tsp dark soy sauce, bicarbonate of soda, cornflour and white pepper. Leave for at least 15 minutes.",
+      "In a separate bowl mix the remaining 2 tbsp oyster sauce, soy sauce, remaining 1 tbsp dark soy sauce, Shaoxing wine, sugar, sesame oil, Chinese five-spice and 2 tbsp water.",
+      "Cut the broccoli into small florets. Thinly slice usable tender pieces of the stalk too rather than wasting them.",
+      "Cover the broccoli with boiling water for 1–2 minutes, then drain very well.",
+      "Heat the frying pan well with a little oil.",
+      "Cook the beef in two batches so the pan is not crowded. Brown for about 2–3 minutes and remove.",
+      "Use the 3 L non-stick pot for the final stage if the frying pan is too small.",
+      "Fry the garlic, ginger and spring-onion whites for about 1 minute.",
+      "Add the cold cooked rice and stir-fry for 1–2 minutes.",
+      "Add the drained broccoli and prepared sauce and mix until everything is hot and coated.",
+      "Return the beef and toss until heated through.",
+      "Stir through the spring-onion greens.",
+      "Fry the 4 eggs separately in the 24 cm frying pan.",
+      "Divide the fried rice between four portions and top each with an egg.",
+      "Add optional chilli oil and sesame seeds."
+    ],
+    "notes": [
+      "Adapted from Maia's Instagram recipe to a practical approximately 400 g Continente steak pack.",
+      "The original uses 500 g steak; the egg on each serving means the 400 g version is still a substantial four-portion meal.",
+      "Cook the beef in batches because Maia's frying pan is only 24 cm.",
+      "If needed, use the 3 L non-stick pot for combining the rice, broccoli, sauce and beef.",
+      "Shaoxing wine, dark soy sauce and Chinese five-spice may be easier to buy from the Asian supermarket.",
+      "Do not leave cooked rice sitting at room temperature; cool it promptly and refrigerate it until the fried rice is made.",
+      "Best eaten fresh; do not mark freezer-friendly."
+    ]
+  },
+  {
+    "id": "tom_yum_gai",
+    "title": "Tom Yum Gai",
+    "group": "Chicken",
+    "tags": [
+      "one-pot",
+      "batch"
+    ],
+    "trial": false,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "Half chicken pack",
+        "yield": {
+          "min": 4,
+          "max": 4
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "conditional"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "chicken_breast",
+            "status": "required",
+            "amount": 350,
+            "unit": "g",
+            "display": "½ of a 700 g chicken breast pack — about 350 g",
+            "preferredPackId": "chicken_breast_700g"
+          },
+          {
+            "ingredientId": "water",
+            "status": "required",
+            "amount": 3,
+            "unit": "mug",
+            "display": "3 mugs water"
+          },
+          {
+            "ingredientId": "stock_cube",
+            "status": "required",
+            "amount": 1,
+            "unit": "cube",
+            "display": "1 stock cube"
+          },
+          {
+            "ingredientId": "kaffir_lime_leaves",
+            "status": "required",
+            "display": "4–6 frozen kaffir lime leaves"
+          },
+          {
+            "ingredientId": "galangal",
+            "status": "required",
+            "display": "About 4 frozen galangal slices"
+          },
+          {
+            "ingredientId": "frozen_lemongrass",
+            "status": "required",
+            "display": "2 frozen lemongrass stalks"
+          },
+          {
+            "ingredientId": "fresh_chilli",
+            "status": "required",
+            "display": "1–2 bird's-eye chillies, sliced, to taste"
+          },
+          {
+            "ingredientId": "green_beans",
+            "status": "required",
+            "amount": 300,
+            "unit": "g",
+            "display": "300 g green beans, cut into bite-sized pieces"
+          },
+          {
+            "ingredientId": "fresh_tomato",
+            "status": "required",
+            "amount": 2,
+            "unit": "piece",
+            "display": "1–2 tomatoes, cut into chunks"
+          },
+          {
+            "ingredientId": "fish_sauce",
+            "status": "required",
+            "display": "About 1–1½ tbsp fish sauce, then adjust to taste"
+          },
+          {
+            "ingredientId": "lime",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "Juice of 1 lime, then adjust to taste"
+          },
+          {
+            "ingredientId": "rice",
+            "status": "required",
+            "amount": 0.75,
+            "unit": "mug",
+            "display": "¾ mug uncooked rice, to serve"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Cook the rice separately.",
+      "Cut the chicken into bite-sized pieces and cut the green beans into shorter lengths.",
+      "Put 3 mugs water and the stock cube into the 3 L pot.",
+      "Add the frozen kaffir lime leaves, galangal slices and frozen lemongrass stalks.",
+      "Add 1–2 sliced bird's-eye chillies according to how spicy you want it.",
+      "Bring to the boil and simmer for about 5 minutes so the aromatics flavour the broth.",
+      "Add the chicken, green beans and tomatoes.",
+      "Simmer gently for about 10–15 minutes until the chicken is completely cooked and the beans are tender.",
+      "Add about 1 tbsp fish sauce and the juice of 1 lime.",
+      "Taste the broth and add a little more fish sauce or lime if needed.",
+      "Serve the hot soup with rice."
+    ],
+    "notes": [
+      "This is Anthony's home Tom Yum Gai recipe, written down from the way he normally cooks it rather than adapted from an external recipe.",
+      "Kaffir lime leaves, galangal and lemongrass are flavouring aromatics; they are not normally eaten. Leave them in the serving bowl or remove them before eating.",
+      "Anthony normally buys kaffir lime leaves, sliced galangal and lemongrass frozen from the Asian supermarket.",
+      "Keep the broth clear and sharp: do not add coconut milk.",
+      "The soup can be frozen without the rice, although the green beans will soften slightly after reheating."
+    ]
   }
 ]
