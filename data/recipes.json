@@ -7578,5 +7578,999 @@
     "notes": [
       "The soup can be frozen without the rice, although the green beans will soften slightly after reheating."
     ]
+  },
+  {
+    "id": "avocado_tuna_salad",
+    "title": "Avocado Tuna Salad",
+    "group": "Light / Summer",
+    "tags": [
+      "light",
+      "summer",
+      "quick",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One large tuna tin",
+        "yield": {
+          "min": 3,
+          "max": 3
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "no"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "tuna_olive_oil",
+            "status": "required",
+            "amount": 250,
+            "unit": "g",
+            "display": "1 × large tuna-in-olive-oil tin — about 250 g drained",
+            "preferredPackId": "tuna_olive_oil_250g_drained"
+          },
+          {
+            "ingredientId": "cucumber",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 cucumber, sliced"
+          },
+          {
+            "ingredientId": "avocado",
+            "status": "required",
+            "amount": 2,
+            "unit": "piece",
+            "display": "2 ripe but firm avocados, diced or sliced"
+          },
+          {
+            "ingredientId": "red_onion",
+            "status": "required",
+            "amount": 0.5,
+            "unit": "piece",
+            "display": "½ red onion, thinly sliced"
+          },
+          {
+            "ingredientId": "fresh_coriander",
+            "status": "required",
+            "display": "About ½ pack fresh coriander, chopped",
+            "preferredPackId": "fresh_coriander_50g"
+          },
+          {
+            "ingredientId": "lemon",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "Juice of 1 lemon"
+          },
+          {
+            "ingredientId": "olive_oil",
+            "status": "required",
+            "display": "1 tbsp extra-virgin olive oil"
+          },
+          {
+            "ingredientId": "salt",
+            "status": "required",
+            "display": "Salt, to taste"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper, to taste"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Drain the tuna well and flake it into large pieces.",
+      "Slice the cucumber and red onion.",
+      "Cut the avocados into chunks or slices.",
+      "Put the cucumber, red onion, tuna and coriander into a large bowl.",
+      "Add the avocado gently.",
+      "Dress with the lemon juice and olive oil.",
+      "Season with salt and black pepper.",
+      "Toss gently so the avocado and tuna remain in pieces.",
+      "Serve immediately."
+    ],
+    "notes": [
+      "Best eaten on the day it is made.",
+      "If preparing ahead, keep the avocado separate and add it just before serving."
+    ]
+  },
+  {
+    "id": "tuna_egg_salad",
+    "title": "Tuna & Egg Salad",
+    "group": "Light / Summer",
+    "tags": [
+      "light",
+      "quick",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "Two small tuna tins",
+        "yield": {
+          "min": 2,
+          "max": 2
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "no"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "tuna_natural",
+            "status": "required",
+            "amount": 170,
+            "unit": "g",
+            "display": "2 × small tuna tins — about 85 g drained each",
+            "preferredPackId": "tuna_small_85g_drained"
+          },
+          {
+            "ingredientId": "eggs",
+            "status": "required",
+            "amount": 4,
+            "unit": "piece",
+            "display": "4 eggs, hard-boiled"
+          },
+          {
+            "ingredientId": "mayonnaise",
+            "status": "required",
+            "amount": 30,
+            "unit": "ml",
+            "display": "2 tbsp mayonnaise",
+            "preferredPackId": "mayonnaise_250ml"
+          },
+          {
+            "ingredientId": "red_onion",
+            "status": "required",
+            "amount": 0.25,
+            "unit": "piece",
+            "display": "¼ red onion, finely chopped"
+          },
+          {
+            "ingredientId": "salt",
+            "status": "required",
+            "display": "Salt, to taste"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper, to taste"
+          }
+        ],
+        "choices": [
+          {
+            "id": "wraps",
+            "label": "Optional wraps",
+            "required": false,
+            "options": [
+              {
+                "id": "wraps",
+                "label": "2 wraps",
+                "ingredients": [
+                  {
+                    "ingredientId": "tortilla_wraps",
+                    "status": "required",
+                    "amount": 2,
+                    "unit": "piece",
+                    "display": "2 tortilla wraps"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "steps": [
+      "Hard-boil the eggs, cool and peel them.",
+      "Chop the eggs into bite-sized pieces.",
+      "Drain the tuna.",
+      "Mix the eggs, tuna, mayonnaise and finely chopped red onion.",
+      "Season with salt and black pepper.",
+      "Eat as a salad or use as filling for the optional wraps."
+    ],
+    "notes": [
+      "Keep refrigerated.",
+      "Best eaten within about 3 days."
+    ]
+  },
+  {
+    "id": "mediterranean_tuna_pasta",
+    "title": "Mediterranean Tuna Pasta",
+    "group": "Fish",
+    "tags": [
+      "quick",
+      "leftovers",
+      "summer",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One large tuna tin",
+        "yield": {
+          "min": 4,
+          "max": 4
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "no"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "dry_pasta",
+            "status": "required",
+            "amount": 250,
+            "unit": "g",
+            "display": "250 g short pasta — ½ of a 500 g pack",
+            "preferredPackId": "dry_pasta_500g"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 4,
+            "unit": "clove",
+            "display": "4 garlic cloves, finely chopped"
+          },
+          {
+            "ingredientId": "chilli_powder",
+            "status": "optional",
+            "display": "A pinch of chilli flakes or chilli powder, optional"
+          },
+          {
+            "ingredientId": "olive_oil",
+            "status": "required",
+            "display": "2 tbsp olive oil, divided"
+          },
+          {
+            "ingredientId": "olives",
+            "status": "required",
+            "display": "About ½ mug olives, roughly chopped"
+          },
+          {
+            "ingredientId": "capers",
+            "status": "required",
+            "display": "2 tbsp capers",
+            "preferredPackId": "capers_170g"
+          },
+          {
+            "ingredientId": "tuna_olive_oil",
+            "status": "required",
+            "amount": 250,
+            "unit": "g",
+            "display": "1 × large tuna-in-olive-oil tin — about 250 g drained",
+            "preferredPackId": "tuna_olive_oil_250g_drained"
+          },
+          {
+            "ingredientId": "lemon",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 lemon — zest and juice"
+          },
+          {
+            "ingredientId": "rocket",
+            "status": "required",
+            "amount": 100,
+            "unit": "g",
+            "display": "1 × 100 g bag rocket",
+            "preferredPackId": "rocket_100g"
+          },
+          {
+            "ingredientId": "cherry_tomatoes",
+            "status": "required",
+            "amount": 250,
+            "unit": "g",
+            "display": "1 × 250 g pack cherry tomatoes, halved",
+            "preferredPackId": "cherry_tomatoes_250g"
+          },
+          {
+            "ingredientId": "fresh_basil",
+            "status": "required",
+            "amount": 20,
+            "unit": "g",
+            "display": "1 × 20 g pack fresh basil, roughly chopped",
+            "preferredPackId": "fresh_basil_20g"
+          },
+          {
+            "ingredientId": "salt",
+            "status": "required",
+            "display": "Salt, to taste"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper, to taste"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Cook the pasta in salted water until just tender.",
+      "Before draining, reserve a small mug of pasta water.",
+      "Heat 1 tbsp olive oil in the 24 cm frying pan.",
+      "Add the garlic and optional chilli and cook briefly without browning the garlic.",
+      "Add the olives, capers, tuna and lemon zest.",
+      "Warm gently for about 1 minute, keeping the tuna in pieces.",
+      "Add the drained pasta and toss together.",
+      "Add the rocket, cherry tomatoes, lemon juice and fresh basil.",
+      "Add the remaining olive oil and enough reserved pasta water to loosen the pasta if needed.",
+      "Season with salt and black pepper.",
+      "Serve warm, at room temperature or chilled."
+    ],
+    "notes": [
+      "Keeps refrigerated for a few days.",
+      "If eating cold the next day, add a little extra lemon juice or olive oil if the pasta seems dry."
+    ]
+  },
+  {
+    "id": "tuna_avocado_crispy_rice_salad",
+    "title": "Tuna, Avocado & Crispy Rice Salad",
+    "group": "Light / Summer",
+    "tags": [
+      "summer",
+      "pan",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One batch",
+        "yield": {
+          "min": 4,
+          "max": 4
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "no"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "rice",
+            "status": "required",
+            "amount": 0.75,
+            "unit": "mug",
+            "display": "¾ mug uncooked rice, cooked ahead and chilled"
+          },
+          {
+            "ingredientId": "soy_sauce",
+            "status": "required",
+            "display": "3 tbsp soy sauce, divided"
+          },
+          {
+            "ingredientId": "dark_soy_sauce",
+            "status": "optional",
+            "display": "1 tsp dark soy sauce, optional"
+          },
+          {
+            "ingredientId": "sesame_oil",
+            "status": "required",
+            "display": "2 tbsp sesame oil, divided"
+          },
+          {
+            "ingredientId": "olive_oil",
+            "status": "required",
+            "display": "1 tbsp olive oil, for crisping the rice"
+          },
+          {
+            "ingredientId": "mayonnaise",
+            "status": "required",
+            "amount": 125,
+            "unit": "ml",
+            "display": "About ½ cup / 125 ml mayonnaise",
+            "preferredPackId": "mayonnaise_250ml"
+          },
+          {
+            "ingredientId": "rice_vinegar",
+            "status": "required",
+            "amount": 30,
+            "unit": "ml",
+            "display": "2 tbsp rice vinegar",
+            "preferredPackId": "rice_vinegar_250ml"
+          },
+          {
+            "ingredientId": "honey",
+            "status": "required",
+            "display": "1 tbsp honey"
+          },
+          {
+            "ingredientId": "chilli_oil",
+            "status": "optional",
+            "display": "Chilli oil, optional"
+          },
+          {
+            "ingredientId": "tuna_olive_oil",
+            "status": "required",
+            "amount": 250,
+            "unit": "g",
+            "display": "1 × large tuna-in-olive-oil tin — about 250 g drained",
+            "preferredPackId": "tuna_olive_oil_250g_drained"
+          },
+          {
+            "ingredientId": "cucumber",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 cucumber, sliced"
+          },
+          {
+            "ingredientId": "edamame",
+            "status": "required",
+            "amount": 200,
+            "unit": "g",
+            "display": "200 g shelled edamame — ½ of a 400 g bag",
+            "preferredPackId": "edamame_400g"
+          },
+          {
+            "ingredientId": "avocado",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 avocado, diced"
+          },
+          {
+            "ingredientId": "spring_onions",
+            "status": "required",
+            "amount": 2,
+            "unit": "piece",
+            "display": "2 spring onions, finely sliced"
+          },
+          {
+            "ingredientId": "sesame_seeds",
+            "status": "optional",
+            "display": "Sesame seeds, optional",
+            "preferredPackId": "sesame_seeds_200g"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Cook the rice ahead of time.",
+      "Cool it promptly and refrigerate until completely cold.",
+      "Thaw the edamame.",
+      "Mix the cold rice with 1 tbsp soy sauce, 1 tbsp sesame oil and 1 tbsp olive oil.",
+      "Heat the 24 cm frying pan over medium-high heat.",
+      "Crisp HALF the rice at a time. Spread it in a reasonably thin layer, leave it undisturbed long enough to colour, then turn/toss and continue until it has crisp golden areas.",
+      "Remove the first batch and repeat with the remaining rice.",
+      "Leave the crispy rice to cool slightly.",
+      "Make the dressing by mixing the mayonnaise, remaining 2 tbsp soy sauce, rice vinegar, remaining 1 tbsp sesame oil, honey and optional chilli oil.",
+      "Drain and flake the tuna.",
+      "Combine the crispy rice, tuna, cucumber, edamame and spring onions.",
+      "Add the avocado gently.",
+      "Add the dressing immediately before serving and toss gently.",
+      "Finish with optional sesame seeds and optional extra chilli oil."
+    ],
+    "notes": [
+      "Cold rice crisps more effectively than freshly cooked rice.",
+      "Crisp the rice in two batches so the 24 cm pan is not overcrowded.",
+      "Add the avocado and dressing just before serving.",
+      "Best eaten fresh; do not freeze."
+    ]
+  },
+  {
+    "id": "turkey_vegetable_one_pot_pasta",
+    "title": "Turkey & Vegetable One-Pot Pasta",
+    "group": "Turkey",
+    "tags": [
+      "one-pot",
+      "batch",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One turkey pack",
+        "yield": {
+          "min": 5,
+          "max": 5
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "conditional"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "turkey_strips",
+            "status": "required",
+            "amount": 500,
+            "unit": "g",
+            "display": "1 × ~500 g Strogonoff de Peru pack, chopped into small pieces",
+            "preferredPackId": "turkey_strips_500g"
+          },
+          {
+            "ingredientId": "olive_oil",
+            "status": "required",
+            "display": "1 tbsp olive oil"
+          },
+          {
+            "ingredientId": "onion",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 onion, diced"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 2,
+            "unit": "clove",
+            "display": "2 garlic cloves, minced"
+          },
+          {
+            "ingredientId": "oregano",
+            "status": "required",
+            "display": "2 tsp dried oregano"
+          },
+          {
+            "ingredientId": "chilli_powder",
+            "status": "optional",
+            "display": "A pinch of chilli flakes or chilli powder, optional"
+          },
+          {
+            "ingredientId": "courgette",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 courgette — about 500 g, diced",
+            "preferredPackId": "courgette_500g"
+          },
+          {
+            "ingredientId": "mushrooms",
+            "status": "required",
+            "amount": 300,
+            "unit": "g",
+            "display": "300 g mushrooms, diced"
+          },
+          {
+            "ingredientId": "dry_pasta",
+            "status": "required",
+            "amount": 250,
+            "unit": "g",
+            "display": "250 g short pasta — ½ of a 500 g pack",
+            "preferredPackId": "dry_pasta_500g"
+          },
+          {
+            "ingredientId": "chopped_tomatoes",
+            "status": "required",
+            "amount": 800,
+            "unit": "g",
+            "display": "2 × 400 g tins chopped tomatoes",
+            "preferredPackId": "chopped_tomatoes_400g"
+          },
+          {
+            "ingredientId": "water",
+            "status": "required",
+            "amount": 0.5,
+            "unit": "mug",
+            "display": "½ mug water, plus a little more if needed"
+          },
+          {
+            "ingredientId": "frozen_spinach",
+            "status": "required",
+            "amount": 100,
+            "unit": "g",
+            "display": "100 g frozen spinach",
+            "preferredPackId": "frozen_spinach_750g"
+          },
+          {
+            "ingredientId": "salt",
+            "status": "required",
+            "display": "Salt, to taste"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper, to taste"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Use the 5 L pot.",
+      "Chop the turkey strips into small pieces.",
+      "Heat the olive oil and soften the onion for 2–3 minutes.",
+      "Add the garlic and cook for about 1 minute.",
+      "Add the turkey and cook for about 5 minutes, stirring regularly.",
+      "Add oregano and optional chilli.",
+      "Add the diced courgette and mushrooms and cook for another 2–3 minutes.",
+      "Add the dry pasta, chopped tomatoes and ½ mug water.",
+      "Mix thoroughly and make sure the pasta is mostly covered by liquid.",
+      "Cover and simmer gently for about 13–15 minutes, stirring once or twice so the pasta does not stick.",
+      "Add a splash more water if the pasta needs longer but the sauce is becoming too thick.",
+      "Stir in the frozen spinach for the final few minutes.",
+      "Continue until the pasta is tender and the turkey is completely cooked through.",
+      "Season with salt and black pepper."
+    ],
+    "notes": [
+      "Stir during cooking so the pasta does not stick to the bottom.",
+      "Add a small splash of water if the pasta needs more cooking time."
+    ]
+  },
+  {
+    "id": "turkey_sausage_green_beans_potatoes",
+    "title": "Turkey Sausage, Green Beans & Potatoes",
+    "group": "Turkey",
+    "tags": [
+      "batch",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One sausage pack",
+        "yield": {
+          "min": 4,
+          "max": 4
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "no"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "turkey_sausages",
+            "status": "required",
+            "amount": 500,
+            "unit": "g",
+            "display": "1 × 500 g pack fresh turkey sausages",
+            "preferredPackId": "turkey_sausages_500g"
+          },
+          {
+            "ingredientId": "potatoes",
+            "status": "required",
+            "amount": 600,
+            "unit": "g",
+            "display": "600 g potatoes, cut into small chunks"
+          },
+          {
+            "ingredientId": "green_beans",
+            "status": "required",
+            "amount": 500,
+            "unit": "g",
+            "display": "1 × 500 g pack green beans, trimmed",
+            "preferredPackId": "green_beans_500g"
+          },
+          {
+            "ingredientId": "olive_oil",
+            "status": "required",
+            "display": "2 tbsp olive oil"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 3,
+            "unit": "clove",
+            "display": "3 garlic cloves, minced"
+          },
+          {
+            "ingredientId": "paprika",
+            "status": "required",
+            "display": "1 tsp paprika"
+          },
+          {
+            "ingredientId": "oregano",
+            "status": "required",
+            "display": "1 tsp dried oregano"
+          },
+          {
+            "ingredientId": "dried_thyme",
+            "status": "required",
+            "display": "½ tsp dried thyme"
+          },
+          {
+            "ingredientId": "salt",
+            "status": "required",
+            "display": "Salt, to taste"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper, to taste"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Heat the mini-oven to 200°C.",
+      "Cut the potatoes into fairly small, even chunks.",
+      "Toss the potatoes with about half the olive oil, some of the garlic, paprika, oregano, thyme, salt and black pepper.",
+      "Put the potatoes on the mini-oven tray and roast for about 15 minutes.",
+      "Meanwhile trim the green beans.",
+      "Add the fresh turkey sausages and green beans to the tray.",
+      "Add the remaining olive oil, garlic and seasoning and toss the vegetables gently.",
+      "Return to the oven for about 20–25 minutes, turning the sausages and vegetables partway through.",
+      "Continue cooking until the potatoes are tender and the fresh turkey sausages are completely cooked through.",
+      "Serve hot."
+    ],
+    "notes": [
+      "Do not overcrowd the mini-oven tray. If necessary, cook in two batches.",
+      "The turkey sausages are fresh/raw and must be completely cooked before serving."
+    ]
+  },
+  {
+    "id": "turkey_broccoli_alfredo_pasta",
+    "title": "Turkey & Broccoli Alfredo Pasta",
+    "group": "Turkey",
+    "tags": [
+      "one-pot",
+      "batch",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One turkey pack",
+        "yield": {
+          "min": 5,
+          "max": 5
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "no"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "turkey_strips",
+            "status": "required",
+            "amount": 500,
+            "unit": "g",
+            "display": "1 × ~500 g Strogonoff de Peru pack, chopped into small pieces",
+            "preferredPackId": "turkey_strips_500g"
+          },
+          {
+            "ingredientId": "dry_pasta",
+            "status": "required",
+            "amount": 250,
+            "unit": "g",
+            "display": "250 g pasta — ½ of a 500 g pack",
+            "preferredPackId": "dry_pasta_500g"
+          },
+          {
+            "ingredientId": "broccoli",
+            "status": "required",
+            "amount": 600,
+            "unit": "g",
+            "display": "1 whole broccoli — about 600 g, cut into small florets",
+            "preferredPackId": "broccoli_600g"
+          },
+          {
+            "ingredientId": "olive_oil",
+            "status": "required",
+            "display": "1 tbsp olive oil"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 3,
+            "unit": "clove",
+            "display": "3 garlic cloves, minced"
+          },
+          {
+            "ingredientId": "cooking_cream",
+            "status": "required",
+            "amount": 200,
+            "unit": "ml",
+            "display": "1 × 200 ml pack cooking cream",
+            "preferredPackId": "cooking_cream_200ml"
+          },
+          {
+            "ingredientId": "parmesan",
+            "status": "required",
+            "amount": 60,
+            "unit": "g",
+            "display": "1 × 60 g pack grated Parmesan",
+            "preferredPackId": "parmesan_60g"
+          },
+          {
+            "ingredientId": "water",
+            "status": "required",
+            "amount": 1,
+            "unit": "mug",
+            "display": "1 mug water"
+          },
+          {
+            "ingredientId": "stock_cube",
+            "status": "required",
+            "amount": 1,
+            "unit": "cube",
+            "display": "1 chicken stock cube"
+          },
+          {
+            "ingredientId": "oregano",
+            "status": "required",
+            "display": "1 tsp dried oregano"
+          },
+          {
+            "ingredientId": "salt",
+            "status": "required",
+            "display": "Salt, to taste"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper, to taste"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Use the 5 L pot.",
+      "Cook the pasta until just tender, then drain and set aside.",
+      "Cut the broccoli into small florets and chop usable tender parts of the stalk.",
+      "Chop the turkey strips into small pieces.",
+      "Heat the olive oil in the same pot.",
+      "Add the turkey and cook for about 5 minutes.",
+      "Add the garlic, broccoli and oregano and cook for another 3–4 minutes.",
+      "Add 1 mug water and the stock cube.",
+      "Cover and simmer until the broccoli is nearly tender and the turkey is completely cooked through.",
+      "Reduce the heat.",
+      "Stir in the cooking cream.",
+      "Gradually stir in the Parmesan until melted and creamy.",
+      "Return the pasta to the pot and toss everything together.",
+      "Warm gently until the pasta is coated and hot.",
+      "Season with salt and black pepper."
+    ],
+    "notes": [
+      "Do not boil vigorously after adding the cream and Parmesan.",
+      "Add a small splash of water if the sauce becomes too thick."
+    ]
+  },
+  {
+    "id": "italian_turkey_rice_pot",
+    "title": "Italian Turkey & Rice Pot",
+    "group": "Turkey",
+    "tags": [
+      "one-pot",
+      "batch",
+      "trial"
+    ],
+    "trial": true,
+    "batchOptions": [
+      {
+        "id": "standard",
+        "label": "One turkey pack",
+        "yield": {
+          "min": 5,
+          "max": 5
+        },
+        "storage": {
+          "size": "normal",
+          "freezer": "conditional"
+        },
+        "ingredients": [
+          {
+            "ingredientId": "turkey_strips",
+            "status": "required",
+            "amount": 500,
+            "unit": "g",
+            "display": "1 × ~500 g Strogonoff de Peru pack, chopped into small pieces",
+            "preferredPackId": "turkey_strips_500g"
+          },
+          {
+            "ingredientId": "olive_oil",
+            "status": "required",
+            "display": "1 tbsp olive oil"
+          },
+          {
+            "ingredientId": "onion",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 onion, diced"
+          },
+          {
+            "ingredientId": "garlic",
+            "status": "required",
+            "amount": 3,
+            "unit": "clove",
+            "display": "3 garlic cloves, minced"
+          },
+          {
+            "ingredientId": "bell_pepper",
+            "status": "required",
+            "amount": 1,
+            "unit": "piece",
+            "display": "1 red pepper, diced"
+          },
+          {
+            "ingredientId": "oregano",
+            "status": "required",
+            "display": "1 tsp dried oregano"
+          },
+          {
+            "ingredientId": "fresh_basil",
+            "status": "required",
+            "amount": 20,
+            "unit": "g",
+            "display": "1 × 20 g pack fresh basil, roughly chopped",
+            "preferredPackId": "fresh_basil_20g"
+          },
+          {
+            "ingredientId": "rice",
+            "status": "required",
+            "amount": 0.75,
+            "unit": "mug",
+            "display": "¾ mug uncooked rice"
+          },
+          {
+            "ingredientId": "water",
+            "status": "required",
+            "amount": 1.5,
+            "unit": "mug",
+            "display": "1½ mugs water, plus a little more if needed"
+          },
+          {
+            "ingredientId": "stock_cube",
+            "status": "required",
+            "amount": 1,
+            "unit": "cube",
+            "display": "1 chicken stock cube"
+          },
+          {
+            "ingredientId": "chopped_tomatoes",
+            "status": "required",
+            "amount": 400,
+            "unit": "g",
+            "display": "1 × 400 g tin chopped tomatoes",
+            "preferredPackId": "chopped_tomatoes_400g"
+          },
+          {
+            "ingredientId": "parmesan",
+            "status": "required",
+            "amount": 60,
+            "unit": "g",
+            "display": "1 × 60 g pack grated Parmesan",
+            "preferredPackId": "parmesan_60g"
+          },
+          {
+            "ingredientId": "salt",
+            "status": "required",
+            "display": "Salt, to taste"
+          },
+          {
+            "ingredientId": "black_pepper",
+            "status": "required",
+            "display": "Black pepper, to taste"
+          }
+        ],
+        "choices": []
+      }
+    ],
+    "steps": [
+      "Use the 5 L pot.",
+      "Chop the turkey strips into small pieces.",
+      "Heat the olive oil and soften the onion for about 3 minutes.",
+      "Add the turkey and cook for about 5 minutes.",
+      "Add the garlic, red pepper and oregano and cook for another 2 minutes.",
+      "Stir in the uncooked rice.",
+      "Add the chopped tomatoes, 1½ mugs water and stock cube.",
+      "Bring to the boil, then reduce to a gentle simmer and cover.",
+      "Cook until the rice is tender and the turkey is completely cooked through, stirring occasionally.",
+      "Add a small splash of water if the rice needs longer but the pot is becoming dry.",
+      "Stir in the Parmesan and fresh basil.",
+      "Season with salt and black pepper.",
+      "Rest for a few minutes before serving."
+    ],
+    "notes": [
+      "Stir occasionally while the rice cooks.",
+      "Add a splash of water if needed before the rice is fully tender."
+    ]
   }
 ]

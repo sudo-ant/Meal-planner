@@ -4,7 +4,7 @@ A lightweight, mobile-first personal meal-planning PWA for choosing what to cook
 
 ## Features
 
-- Build the current week manually from a 53-recipe catalogue.
+- Build the current week manually from a 61-recipe catalogue.
 - Choose explicit recipe-specific batch sizes and substitutions.
 - Plan eligible small or medium recipes once or twice as separate cooking occasions.
 - See approximate weekly yield without assigning recipes to weekdays.
@@ -56,7 +56,7 @@ Then open `http://localhost:8000/`.
 
 ## Data
 
-`data/recipes.json` contains 53 recipes with explicit approved batches, approximate yields, ingredient requirements, choices, storage metadata, steps, and notes. The catalogue includes Lemongrass Beef Brothy Rice, Greek Chicken & Rice Bowls, and Beef & Broccoli Fried Rice as trial recipes, plus Tom Yum Gai as a family/home recipe. Specialist Thai and Chinese ingredients may be Asian-supermarket stock-up items. All four additions automatically support the existing 1× / 2× weekly repeat feature. `data/ingredients.json` provides 108 stable ingredient identities, aggregation rules, shopping flags, and supermarket pack metadata.
+`data/recipes.json` contains 61 recipes with explicit approved batches, approximate yields, ingredient requirements, choices, storage metadata, steps, and notes. The latest additions include four tuna-focused meals and four turkey-focused meals; all eight are trial recipes and automatically support the existing 1× / 2× weekly repeat feature. `data/ingredients.json` provides 114 stable ingredient identities, aggregation rules, shopping flags, and supermarket pack metadata.
 
 Recipe amounts are not scaled automatically. The application always uses one of the batch options supplied in the data.
 

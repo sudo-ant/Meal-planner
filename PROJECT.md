@@ -40,7 +40,7 @@ Cook contains only recipes selected for the current week. It shows the chosen ba
 
 ### Recipes
 
-Recipes is a browse-only reference library containing the complete 53-recipe catalogue. Search uses AND token matching across titles, groups, tags, and ingredient names, while recipe details expose the approved batches and instructions. Weekly recipe selection remains in Plan.
+Recipes is a browse-only reference library containing the complete 61-recipe catalogue. Search uses AND token matching across titles, groups, tags, and ingredient names, while recipe details expose the approved batches and instructions. Weekly recipe selection remains in Plan.
 
 ### Weight
 
@@ -62,8 +62,8 @@ Required and optional quantities remain separate. Leftover-only requirements do 
 
 ## Data
 
-- `data/recipes.json` contains 53 recipes, explicit batches, ingredients, choices, yields, storage metadata, steps, and notes. Lemongrass Beef Brothy Rice, Greek Chicken & Rice Bowls, and Beef & Broccoli Fried Rice are trial recipes; Tom Yum Gai is a family/home recipe and is not Trial. All four automatically support the existing 1× / 2× weekly repeat feature.
-- `data/ingredients.json` contains 108 canonical ingredient identities, shopping metadata, aggregation rules, and supermarket packs. Specialist Thai and Chinese ingredients may be Asian-supermarket stock-up items.
+- `data/recipes.json` contains 61 recipes, explicit batches, ingredients, choices, yields, storage metadata, steps, and notes. The latest additions are Avocado Tuna Salad, Tuna & Egg Salad, Mediterranean Tuna Pasta, Tuna, Avocado & Crispy Rice Salad, Turkey & Vegetable One-Pot Pasta, Turkey Sausage, Green Beans & Potatoes, Turkey & Broccoli Alfredo Pasta, and Italian Turkey & Rice Pot. All eight are trial recipes and automatically support the existing 1× / 2× weekly repeat feature.
+- `data/ingredients.json` contains 114 canonical ingredient identities, shopping metadata, aggregation rules, and supermarket packs.
 
 Run `node scripts/validate-data.mjs` to validate both files and all cross-references.
 

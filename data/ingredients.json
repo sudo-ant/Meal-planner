@@ -632,7 +632,17 @@
     "aggregation": {
       "mode": "sum",
       "unit": "g"
-    }
+    },
+    "packs": [
+      {
+        "id": "green_beans_500g",
+        "label": "Green beans — 500 g",
+        "shopHint": "Feijão Verde Continente",
+        "amount": 500,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
   },
   {
     "id": "onion",
@@ -1613,5 +1623,130 @@
     "aggregation": {
       "mode": "presence"
     }
+  },
+  {
+    "id": "mayonnaise",
+    "name": "Mayonnaise",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "ml"
+    },
+    "packs": [
+      {
+        "id": "mayonnaise_250ml",
+        "label": "Mayonnaise — 250 ml",
+        "shopHint": "Maionese sem Glúten Continente",
+        "amount": 250,
+        "unit": "ml",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "rocket",
+    "name": "Rocket",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "rocket_100g",
+        "label": "Rocket — 100 g",
+        "shopHint": "Rúcula Selvagem Continente",
+        "amount": 100,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "capers",
+    "name": "Capers",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "presence"
+    },
+    "packs": [
+      {
+        "id": "capers_170g",
+        "label": "Capers — 170 g jar",
+        "shopHint": "Alcaparras — about 170 g jar",
+        "amount": 170,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "rice_vinegar",
+    "name": "Rice vinegar",
+    "category": "Condiments",
+    "shopping": true,
+    "atHomeCandidate": true,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "ml"
+    },
+    "packs": [
+      {
+        "id": "rice_vinegar_250ml",
+        "label": "Rice vinegar — 250 ml",
+        "shopHint": "Vinagre de Arroz Gourmet Cristal",
+        "amount": 250,
+        "unit": "ml",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "courgette",
+    "name": "Courgette",
+    "category": "Vegetables",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "piece"
+    },
+    "packs": [
+      {
+        "id": "courgette_500g",
+        "label": "Courgette — about 500 g (1)",
+        "shopHint": "Curgete Verde Continente",
+        "amount": 1,
+        "unit": "piece",
+        "preferred": true
+      }
+    ]
+  },
+  {
+    "id": "turkey_sausages",
+    "name": "Fresh turkey sausages",
+    "category": "Meat",
+    "shopping": true,
+    "atHomeCandidate": false,
+    "aggregation": {
+      "mode": "sum",
+      "unit": "g"
+    },
+    "packs": [
+      {
+        "id": "turkey_sausages_500g",
+        "label": "Fresh turkey sausages — 500 g",
+        "shopHint": "Salsichas Frescas de Peru Continente",
+        "amount": 500,
+        "unit": "g",
+        "preferred": true
+      }
+    ]
   }
 ]

@@ -20,6 +20,8 @@
 - Added optional twice-weekly planning for recipes without a 6+ portion batch, with multiplied shopping requirements and cooking-occasion progress.
 - Added trial recipes Lemongrass Beef Brothy Rice, Greek Chicken & Rice Bowls, and Beef & Broccoli Fried Rice, plus Anthony's non-Trial family recipe Tom Yum Gai; all four use the existing weekly repeat feature.
 - Added canonical Thai and Chinese pantry/freezer ingredients, including Asian-supermarket stock-up items.
+- Added eight trial recipes: four tuna-focused meals and four turkey-focused meals, all using the existing weekly repeat feature.
+- Added six canonical ingredients and a 500 g green-bean pack recommendation for the new recipes.
 - Added eight trial recipes, including French-Style Green Lentil Stew, and the canonical ingredients needed for them.
 - Made frozen pumpkin chunks a standard required ingredient in Thai Green Chicken Curry and clarified its cooking timings.
 - Retired `data/plans.json` from the runtime and repository.
