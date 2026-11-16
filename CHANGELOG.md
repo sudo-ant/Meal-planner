@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added a single controlled Food style classification to every recipe and independent Recipe group, Food style, and search filtering in Plan and Recipes.
 - Replaced predefined plans and the automatic Builder with manual weekly recipe selection.
 - Added explicit recipe batch selection, approximate weekly yields, and recipe choices.
 - Replaced Shopping with a canonical-ingredient Shop flow containing To buy, At home, and Optional sections.

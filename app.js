@@ -38,6 +38,16 @@ const RECIPE_GROUPS = [
   "Light / Summer"
 ];
 
+const RECIPE_STYLES = [
+  "all",
+  "Asian",
+  "Mediterranean",
+  "Italian",
+  "Latin American",
+  "European",
+  "Everyday"
+];
+
 let recipes = [];
 let ingredients = [];
 let recipesById = {};
@@ -45,7 +55,9 @@ let ingredientsById = {};
 let currentWeek = null;
 let atHome = null;
 let activePlanFilter = "all";
+let activePlanStyleFilter = "all";
 let activeRecipeFilter = "all";
+let activeRecipeStyleFilter = "all";
 
 function loadJson(path) {
   return fetch(path).then(response => {
@@ -473,7 +485,7 @@ function recipeSearchBlob(recipe) {
     ...batch.choices.flatMap(choice => choice.options.flatMap(option => option.ingredients))
   ]).map(reference => ingredientsById[reference.ingredientId]?.name || reference.ingredientId);
 
-  return [recipe.title, recipe.group, ...(recipe.tags || []), ...ingredientNames].join(" ").toLowerCase();
+  return [recipe.title, recipe.group, recipe.style, ...(recipe.tags || []), ...ingredientNames].join(" ").toLowerCase();
 }
 
 function matchesSearch(recipe, query) {
@@ -503,7 +515,7 @@ function recipeCardMarkup(recipe, source) {
       <div class="section-heading">
         <div>
           <h3>${escapeHtml(recipe.title)}</h3>
-          <p class="meta">${escapeHtml(recipe.group)} · ${recipe.batchOptions.length} batch option${recipe.batchOptions.length === 1 ? "" : "s"}</p>
+          <p class="meta">${escapeHtml(recipe.group)} · ${escapeHtml(recipe.style)} · ${recipe.batchOptions.length} batch option${recipe.batchOptions.length === 1 ? "" : "s"}</p>
         </div>
         ${recipe.trial ? `<span class="tag trial-tag">Trial</span>` : ""}
       </div>
@@ -516,9 +528,12 @@ function recipeCardMarkup(recipe, source) {
 
 function renderPlanRecipeBrowser() {
   const query = document.getElementById("planRecipeSearch").value;
-  renderGroupFilters("planRecipeFilters", activePlanFilter, "filter-plan-recipes");
+  renderFilterChips("planRecipeFilters", RECIPE_GROUPS, activePlanFilter, "filter-plan-recipes");
+  renderFilterChips("planStyleFilters", RECIPE_STYLES, activePlanStyleFilter, "filter-plan-style");
   const filtered = recipes.filter(recipe =>
-    matchesSearch(recipe, query) && (activePlanFilter === "all" || recipe.group === activePlanFilter)
+    matchesSearch(recipe, query) &&
+    (activePlanFilter === "all" || recipe.group === activePlanFilter) &&
+    (activePlanStyleFilter === "all" || recipe.style === activePlanStyleFilter)
   );
 
   document.getElementById("planRecipeList").innerHTML = filtered
@@ -865,19 +880,22 @@ function renderCook() {
     : `<div class="card empty">Add recipes in Plan before you start cooking.</div>`;
 }
 
-function renderGroupFilters(containerId, activeFilter, action) {
-  document.getElementById(containerId).innerHTML = RECIPE_GROUPS.map(group => `
-    <button class="filter-chip ${activeFilter === group ? "active" : ""}" type="button" data-action="${escapeHtml(action)}" data-filter="${escapeHtml(group)}" aria-pressed="${activeFilter === group}">
-      ${escapeHtml(group === "all" ? "All" : group)}
+function renderFilterChips(containerId, values, activeFilter, action) {
+  document.getElementById(containerId).innerHTML = values.map(value => `
+    <button class="filter-chip ${activeFilter === value ? "active" : ""}" type="button" data-action="${escapeHtml(action)}" data-filter="${escapeHtml(value)}" aria-pressed="${activeFilter === value}">
+      ${escapeHtml(value === "all" ? "All" : value)}
     </button>
   `).join("");
 }
 
 function renderRecipes() {
-  renderGroupFilters("recipeFilters", activeRecipeFilter, "filter-recipes");
+  renderFilterChips("recipeFilters", RECIPE_GROUPS, activeRecipeFilter, "filter-recipes");
+  renderFilterChips("recipeStyleFilters", RECIPE_STYLES, activeRecipeStyleFilter, "filter-recipe-style");
   const query = document.getElementById("recipeSearch").value;
   const filtered = recipes.filter(recipe =>
-    matchesSearch(recipe, query) && (activeRecipeFilter === "all" || recipe.group === activeRecipeFilter)
+    matchesSearch(recipe, query) &&
+    (activeRecipeFilter === "all" || recipe.group === activeRecipeFilter) &&
+    (activeRecipeStyleFilter === "all" || recipe.style === activeRecipeStyleFilter)
   );
 
   document.getElementById("recipeList").innerHTML = filtered
@@ -1009,8 +1027,14 @@ function setupEvents() {
     } else if (action === "filter-recipes") {
       activeRecipeFilter = button.dataset.filter;
       renderRecipes();
+    } else if (action === "filter-recipe-style") {
+      activeRecipeStyleFilter = button.dataset.filter;
+      renderRecipes();
     } else if (action === "filter-plan-recipes") {
       activePlanFilter = button.dataset.filter;
+      renderPlanRecipeBrowser();
+    } else if (action === "filter-plan-style") {
+      activePlanStyleFilter = button.dataset.filter;
       renderPlanRecipeBrowser();
     }
   });

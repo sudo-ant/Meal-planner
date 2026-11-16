@@ -3,6 +3,7 @@
     "id": "chicken_lentil_one_pot",
     "title": "Chicken & Lentil One-Pot",
     "group": "Chicken",
+    "style": "Everyday",
     "tags": [
       "one-pot",
       "batch",
@@ -237,6 +238,7 @@
     "id": "chicken_tomato_vegetable_stew",
     "title": "Chicken, Tomato & Vegetable Stew",
     "group": "Chicken",
+    "style": "Everyday",
     "tags": [
       "one-pot",
       "batch",
@@ -417,6 +419,7 @@
     "id": "chicken_chickpea_curry",
     "title": "Chicken & Chickpea Curry",
     "group": "Chicken",
+    "style": "Asian",
     "tags": [
       "one-pot",
       "batch",
@@ -601,6 +604,7 @@
     "id": "lemon_garlic_chicken_potatoes",
     "title": "Lemon Garlic Chicken, Potatoes & Green Beans",
     "group": "Chicken",
+    "style": "Mediterranean",
     "tags": [
       "one-pot",
       "batch"
@@ -780,6 +784,7 @@
     "id": "chicken_spinach_yoghurt_pan",
     "title": "Chicken & Spinach Yoghurt",
     "group": "Chicken",
+    "style": "Everyday",
     "tags": [
       "one-pot",
       "batch"
@@ -943,6 +948,7 @@
     "id": "chicken_veg_noodle_bowl",
     "title": "Chicken Noodle Bowl",
     "group": "Chicken",
+    "style": "Asian",
     "tags": [
       "one-pot",
       "quick"
@@ -1048,6 +1054,7 @@
     "id": "creamy_tomato_spinach_chicken_pasta",
     "title": "Creamy Tomato Spinach Pasta with Chicken",
     "group": "Chicken",
+    "style": "Italian",
     "tags": [
       "one-pot",
       "batch"
@@ -1230,6 +1237,7 @@
     "id": "chicken_vegetable_stir_fry",
     "title": "Chicken & Vegetable Stir-Fry",
     "group": "Chicken",
+    "style": "Asian",
     "tags": [
       "pan",
       "quick"
@@ -1347,6 +1355,7 @@
     "id": "thai_green_chicken_curry",
     "title": "Thai Green Chicken Curry",
     "group": "Chicken",
+    "style": "Asian",
     "tags": [
       "one-pot",
       "batch"
@@ -1572,6 +1581,7 @@
     "id": "asian_chicken_edamame_rice_bowl",
     "title": "Asian Chicken & Edamame Rice Bowl",
     "group": "Chicken",
+    "style": "Asian",
     "tags": [
       "pan",
       "quick"
@@ -1672,6 +1682,7 @@
     "id": "thai_chicken_meatballs_coconut_curry",
     "title": "Thai Chicken Meatballs in Coconut Curry",
     "group": "Chicken",
+    "style": "Asian",
     "tags": [
       "one-pot",
       "batch",
@@ -1839,6 +1850,7 @@
     "id": "basil_chicken_coconut_curry",
     "title": "Basil Chicken in Coconut Curry Sauce",
     "group": "Chicken",
+    "style": "Asian",
     "tags": [
       "one-pot",
       "batch",
@@ -2122,6 +2134,7 @@
     "id": "creamy_chicken_pea_lemon_risotto",
     "title": "Creamy Chicken, Pea & Lemon Risotto",
     "group": "Chicken",
+    "style": "Italian",
     "tags": [
       "one-pot",
       "trial"
@@ -2248,6 +2261,7 @@
     "id": "thai_drunken_noodles",
     "title": "Thai Drunken Noodles (Pad Kee Mao)",
     "group": "Chicken",
+    "style": "Asian",
     "tags": [
       "pan",
       "quick",
@@ -2376,6 +2390,7 @@
     "id": "chicken_katsu_curry",
     "title": "Chicken Katsu Curry",
     "group": "Chicken",
+    "style": "Asian",
     "tags": [
       "pan",
       "trial"
@@ -2493,6 +2508,7 @@
     "id": "turkey_veg_rice_bowl",
     "title": "Turkey & Vegetable Rice Pot",
     "group": "Turkey",
+    "style": "Everyday",
     "tags": [
       "one-pot",
       "batch"
@@ -2663,6 +2679,7 @@
     "id": "turkey_lentil_tomato_pot",
     "title": "Turkey & Lentil Tomato Pot",
     "group": "Turkey",
+    "style": "Everyday",
     "tags": [
       "one-pot",
       "batch",
@@ -2899,6 +2916,7 @@
     "id": "turkey_stir_fry_low_carb",
     "title": "Turkey Stir-Fry",
     "group": "Turkey",
+    "style": "Asian",
     "tags": [
       "pan",
       "quick"
@@ -3016,6 +3034,7 @@
     "id": "turkey_jardineira",
     "title": "Turkey Jardineira",
     "group": "Turkey",
+    "style": "European",
     "tags": [
       "one-pot",
       "batch",
@@ -3135,6 +3154,7 @@
     "id": "turkey_stroganoff_mushrooms",
     "title": "Turkey Stroganoff with Mushrooms",
     "group": "Turkey",
+    "style": "European",
     "tags": [
       "one-pot",
       "batch"
@@ -3259,6 +3279,7 @@
     "id": "beef_bolognese",
     "title": "Beef Bolognese",
     "group": "Beef",
+    "style": "Italian",
     "tags": [
       "one-pot",
       "batch",
@@ -3442,6 +3463,7 @@
     "id": "beef_black_bean_chilli",
     "title": "Beef & Black Bean Chilli",
     "group": "Beef",
+    "style": "Latin American",
     "tags": [
       "one-pot",
       "batch",
@@ -3652,6 +3674,7 @@
     "id": "meatballs_tomato_sauce",
     "title": "Meatballs in Tomato Sauce",
     "group": "Beef",
+    "style": "Italian",
     "tags": [
       "pan",
       "batch",
@@ -3902,6 +3925,7 @@
     "id": "cheesy_beef_tomato_rice",
     "title": "Cheesy Beef & Tomato Rice",
     "group": "Beef",
+    "style": "Everyday",
     "tags": [
       "one-pot",
       "batch",
@@ -4042,6 +4066,7 @@
     "id": "tuna_veg_rice",
     "title": "Tuna & Vegetable Rice",
     "group": "Fish",
+    "style": "Everyday",
     "tags": [
       "one-pot",
       "batch"
@@ -4129,6 +4154,7 @@
     "id": "tuna_chickpea_bowl",
     "title": "Tuna & Chickpea Tomato Pot",
     "group": "Fish",
+    "style": "Everyday",
     "tags": [
       "one-pot",
       "batch"
@@ -4268,6 +4294,7 @@
     "id": "tuna_egg_chilli_fried_rice",
     "title": "Tuna, Egg & Chilli Fried Rice with Peas",
     "group": "Fish",
+    "style": "Asian",
     "tags": [
       "pan",
       "quick"
@@ -4365,6 +4392,7 @@
     "id": "white_fish_potato_pan",
     "title": "Pescada do Cabo, Potato & Vegetable Pot",
     "group": "Fish",
+    "style": "European",
     "tags": [
       "one-pot",
       "batch"
@@ -4473,6 +4501,7 @@
     "id": "coconut_lime_tuna_rice",
     "title": "Coconut-Lime Tuna Rice",
     "group": "Fish",
+    "style": "Asian",
     "tags": [
       "one-pot",
       "batch",
@@ -4610,6 +4639,7 @@
     "id": "bean_veg_one_pot",
     "title": "Black Bean & Vegetable One-Pot",
     "group": "Vegetarian / Eggs",
+    "style": "Latin American",
     "tags": [
       "one-pot",
       "batch",
@@ -4816,6 +4846,7 @@
     "id": "sopa_de_lentejas",
     "title": "Sopa de Lentejas",
     "group": "Vegetarian / Eggs",
+    "style": "Latin American",
     "tags": [
       "one-pot",
       "batch",
@@ -4921,6 +4952,7 @@
     "id": "lentil_bolognese",
     "title": "Lentil Bolognese",
     "group": "Vegetarian / Eggs",
+    "style": "Italian",
     "tags": [
       "one-pot",
       "batch",
@@ -5131,6 +5163,7 @@
     "id": "spanish_tortilla_vegetables",
     "title": "Spanish Tortilla + Vegetables",
     "group": "Vegetarian / Eggs",
+    "style": "Mediterranean",
     "tags": [
       "pan",
       "batch"
@@ -5215,6 +5248,7 @@
     "id": "egg_fried_rice",
     "title": "Egg Fried Rice",
     "group": "Vegetarian / Eggs",
+    "style": "Asian",
     "tags": [
       "pan",
       "quick"
@@ -5293,6 +5327,7 @@
     "id": "french_style_green_lentil_stew",
     "title": "French-Style Green Lentil Stew",
     "group": "Vegetarian / Eggs",
+    "style": "European",
     "tags": [
       "one-pot",
       "batch",
@@ -5442,6 +5477,7 @@
     "id": "mediterranean_chickpea_salad",
     "title": "Mediterranean Chickpea Salad",
     "group": "Light / Summer",
+    "style": "Mediterranean",
     "tags": [
       "light",
       "summer",
@@ -5582,6 +5618,7 @@
     "id": "pesto_chicken_pasta_salad",
     "title": "Pesto Chicken Pasta Salad",
     "group": "Light / Summer",
+    "style": "Italian",
     "tags": [
       "summer",
       "leftovers",
@@ -5691,6 +5728,7 @@
     "id": "abues_tuna_salad",
     "title": "Abue's Tuna Salad",
     "group": "Light / Summer",
+    "style": "Latin American",
     "tags": [
       "light",
       "summer",
@@ -5774,6 +5812,7 @@
     "id": "southwestern_chicken_black_bean_salad",
     "title": "Southwestern Chicken & Black Bean Salad",
     "group": "Light / Summer",
+    "style": "Latin American",
     "tags": [
       "light",
       "summer",
@@ -5924,6 +5963,7 @@
     "id": "chicken_salad_bowl",
     "title": "Chicken Salad Bowl",
     "group": "Light / Summer",
+    "style": "Everyday",
     "tags": [
       "light",
       "summer",
@@ -6011,6 +6051,7 @@
     "id": "chicken_wrap",
     "title": "Chicken Wraps",
     "group": "Light / Summer",
+    "style": "Everyday",
     "tags": [
       "light",
       "summer",
@@ -6102,6 +6143,7 @@
     "id": "tuna_salad_bowl",
     "title": "Tuna Salad Bowl",
     "group": "Light / Summer",
+    "style": "Mediterranean",
     "tags": [
       "light",
       "summer",
@@ -6183,6 +6225,7 @@
     "id": "tuna_yoghurt_protein_bowl",
     "title": "Creamy Tuna Salad / Wrap Filling",
     "group": "Light / Summer",
+    "style": "Everyday",
     "tags": [
       "light",
       "summer",
@@ -6280,6 +6323,7 @@
     "id": "cold_egg_veg_bowl",
     "title": "Cold Egg & Vegetable Bowl",
     "group": "Light / Summer",
+    "style": "Everyday",
     "tags": [
       "light",
       "summer",
@@ -6384,6 +6428,7 @@
     "id": "egg_wrap",
     "title": "Egg Wraps",
     "group": "Light / Summer",
+    "style": "Everyday",
     "tags": [
       "light",
       "summer",
@@ -6469,6 +6514,7 @@
     "id": "lentil_cold_salad",
     "title": "Lentil Cold Salad",
     "group": "Light / Summer",
+    "style": "Mediterranean",
     "tags": [
       "light",
       "summer",
@@ -6568,6 +6614,7 @@
     "id": "simple_rice_salad",
     "title": "Simple Leftover Rice Salad",
     "group": "Light / Summer",
+    "style": "Everyday",
     "tags": [
       "light",
       "summer",
@@ -6716,6 +6763,7 @@
     "id": "sardine_salad_bowl",
     "title": "Sardine Salad Bowl",
     "group": "Light / Summer",
+    "style": "Mediterranean",
     "tags": [
       "light",
       "summer",
@@ -6817,6 +6865,7 @@
     "id": "vietnamese_chicken_rice_paper_rolls",
     "title": "Vietnamese-Style Chicken Rice-Paper Rolls",
     "group": "Light / Summer",
+    "style": "Asian",
     "tags": [
       "light",
       "summer",
@@ -6947,6 +6996,7 @@
     "id": "lemongrass_beef_brothy_rice",
     "title": "Lemongrass Beef Brothy Rice",
     "group": "Beef",
+    "style": "Asian",
     "tags": [
       "batch",
       "trial"
@@ -7089,6 +7139,7 @@
     "id": "greek_chicken_rice_bowls",
     "title": "Greek Chicken & Rice Bowls",
     "group": "Chicken",
+    "style": "Mediterranean",
     "tags": [
       "batch",
       "trial"
@@ -7267,6 +7318,7 @@
     "id": "beef_broccoli_fried_rice",
     "title": "Beef & Broccoli Fried Rice",
     "group": "Beef",
+    "style": "Asian",
     "tags": [
       "pan",
       "trial"
@@ -7441,6 +7493,7 @@
     "id": "tom_yum_gai",
     "title": "Tom Yum Gai",
     "group": "Chicken",
+    "style": "Asian",
     "tags": [
       "one-pot",
       "batch"
@@ -7559,6 +7612,7 @@
     "id": "avocado_tuna_salad",
     "title": "Avocado Tuna Salad",
     "group": "Light / Summer",
+    "style": "Mediterranean",
     "tags": [
       "light",
       "summer",
@@ -7660,6 +7714,7 @@
     "id": "tuna_egg_salad",
     "title": "Tuna & Egg Salad",
     "group": "Light / Summer",
+    "style": "Everyday",
     "tags": [
       "light",
       "quick",
@@ -7761,6 +7816,7 @@
     "id": "mediterranean_tuna_pasta",
     "title": "Mediterranean Tuna Pasta",
     "group": "Fish",
+    "style": "Mediterranean",
     "tags": [
       "quick",
       "leftovers",
@@ -7892,6 +7948,7 @@
     "id": "tuna_avocado_crispy_rice_salad",
     "title": "Tuna, Avocado & Crispy Rice Salad",
     "group": "Light / Summer",
+    "style": "Asian",
     "tags": [
       "summer",
       "pan",
@@ -8038,6 +8095,7 @@
     "id": "turkey_vegetable_one_pot_pasta",
     "title": "Turkey & Vegetable One-Pot Pasta",
     "group": "Turkey",
+    "style": "Italian",
     "tags": [
       "one-pot",
       "batch",
@@ -8179,6 +8237,7 @@
     "id": "turkey_sausage_green_beans_potatoes",
     "title": "Turkey Sausage, Green Beans & Potatoes",
     "group": "Turkey",
+    "style": "European",
     "tags": [
       "batch",
       "trial"
@@ -8282,6 +8341,7 @@
     "id": "turkey_broccoli_alfredo_pasta",
     "title": "Turkey & Broccoli Alfredo Pasta",
     "group": "Turkey",
+    "style": "Italian",
     "tags": [
       "one-pot",
       "batch",
@@ -8412,6 +8472,7 @@
     "id": "italian_turkey_rice_pot",
     "title": "Italian Turkey & Rice Pot",
     "group": "Turkey",
+    "style": "Italian",
     "tags": [
       "one-pot",
       "batch",

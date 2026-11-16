@@ -14,6 +14,7 @@ A lightweight, mobile-first personal meal-planning PWA for choosing what to cook
 - Tick Bought items, hide bought items, and copy To buy plus Optional lists.
 - Cook from a focused view containing one recipe card per selection and track completed cooking occasions.
 - Search recipes using multi-word AND matching.
+- Filter Plan and Recipes independently by recipe group, Food style, and search.
 - Preserve optional local Weight history.
 - Install and use the app offline after its resources are cached.
 
@@ -56,7 +57,7 @@ Then open `http://localhost:8000/`.
 
 ## Data
 
-`data/recipes.json` contains 61 recipes with explicit approved batches, approximate yields, ingredient requirements, choices, storage metadata, steps, and notes. The latest additions include four tuna-focused meals and four turkey-focused meals; all eight are trial recipes and automatically support the existing 1× / 2× weekly repeat feature. `data/ingredients.json` provides 114 stable ingredient identities, aggregation rules, shopping flags, and supermarket pack metadata.
+`data/recipes.json` contains 61 recipes with a single controlled Food style classification, explicit approved batches, approximate yields, ingredient requirements, choices, storage metadata, steps, and notes. The latest additions include four tuna-focused meals and four turkey-focused meals; all eight are trial recipes and automatically support the existing 1× / 2× weekly repeat feature. `data/ingredients.json` provides 114 stable ingredient identities, aggregation rules, shopping flags, and supermarket pack metadata.
 
 Recipe amounts are not scaled automatically. The application always uses one of the batch options supplied in the data.
 

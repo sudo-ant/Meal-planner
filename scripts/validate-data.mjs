@@ -31,6 +31,14 @@ const CONTROLLED_GROUPS = new Set([
   "Turkey",
   "Vegetarian / Eggs"
 ]);
+const CONTROLLED_STYLES = new Set([
+  "Asian",
+  "Mediterranean",
+  "Italian",
+  "Latin American",
+  "European",
+  "Everyday"
+]);
 const AGGREGATION_MODES = new Set(["sum", "presence", "none"]);
 const INGREDIENT_STATUSES = new Set(["required", "optional"]);
 const STORAGE_SIZES = new Set(["normal", "large_batch"]);
@@ -190,6 +198,11 @@ function validateRecipes(recipes, ingredientMap) {
 
     if (!isNonEmptyString(recipe.title)) errors.push(`${location}: title must be a non-empty string`);
     if (!CONTROLLED_GROUPS.has(recipe.group)) errors.push(`${location}: unsupported group "${recipe.group}"`);
+    if (!isNonEmptyString(recipe.style)) {
+      errors.push(`${location}: style must be a non-empty string`);
+    } else if (!CONTROLLED_STYLES.has(recipe.style)) {
+      errors.push(`${location}: unsupported style "${recipe.style}"`);
+    }
     if (typeof recipe.trial !== "boolean") errors.push(`${location}: trial must be boolean`);
 
     if (!Array.isArray(recipe.tags)) {
