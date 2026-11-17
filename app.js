@@ -64,6 +64,8 @@ let activePlanStyleFilter = "all";
 let activeRecipeFilter = "all";
 let activeRecipeStyleFilter = "all";
 const recipeListState = new Map();
+const recipeCardsByList = new Map();
+const recipeSearchText = new Map();
 
 function loadJson(path) {
   return fetch(path).then(response => {
@@ -741,11 +743,16 @@ function recipeSearchBlob(recipe) {
   return [recipe.title, recipe.group, recipe.style, ...(recipe.tags || []), ...ingredientNames].join(" ").toLowerCase();
 }
 
-function matchesSearch(recipe, query) {
+function filterRecipes(query, group, style) {
   const tokens = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
-  if (!tokens.length) return true;
-  const searchable = recipeSearchBlob(recipe);
-  return tokens.every(token => searchable.includes(token));
+  return recipes.filter(recipe => {
+    if (group !== "all" && recipe.group !== group) return false;
+    if (style !== "all" && recipe.style !== style) return false;
+    if (!tokens.length) return true;
+    if (!recipeSearchText.has(recipe.id)) recipeSearchText.set(recipe.id, recipeSearchBlob(recipe));
+    const searchable = recipeSearchText.get(recipe.id);
+    return tokens.every(token => searchable.includes(token));
+  });
 }
 
 function pickerActionMarkup(recipe, selection) {
@@ -761,7 +768,7 @@ function pickerActionMarkup(recipe, selection) {
 }
 
 function updatePickerRecipe(recipeId) {
-  const row = recipeRow(document.getElementById("planRecipeList"), recipeId);
+  const row = recipeCardsByList.get("planRecipeList")?.get(recipeId);
   if (!row) return;
 
   const action = row.querySelector(".recipe-action");
@@ -799,16 +806,61 @@ function renderPlanRecipeBrowser() {
   const query = document.getElementById("planRecipeSearch").value;
   renderFilterChips("planRecipeFilters", RECIPE_GROUPS, activePlanFilter, "filter-plan-recipes");
   renderFilterChips("planStyleFilters", RECIPE_STYLES, activePlanStyleFilter, "filter-plan-style");
-  const filtered = recipes.filter(recipe =>
-    matchesSearch(recipe, query) &&
-    (activePlanFilter === "all" || recipe.group === activePlanFilter) &&
-    (activePlanStyleFilter === "all" || recipe.style === activePlanStyleFilter)
-  );
+  const filtered = filterRecipes(query, activePlanFilter, activePlanStyleFilter);
+  renderRecipeCards("planRecipeList", filtered, "plan", "planRecipeSearch");
+}
 
-  const markup = filtered
-    .map(recipe => recipeCardMarkup(recipe, "plan"))
-    .join("") || `<div class="card empty">No recipes found.</div>`;
-  replaceList("planRecipeList", markup, "planRecipeSearch");
+function renderRecipeCards(id, filtered, source, fallbackId) {
+  const list = document.getElementById(id);
+  const emptyMarkup = `<div class="card empty">No recipes found.</div>`;
+  const cards = recipeCardsByList.get(id);
+  if (!cards) {
+    list.innerHTML = filtered.map(recipe => recipeCardMarkup(recipe, source)).join("") || emptyMarkup;
+    recipeCardsByList.set(id, new Map([...list.querySelectorAll("[data-recipe-card]")].map(row =>
+      [row.dataset.recipeCard, row])));
+    return;
+  }
+
+  const wanted = new Set(filtered.map(recipe => recipe.id));
+  const previousRows = [...list.children];
+  const active = document.activeElement;
+  const activeRow = list.contains(active) ? active.closest("[data-recipe-card]") : null;
+  const focusRemoved = activeRow && !wanted.has(activeRow.dataset.recipeCard);
+  const keyboardFocus = focusRemoved && active.matches(":focus-visible");
+  const key = focusRemoved && controlKey(active);
+
+  // Detaching a card keeps its native disclosure and radio state intact.
+  for (const row of previousRows) {
+    if (!wanted.has(row.dataset.recipeCard) && (filtered.length || row.dataset.recipeCard)) row.remove();
+  }
+  if (!filtered.length && !list.firstElementChild) list.innerHTML = emptyMarkup;
+
+  // Results always follow catalogue order, so surviving cards can stay where they are.
+  let next = null;
+  for (let i = filtered.length - 1; i >= 0; i--) {
+    const recipe = filtered[i];
+    let row = cards.get(recipe.id);
+    if (!row) {
+      const template = document.createElement("template");
+      template.innerHTML = recipeCardMarkup(recipe, source).trim();
+      row = template.content.firstElementChild;
+      cards.set(recipe.id, row);
+    }
+    if (row.parentElement !== list) list.insertBefore(row, next);
+    next = row;
+  }
+
+  if (focusRemoved) {
+    const index = previousRows.indexOf(activeRow);
+    const neighbours = [...previousRows.slice(index + 1), ...previousRows.slice(0, index).reverse()];
+    let target;
+    for (const row of neighbours) {
+      if (row.parentElement !== list) continue;
+      target = findListControl(row, key);
+      if (target) break;
+    }
+    restoreListFocus(target ?? listFallback(fallbackId), keyboardFocus);
+  }
 }
 
 function recipeDetailsMarkup(recipe) {
@@ -1240,6 +1292,7 @@ function renderFilterChips(containerId, values, activeFilter, action) {
   `).join("");
   for (const button of container.children) {
     const selected = button.dataset.filter === activeFilter;
+    if (button.getAttribute("aria-pressed") === String(selected)) continue;
     button.classList.toggle("active", selected);
     button.setAttribute("aria-pressed", selected);
   }
@@ -1249,16 +1302,8 @@ function renderRecipes() {
   renderFilterChips("recipeFilters", RECIPE_GROUPS, activeRecipeFilter, "filter-recipes");
   renderFilterChips("recipeStyleFilters", RECIPE_STYLES, activeRecipeStyleFilter, "filter-recipe-style");
   const query = document.getElementById("recipeSearch").value;
-  const filtered = recipes.filter(recipe =>
-    matchesSearch(recipe, query) &&
-    (activeRecipeFilter === "all" || recipe.group === activeRecipeFilter) &&
-    (activeRecipeStyleFilter === "all" || recipe.style === activeRecipeStyleFilter)
-  );
-
-  const markup = filtered
-    .map(recipe => recipeCardMarkup(recipe, "recipes"))
-    .join("") || `<div class="card empty">No recipes found.</div>`;
-  replaceList("recipeList", markup, "recipeSearch");
+  const filtered = filterRecipes(query, activeRecipeFilter, activeRecipeStyleFilter);
+  renderRecipeCards("recipeList", filtered, "recipes", "recipeSearch");
 }
 
 function saveWeightEntry() {
@@ -1311,7 +1356,13 @@ function renderWeek(updatePicker = false) {
   renderPlan();
   renderShoppingList();
   renderCook();
-  if (updatePicker) renderPlanRecipeBrowser();
+  if (updatePicker) {
+    const cards = recipeCardsByList.get("planRecipeList");
+    for (const [id, row] of cards ?? []) {
+      if (row.classList.contains("selected-recipe") !== Boolean(getSelection(id))) updatePickerRecipe(id);
+    }
+    renderPlanRecipeBrowser();
+  }
 }
 
 function refreshWeeklyRecipe(recipeId) {
