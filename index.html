@@ -41,7 +41,9 @@
             <button id="newWeekBtn" class="ghost small" type="button">New week</button>
           </div>
         </section>
-        <div id="weekList" class="stack"></div>
+        <div id="weekList" class="stack">
+          <div class="card empty">Add recipes below to build this week.</div>
+        </div>
       </section>
 
       <section class="plan-area recipe-picker-area" aria-labelledby="recipePickerHeading">
@@ -50,9 +52,25 @@
           <label for="planRecipeSearch">Search recipes</label>
           <input id="planRecipeSearch" type="search" placeholder="Search chicken, curry, quick...">
           <p class="filter-label">Recipe group</p>
-          <div id="planRecipeFilters" class="filter-row" aria-label="Plan recipe group filters"></div>
+          <div id="planRecipeFilters" class="filter-row" aria-label="Plan recipe group filters">
+            <button class="filter-chip active" type="button" data-action="filter-plan-recipes" data-filter="all" aria-pressed="true" disabled>All</button>
+            <button class="filter-chip" type="button" data-action="filter-plan-recipes" data-filter="Chicken" aria-pressed="false" disabled>Chicken</button>
+            <button class="filter-chip" type="button" data-action="filter-plan-recipes" data-filter="Turkey" aria-pressed="false" disabled>Turkey</button>
+            <button class="filter-chip" type="button" data-action="filter-plan-recipes" data-filter="Beef" aria-pressed="false" disabled>Beef</button>
+            <button class="filter-chip" type="button" data-action="filter-plan-recipes" data-filter="Fish" aria-pressed="false" disabled>Fish</button>
+            <button class="filter-chip" type="button" data-action="filter-plan-recipes" data-filter="Vegetarian / Eggs" aria-pressed="false" disabled>Vegetarian / Eggs</button>
+            <button class="filter-chip" type="button" data-action="filter-plan-recipes" data-filter="Light / Summer" aria-pressed="false" disabled>Light / Summer</button>
+          </div>
           <p class="filter-label">Food style</p>
-          <div id="planStyleFilters" class="filter-row" aria-label="Plan food style filters"></div>
+          <div id="planStyleFilters" class="filter-row" aria-label="Plan food style filters">
+            <button class="filter-chip active" type="button" data-action="filter-plan-style" data-filter="all" aria-pressed="true" disabled>All</button>
+            <button class="filter-chip" type="button" data-action="filter-plan-style" data-filter="Asian" aria-pressed="false" disabled>Asian</button>
+            <button class="filter-chip" type="button" data-action="filter-plan-style" data-filter="Mediterranean" aria-pressed="false" disabled>Mediterranean</button>
+            <button class="filter-chip" type="button" data-action="filter-plan-style" data-filter="Italian" aria-pressed="false" disabled>Italian</button>
+            <button class="filter-chip" type="button" data-action="filter-plan-style" data-filter="Latin American" aria-pressed="false" disabled>Latin American</button>
+            <button class="filter-chip" type="button" data-action="filter-plan-style" data-filter="European" aria-pressed="false" disabled>European</button>
+            <button class="filter-chip" type="button" data-action="filter-plan-style" data-filter="Everyday" aria-pressed="false" disabled>Everyday</button>
+          </div>
         </section>
         <div id="planRecipeList" class="stack"></div>
       </section>
@@ -105,7 +123,7 @@
     </section>
   </main>
 
-  <footer class="app-footer">
+  <footer class="app-footer" hidden>
     <p>Works offline after first load. Your plan and weight history stay on this device.</p>
   </footer>
 

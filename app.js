@@ -28,26 +28,6 @@ const CATEGORY_ORDER = [
   "Other"
 ];
 
-const RECIPE_GROUPS = [
-  "all",
-  "Chicken",
-  "Turkey",
-  "Beef",
-  "Fish",
-  "Vegetarian / Eggs",
-  "Light / Summer"
-];
-
-const RECIPE_STYLES = [
-  "all",
-  "Asian",
-  "Mediterranean",
-  "Italian",
-  "Latin American",
-  "European",
-  "Everyday"
-];
-
 let recipes = [];
 let ingredients = [];
 let recipesById = {};
@@ -804,8 +784,8 @@ function recipeCardMarkup(recipe, source) {
 
 function renderPlanRecipeBrowser() {
   const query = document.getElementById("planRecipeSearch").value;
-  renderFilterChips("planRecipeFilters", RECIPE_GROUPS, activePlanFilter, "filter-plan-recipes");
-  renderFilterChips("planStyleFilters", RECIPE_STYLES, activePlanStyleFilter, "filter-plan-style");
+  renderFilterChips("planRecipeFilters", activePlanFilter);
+  renderFilterChips("planStyleFilters", activePlanStyleFilter);
   const filtered = filterRecipes(query, activePlanFilter, activePlanStyleFilter);
   renderRecipeCards("planRecipeList", filtered, "plan", "planRecipeSearch");
 }
@@ -1283,14 +1263,19 @@ function cookCardMarkup(selection) {
     `;
 }
 
-function renderFilterChips(containerId, values, activeFilter, action) {
+function copyFilterChips(sourceId, containerId, action) {
+  const buttons = [...document.getElementById(sourceId).children].map(source => {
+    const button = source.cloneNode(true);
+    button.dataset.action = action;
+    return button;
+  });
+  document.getElementById(containerId).append(...buttons);
+}
+
+function renderFilterChips(containerId, activeFilter) {
   const container = document.getElementById(containerId);
-  if (!container.children.length) container.innerHTML = values.map(value => `
-    <button class="filter-chip ${activeFilter === value ? "active" : ""}" type="button" data-action="${escapeHtml(action)}" data-filter="${escapeHtml(value)}" aria-pressed="${activeFilter === value}">
-      ${escapeHtml(value === "all" ? "All" : value)}
-    </button>
-  `).join("");
   for (const button of container.children) {
+    if (button.disabled) button.disabled = false;
     const selected = button.dataset.filter === activeFilter;
     if (button.getAttribute("aria-pressed") === String(selected)) continue;
     button.classList.toggle("active", selected);
@@ -1299,8 +1284,8 @@ function renderFilterChips(containerId, values, activeFilter, action) {
 }
 
 function renderRecipes() {
-  renderFilterChips("recipeFilters", RECIPE_GROUPS, activeRecipeFilter, "filter-recipes");
-  renderFilterChips("recipeStyleFilters", RECIPE_STYLES, activeRecipeStyleFilter, "filter-recipe-style");
+  renderFilterChips("recipeFilters", activeRecipeFilter);
+  renderFilterChips("recipeStyleFilters", activeRecipeStyleFilter);
   const query = document.getElementById("recipeSearch").value;
   const filtered = filterRecipes(query, activeRecipeFilter, activeRecipeStyleFilter);
   renderRecipeCards("recipeList", filtered, "recipes", "recipeSearch");
@@ -1389,6 +1374,9 @@ function removeIngredientAtHome(ingredientId) {
 }
 
 function setupEvents() {
+  copyFilterChips("planRecipeFilters", "recipeFilters", "filter-recipes");
+  copyFilterChips("planStyleFilters", "recipeStyleFilters", "filter-recipe-style");
+
   document.querySelectorAll(".tab").forEach(tab => {
     tab.addEventListener("click", () => setActiveTab(tab.dataset.tab));
   });
@@ -1515,6 +1503,7 @@ async function init() {
   renderWeek(true);
   renderRecipes();
   renderWeightCheckIn();
+  document.querySelector(".app-footer").hidden = false;
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js").catch(() => {});
