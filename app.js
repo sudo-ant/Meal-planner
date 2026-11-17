@@ -54,6 +54,11 @@ let recipesById = {};
 let ingredientsById = {};
 let currentWeek = null;
 let atHome = null;
+let hideBought = false;
+let weightEntries = [];
+const storageRecords = new Map();
+const pendingStorageWrites = new Map();
+let weekSaveDependsOnAtHome = false;
 let activePlanFilter = "all";
 let activePlanStyleFilter = "all";
 let activeRecipeFilter = "all";
@@ -66,17 +71,96 @@ function loadJson(path) {
   });
 }
 
-function getStoredJson(key, fallback) {
+function isStringList(value) {
+  return Array.isArray(value) && value.every(item => typeof item === "string");
+}
+
+function readStoredValue(key, fallback, isValid) {
+  const record = { status: "unreadable" };
+  storageRecords.set(key, record);
   try {
-    const value = JSON.parse(localStorage.getItem(key));
-    return value ?? fallback;
+    record.raw = localStorage.getItem(key);
   } catch {
     return fallback;
   }
+  record.status = "invalid";
+  try {
+    const value = record.raw === null ? fallback : JSON.parse(record.raw);
+    if (record.raw === null || isValid(value)) {
+      record.status = "ready";
+      return value;
+    }
+  } catch {
+    // Keep the original value intact if it cannot be decoded.
+  }
+  return fallback;
+}
+
+function updateStorageStatus() {
+  const records = [...storageRecords.values()];
+  const messages = [];
+  if (records.some(record => record.status === "unreadable")) {
+    messages.push("Browser storage could not be read. Some saved data may be missing from this session. Reload when storage is available to restore it.");
+  }
+  if (records.some(record => record.status === "invalid")) {
+    messages.push("Some saved data is invalid. The original data has been kept.");
+  }
+  if (records.some(record => record.status === "changed")) {
+    messages.push("Saved data became available or changed outside this session. Reload to use the saved copy.");
+  }
+  if (records.some(record => record.status === "write-failed")) {
+    messages.push("Browser storage could not save your changes. The app will try again the next time you make a change.");
+  }
+  if (pendingStorageWrites.size) {
+    messages.push("Unsaved changes are available only in this session. Closing or reloading the page will lose them.");
+  }
+
+  const status = document.getElementById("storageStatus");
+  const message = messages.join(" ");
+  if (status.textContent !== message) status.textContent = message;
+  status.classList.toggle("warning", Boolean(message));
+}
+
+function flushStorageWrites() {
+  const { atHome: atHomeKey, currentWeek: weekKey, hideBought: hideBoughtKey, weightEntries: weightKey } = STORAGE_KEYS;
+  // Save At home before its dependent weekly Bought change.
+  for (const key of [atHomeKey, weekKey, hideBoughtKey, weightKey]) {
+    if (!pendingStorageWrites.has(key)) continue;
+    if (key === weekKey && weekSaveDependsOnAtHome && pendingStorageWrites.has(atHomeKey)) continue;
+
+    const record = storageRecords.get(key);
+    if (record.status === "invalid" || record.status === "changed") continue;
+    let raw;
+    try {
+      raw = localStorage.getItem(key);
+    } catch {
+      record.status = "unreadable";
+      continue;
+    }
+    // A session that started without a readable copy may only save into a missing key.
+    if (raw !== (record.raw ?? null)) {
+      record.status = "changed";
+      continue;
+    }
+
+    const next = pendingStorageWrites.get(key);
+    try {
+      if (raw !== next) localStorage.setItem(key, next);
+    } catch {
+      record.status = "write-failed";
+      continue;
+    }
+    record.status = "ready";
+    record.raw = next;
+    pendingStorageWrites.delete(key);
+    if (key === weekKey) weekSaveDependsOnAtHome = false;
+  }
+  updateStorageStatus();
 }
 
 function setStoredJson(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+  pendingStorageWrites.set(key, JSON.stringify(value));
+  flushStorageWrites();
 }
 
 function createEmptyWeek() {
@@ -131,7 +215,7 @@ function normaliseCurrentWeek(value) {
 
   value.selections.forEach(selection => {
     const recipe = recipesById[selection?.recipeId];
-    if (!recipe || seenRecipes.has(recipe.id)) return;
+    if (!recipe?.batchOptions || seenRecipes.has(recipe.id)) return;
 
     const batch = getBatch(recipe, selection.batchId);
     if (!batch) return;
@@ -356,6 +440,7 @@ function startNewWeek() {
   }
 
   currentWeek = createEmptyWeek();
+  weekSaveDependsOnAtHome = false;
   saveCurrentWeek();
   renderAll();
 }
@@ -757,7 +842,6 @@ function renderShoppingList() {
   const allEntries = collectShoppingEntries();
   const atHomeIds = new Set(atHome.ingredientIds);
   const boughtIds = new Set(currentWeek.boughtIngredientIds);
-  const hideBought = localStorage.getItem(STORAGE_KEYS.hideBought) === "true";
 
   const atHomeItems = allEntries.filter(entry => atHomeIds.has(entry.ingredient.id));
   const toBuyAll = allEntries.filter(entry => !atHomeIds.has(entry.ingredient.id) && entryHasRequired(entry));
@@ -913,14 +997,6 @@ function renderRecipes() {
     .join("") || `<div class="card empty">No recipes found.</div>`;
 }
 
-function getWeightEntries() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEYS.weightEntries)) || [];
-  } catch {
-    return [];
-  }
-}
-
 function saveWeightEntry() {
   const input = document.getElementById("weightInput");
   const message = document.getElementById("weightMessage");
@@ -932,15 +1008,14 @@ function saveWeightEntry() {
     return;
   }
 
-  const entries = getWeightEntries();
-  entries.push({ date: new Date().toISOString(), weight: Math.round(value * 10) / 10 });
-  localStorage.setItem(STORAGE_KEYS.weightEntries, JSON.stringify(entries));
+  weightEntries.push({ date: new Date().toISOString(), weight: Math.round(value * 10) / 10 });
+  setStoredJson(STORAGE_KEYS.weightEntries, weightEntries);
   input.value = "";
   renderWeightCheckIn();
 }
 
 function renderWeightCheckIn() {
-  const entries = getWeightEntries();
+  const entries = weightEntries;
   const last = entries[entries.length - 1];
   const previous = entries[entries.length - 2];
   let summary = "No weight recorded yet.";
@@ -978,9 +1053,12 @@ function renderAll() {
 
 function markIngredientAtHome(ingredientId) {
   if (!atHome.ingredientIds.includes(ingredientId)) atHome.ingredientIds.push(ingredientId);
-  currentWeek.boughtIngredientIds = currentWeek.boughtIngredientIds.filter(id => id !== ingredientId);
+  if (currentWeek.boughtIngredientIds.includes(ingredientId)) {
+    currentWeek.boughtIngredientIds = currentWeek.boughtIngredientIds.filter(id => id !== ingredientId);
+    weekSaveDependsOnAtHome = true;
+    pendingStorageWrites.set(STORAGE_KEYS.currentWeek, JSON.stringify(currentWeek));
+  }
   saveAtHome();
-  saveCurrentWeek();
   renderShoppingList();
 }
 
@@ -1007,7 +1085,8 @@ function setupEvents() {
   });
 
   document.getElementById("hideBoughtToggle").addEventListener("change", event => {
-    localStorage.setItem(STORAGE_KEYS.hideBought, event.target.checked ? "true" : "false");
+    hideBought = event.target.checked;
+    setStoredJson(STORAGE_KEYS.hideBought, hideBought);
     renderShoppingList();
   });
 
@@ -1089,12 +1168,28 @@ async function init() {
 
   recipesById = Object.fromEntries(recipes.map(recipe => [recipe.id, recipe]));
   ingredientsById = Object.fromEntries(ingredients.map(ingredient => [ingredient.id, ingredient]));
-  currentWeek = normaliseCurrentWeek(getStoredJson(STORAGE_KEYS.currentWeek, null));
-  atHome = normaliseAtHome(getStoredJson(STORAGE_KEYS.atHome, null));
-  saveCurrentWeek();
-  saveAtHome();
+  const savedWeek = readStoredValue(STORAGE_KEYS.currentWeek, null, value =>
+    [2, 3].includes(value?.version) && Array.isArray(value.selections) &&
+    value.selections.every(selection => typeof selection?.recipeId === "string" &&
+      (selection.choiceSelections === undefined ||
+        (selection.choiceSelections !== null && typeof selection.choiceSelections === "object" &&
+          !Array.isArray(selection.choiceSelections)))) &&
+    (value.boughtIngredientIds === undefined || isStringList(value.boughtIngredientIds)));
+  currentWeek = normaliseCurrentWeek(savedWeek);
+  atHome = normaliseAtHome(readStoredValue(STORAGE_KEYS.atHome, null, value =>
+    isStringList(value?.ingredientIds)));
+  weightEntries = readStoredValue(STORAGE_KEYS.weightEntries, [], value =>
+    Array.isArray(value) && value.every(entry => Number.isFinite(entry?.weight)));
+  hideBought = readStoredValue(STORAGE_KEYS.hideBought, false, value =>
+    value === true || value === false);
+  document.getElementById("hideBoughtToggle").checked = hideBought;
 
-  document.getElementById("hideBoughtToggle").checked = localStorage.getItem(STORAGE_KEYS.hideBought) === "true";
+  // At-home state takes precedence if it was saved before a weekly write failed.
+  const boughtIds = currentWeek.boughtIngredientIds.filter(id => !atHome.ingredientIds.includes(id));
+  const needsBoughtRepair = boughtIds.length !== currentWeek.boughtIngredientIds.length;
+  currentWeek.boughtIngredientIds = boughtIds;
+  if (savedWeek?.version === 2 || needsBoughtRepair) saveCurrentWeek();
+  else updateStorageStatus();
 
   setupEvents();
   renderAll();
