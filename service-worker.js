@@ -1,4 +1,4 @@
-const CACHE_NAME = "maia-meal-planner-v2-15";
+const CACHE_NAME = "maia-meal-planner-v2-16";
 const ASSETS = [
   "./",
   "index.html",
@@ -12,7 +12,7 @@ const ASSETS = [
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(ASSETS))
+      .then(cache => cache.addAll(ASSETS.map(asset => new Request(asset, { cache: "reload" }))))
       .then(() => self.skipWaiting())
   );
 });
