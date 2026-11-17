@@ -687,7 +687,7 @@ function entryHasRequired(entry) {
   return entry.requiredAmount > 0 || entry.requiredPresence;
 }
 
-function shoppingRequirementMarkup(entry) {
+function shoppingRequirementText(entry) {
   const unit = entry.ingredient.aggregation.unit;
   const required = entry.requiredAmount > 0
     ? `${formatAmount(entry.requiredAmount, unit)} required`
@@ -696,16 +696,23 @@ function shoppingRequirementMarkup(entry) {
     ? `${formatAmount(entry.optionalAmount, unit)} optional`
     : entry.optionalPresence ? "Optional" : "";
   const optionalSources = [...entry.optionalSources];
+  const optionalFor = optionalSources.length ? `Optional for ${optionalSources.join(", ")}` : "";
+  return { required, optional, optionalFor };
+}
 
+function shoppingRequirementMarkup(entry) {
+  const { required, optional, optionalFor } = shoppingRequirementText(entry);
   return `
     ${required ? `<span>${escapeHtml(required)}</span>` : ""}
-    ${optional && !required ? `<span>${escapeHtml(optional)}</span>` : ""}
-    ${optionalSources.length ? `<small class="meta">Optional for ${escapeHtml(optionalSources.join(", "))}</small>` : ""}
+    ${optional ? `<span>${escapeHtml(optional)}</span>` : ""}
+    ${optionalFor ? `<small class="meta">${escapeHtml(optionalFor)}</small>` : ""}
   `;
 }
 
 function shoppingEntryMarkup(entry, section) {
   const ingredientId = entry.ingredient.id;
+  const checkboxId = escapeHtml(`bought-${ingredientId}`);
+  const ingredientName = escapeHtml(entry.ingredient.name);
   const bought = currentWeek.boughtIngredientIds.includes(ingredientId);
   const amountForPack = entryHasRequired(entry) ? entry.requiredAmount : entry.optionalAmount;
   const pack = packRecommendation(entry, amountForPack);
@@ -713,9 +720,13 @@ function shoppingEntryMarkup(entry, section) {
 
   return `
     <div class="shopping-item ${section === "home" ? "home-item" : ""} ${bought ? "done" : ""}">
-      ${section === "home" ? "" : `<input class="checkbox bought-check" type="checkbox" data-ingredient-id="${escapeHtml(ingredientId)}" ${bought ? "checked" : ""} aria-label="Mark ${escapeHtml(entry.ingredient.name)} as bought">`}
+      ${section === "home" ? "" : `
+        <label class="bought-target">
+          <input id="${checkboxId}" class="checkbox bought-check" type="checkbox" data-ingredient-id="${escapeHtml(ingredientId)}" ${bought ? "checked" : ""} aria-label="Mark ${ingredientName} as bought">
+        </label>
+      `}
       <div class="shopping-item-copy">
-        <strong>${escapeHtml(entry.ingredient.name)}</strong>
+        ${section === "home" ? `<strong>${ingredientName}</strong>` : `<label for="${checkboxId}">${ingredientName}</label>`}
         <div class="requirement-line">${shoppingRequirementMarkup(entry)}</div>
         ${pack && section !== "home" ? `<small class="pack-recommendation">${escapeHtml(pack)}</small>` : ""}
         <small class="meta">Used in: ${escapeHtml([...sourceSet].join(", "))}</small>
@@ -770,9 +781,8 @@ function renderShoppingList() {
 }
 
 function shoppingTextLine(entry) {
-  const container = document.createElement("div");
-  container.innerHTML = shoppingRequirementMarkup(entry);
-  const requirement = container.textContent.trim();
+  const { required, optional, optionalFor } = shoppingRequirementText(entry);
+  const requirement = [required, optional, optionalFor].filter(Boolean).join(" · ");
   const pack = packRecommendation(entry, entryHasRequired(entry) ? entry.requiredAmount : entry.optionalAmount);
   return `- ${entry.ingredient.name}${requirement ? ` — ${requirement}` : ""}${pack ? ` (${pack})` : ""}`;
 }
@@ -917,6 +927,7 @@ function saveWeightEntry() {
   const value = Number(input.value);
 
   if (!value || value < 30 || value > 250) {
+    input.setAttribute("aria-invalid", "true");
     message.textContent = "Enter a sensible weight in kg.";
     return;
   }
@@ -946,7 +957,8 @@ function renderWeightCheckIn() {
       <h2>Weight check-in</h2>
       <p class="meta">Optional, private and saved only on this device.</p>
       <div class="weight-row">
-        <input id="weightInput" type="number" inputmode="decimal" step="0.1" min="30" max="250" placeholder="kg">
+        <label for="weightInput">Weight (kg)</label>
+        <input id="weightInput" type="number" inputmode="decimal" step="0.1" min="30" max="250" aria-describedby="weightMessage">
         <button id="saveWeightBtn" class="secondary" type="button">Save</button>
       </div>
       <p class="meta">${escapeHtml(summary)}</p>
