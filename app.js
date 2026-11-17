@@ -63,6 +63,7 @@ let activePlanFilter = "all";
 let activePlanStyleFilter = "all";
 let activeRecipeFilter = "all";
 let activeRecipeStyleFilter = "all";
+const recipeListState = new Map();
 
 function loadJson(path) {
   return fetch(path).then(response => {
@@ -364,12 +365,74 @@ function getBatchIngredientGroups(selection) {
 }
 
 function setActiveTab(tabName) {
+  const focusedPanel = document.activeElement?.closest(".panel");
   document.querySelectorAll(".tab").forEach(tab => {
     tab.classList.toggle("active", tab.dataset.tab === tabName);
   });
   document.querySelectorAll(".panel").forEach(panel => {
     panel.classList.toggle("active", panel.id === `${tabName}Panel`);
   });
+  if (focusedPanel && !focusedPanel.classList.contains("active")) {
+    document.querySelector(".tab.active").focus({ preventScroll: true });
+  }
+}
+
+function canRestoreFocus(control) {
+  return control && !control.matches(":disabled") && control.getClientRects().length > 0;
+}
+
+function controlKey(control) {
+  if (control.type === "radio") return `${control.name}:${control.value}`;
+  if (control.dataset.choiceId) return `choice:${control.dataset.choiceId}`;
+  if (control.classList.contains("stock-button")) return "stock";
+  if (control.classList.contains("bought-check")) return "bought";
+  return control.dataset.action || control.id || control.tagName;
+}
+
+function replaceList(id, markup, fallbackId) {
+  const list = document.getElementById(id);
+  const rowSelector = "[data-recipe-card], [data-ingredient-row]";
+  const controls = "button, input, select, summary";
+  const rowKey = row => row.dataset.recipeCard ?? row.dataset.ingredientRow;
+  const oldRows = [...list.querySelectorAll(rowSelector)];
+  const active = document.activeElement;
+  const activeRow = list.contains(active) ? active.closest(rowSelector) : null;
+  // Keep each list's state for recipes temporarily absent from the results.
+  const state = recipeListState.get(id) ?? new Map();
+
+  for (const row of oldRows) {
+    const details = row.querySelector("details");
+    const batch = row.querySelector(".add-batch-option:checked");
+    if (details) state.set(rowKey(row), { open: details.open, batch: batch?.value });
+  }
+  if (state.size) recipeListState.set(id, state);
+  list.innerHTML = markup;
+  const rows = new Map([...list.querySelectorAll(rowSelector)].map(row => [rowKey(row), row]));
+  for (const [key, row] of rows) {
+    const previous = state.get(key);
+    if (!previous) continue;
+    const details = row.querySelector("details");
+    if (details) details.open = previous.open;
+    const batch = [...row.querySelectorAll(".add-batch-option")].find(input => input.value === previous.batch);
+    if (batch) batch.checked = true;
+  }
+
+  if (!activeRow) return;
+  const key = controlKey(active);
+  const sameRow = rows.get(rowKey(activeRow));
+  const available = row => [...(row?.querySelectorAll(controls) ?? [])].filter(canRestoreFocus);
+  const exact = available(sameRow).find(control => controlKey(control) === key);
+  if (exact) {
+    exact.focus({ preventScroll: true });
+    return;
+  }
+
+  const index = oldRows.indexOf(activeRow);
+  const neighbours = [...oldRows.slice(index + 1), ...oldRows.slice(0, index).reverse()];
+  const nearby = neighbours.flatMap(row => available(rows.get(rowKey(row))));
+  const target = available(sameRow)[0] ?? nearby.find(control => controlKey(control) === key) ??
+    (fallbackId ? document.getElementById(fallbackId) : document.querySelector(".tab.active"));
+  if (canRestoreFocus(target)) target.focus();
 }
 
 function addRecipeToWeek(recipeId, batchId) {
@@ -392,7 +455,7 @@ function addRecipeToWeek(recipeId, batchId) {
   }
 
   saveCurrentWeek();
-  renderAll();
+  renderWeek(true);
 }
 
 function changeRecipeBatch(recipeId, batchId) {
@@ -404,7 +467,7 @@ function changeRecipeBatch(recipeId, batchId) {
   selection.batchId = batch.id;
   selection.choiceSelections = normaliseChoiceSelections(batch, selection.choiceSelections);
   saveCurrentWeek();
-  renderAll();
+  renderWeek();
 }
 
 function changeRecipeRepeatCount(recipeId, value) {
@@ -415,7 +478,7 @@ function changeRecipeRepeatCount(recipeId, value) {
   selection.repeatCount = normaliseRepeatCount(recipe, Number(value));
   selection.cookedCount = normaliseCookedCount(selection.cookedCount, selection.repeatCount);
   saveCurrentWeek();
-  renderAll();
+  renderWeek();
 }
 
 function changeCookedCount(recipeId, delta) {
@@ -430,7 +493,7 @@ function changeCookedCount(recipeId, delta) {
 function removeRecipeFromWeek(recipeId) {
   currentWeek.selections = currentWeek.selections.filter(selection => selection.recipeId !== recipeId);
   saveCurrentWeek();
-  renderAll();
+  renderWeek(true);
 }
 
 function startNewWeek() {
@@ -442,7 +505,7 @@ function startNewWeek() {
   currentWeek = createEmptyWeek();
   weekSaveDependsOnAtHome = false;
   saveCurrentWeek();
-  renderAll();
+  renderWeek(true);
 }
 
 function batchOptionsMarkup(recipe, selectedBatchId, className, groupName, labelText = "Choose batch size") {
@@ -519,11 +582,10 @@ function choiceControlsMarkup(selection, batch) {
 
 function renderPlan() {
   const summary = document.getElementById("planSummary");
-  const weekList = document.getElementById("weekList");
 
   if (!currentWeek.selections.length) {
     summary.textContent = "No recipes selected yet.";
-    weekList.innerHTML = `<div class="card empty">Add recipes below to build this week.</div>`;
+    replaceList("weekList", `<div class="card empty">Add recipes below to build this week.</div>`, "planRecipeSearch");
   } else {
     const totals = currentWeek.selections.reduce((result, selection) => {
       const { batch } = getSelectedRecipeData(selection);
@@ -539,10 +601,10 @@ function renderPlan() {
       ? `${recipeLabel} · ${totals.occasions} cooking occasions · about ${portions} portions`
       : `${recipeLabel} · about ${portions} portions`;
 
-    weekList.innerHTML = currentWeek.selections.map(selection => {
+    const markup = currentWeek.selections.map(selection => {
       const { recipe, batch } = getSelectedRecipeData(selection);
       return `
-        <article class="card plan-item selected-recipe">
+        <article class="card plan-item selected-recipe" data-recipe-card="${escapeHtml(recipe.id)}">
           <div class="section-heading">
             <div>
               <h3>${escapeHtml(recipe.title)}</h3>
@@ -559,9 +621,8 @@ function renderPlan() {
         </article>
       `;
     }).join("");
+    replaceList("weekList", markup, "planRecipeSearch");
   }
-
-  renderPlanRecipeBrowser();
 }
 
 function recipeSearchBlob(recipe) {
@@ -596,7 +657,7 @@ function recipeCardMarkup(recipe, source) {
     : "";
 
   return `
-    <article class="card recipe-card ${selection ? "selected-recipe" : ""}" ${isPlanPicker ? `data-recipe-card="${escapeHtml(recipe.id)}"` : ""}>
+    <article class="card recipe-card ${selection ? "selected-recipe" : ""}" data-recipe-card="${escapeHtml(recipe.id)}">
       <div class="section-heading">
         <div>
           <h3>${escapeHtml(recipe.title)}</h3>
@@ -621,9 +682,10 @@ function renderPlanRecipeBrowser() {
     (activePlanStyleFilter === "all" || recipe.style === activePlanStyleFilter)
   );
 
-  document.getElementById("planRecipeList").innerHTML = filtered
+  const markup = filtered
     .map(recipe => recipeCardMarkup(recipe, "plan"))
     .join("") || `<div class="card empty">No recipes found.</div>`;
+  replaceList("planRecipeList", markup, "planRecipeSearch");
 }
 
 function recipeDetailsMarkup(recipe) {
@@ -804,7 +866,7 @@ function shoppingEntryMarkup(entry, section) {
   const sourceSet = new Set([...entry.requiredSources, ...entry.optionalSources]);
 
   return `
-    <div class="shopping-item ${section === "home" ? "home-item" : ""} ${bought ? "done" : ""}">
+    <div class="shopping-item ${section === "home" ? "home-item" : ""} ${bought ? "done" : ""}" data-ingredient-row="${escapeHtml(ingredientId)}">
       ${section === "home" ? "" : `
         <label class="bought-target">
           <input id="${checkboxId}" class="checkbox bought-check" type="checkbox" data-ingredient-id="${escapeHtml(ingredientId)}" ${bought ? "checked" : ""} aria-label="Mark ${ingredientName} as bought">
@@ -838,7 +900,7 @@ function shoppingSectionMarkup(title, items, section, emptyText) {
   `;
 }
 
-function renderShoppingList() {
+function renderShoppingList(focusedCheckbox) {
   const allEntries = collectShoppingEntries();
   const atHomeIds = new Set(atHome.ingredientIds);
   const boughtIds = new Set(currentWeek.boughtIngredientIds);
@@ -855,13 +917,19 @@ function renderShoppingList() {
     ? `Bought ${boughtCount} of ${shoppingCount} · ${atHomeItems.length} at home`
     : "Build this week's plan to create a list.";
 
-  document.getElementById("shoppingList").innerHTML = currentWeek.selections.length
+  if (focusedCheckbox && !hideBought) {
+    focusedCheckbox.closest(".shopping-item").classList.toggle("done", focusedCheckbox.checked);
+    return;
+  }
+
+  const markup = currentWeek.selections.length
       ? [
         shoppingSectionMarkup("To buy", toBuy, "buy", hideBought && toBuyAll.length ? "All required items are bought." : "Nothing required to buy."),
         shoppingSectionMarkup("Optional", optional, "optional", hideBought && optionalAll.length ? "All optional items are bought." : "No optional items this week."),
         shoppingSectionMarkup("At home", atHomeItems, "home", "No required items are marked At home.")
       ].join("")
     : `<div class="card empty">Add recipes in Plan to build the shopping list.</div>`;
+  replaceList("shoppingList", markup, "hideBoughtToggle");
 }
 
 function shoppingTextLine(entry) {
@@ -914,7 +982,7 @@ function renderCookSummary() {
 function renderCook() {
   renderCookSummary();
 
-  document.getElementById("cookList").innerHTML = currentWeek.selections.length
+  const markup = currentWeek.selections.length
     ? currentWeek.selections.map(selection => {
       const { recipe, batch } = getSelectedRecipeData(selection);
       const ingredientGroups = getBatchIngredientGroups(selection);
@@ -932,7 +1000,7 @@ function renderCook() {
         `
         : "";
       return `
-          <article class="card cook-card ${isComplete ? "cooked" : ""}">
+          <article class="card cook-card ${isComplete ? "cooked" : ""}" data-recipe-card="${escapeHtml(recipe.id)}">
             <div class="section-heading">
               <div>
                 <h2>${escapeHtml(recipe.title)}</h2>
@@ -972,14 +1040,21 @@ function renderCook() {
         `;
       }).join("")
     : `<div class="card empty">Add recipes in Plan before you start cooking.</div>`;
+  replaceList("cookList", markup);
 }
 
 function renderFilterChips(containerId, values, activeFilter, action) {
-  document.getElementById(containerId).innerHTML = values.map(value => `
+  const container = document.getElementById(containerId);
+  if (!container.children.length) container.innerHTML = values.map(value => `
     <button class="filter-chip ${activeFilter === value ? "active" : ""}" type="button" data-action="${escapeHtml(action)}" data-filter="${escapeHtml(value)}" aria-pressed="${activeFilter === value}">
       ${escapeHtml(value === "all" ? "All" : value)}
     </button>
   `).join("");
+  for (const button of container.children) {
+    const selected = button.dataset.filter === activeFilter;
+    button.classList.toggle("active", selected);
+    button.setAttribute("aria-pressed", selected);
+  }
 }
 
 function renderRecipes() {
@@ -992,9 +1067,10 @@ function renderRecipes() {
     (activeRecipeStyleFilter === "all" || recipe.style === activeRecipeStyleFilter)
   );
 
-  document.getElementById("recipeList").innerHTML = filtered
+  const markup = filtered
     .map(recipe => recipeCardMarkup(recipe, "recipes"))
     .join("") || `<div class="card empty">No recipes found.</div>`;
+  replaceList("recipeList", markup, "recipeSearch");
 }
 
 function saveWeightEntry() {
@@ -1043,12 +1119,11 @@ function renderWeightCheckIn() {
   document.getElementById("saveWeightBtn").addEventListener("click", saveWeightEntry);
 }
 
-function renderAll() {
+function renderWeek(updatePicker = false) {
   renderPlan();
   renderShoppingList();
   renderCook();
-  renderRecipes();
-  renderWeightCheckIn();
+  if (updatePicker) renderPlanRecipeBrowser();
 }
 
 function markIngredientAtHome(ingredientId) {
@@ -1141,7 +1216,7 @@ function setupEvents() {
       if (event.target.value) selection.choiceSelections[event.target.dataset.choiceId] = event.target.value;
       else delete selection.choiceSelections[event.target.dataset.choiceId];
       saveCurrentWeek();
-      renderAll();
+      renderWeek();
     } else if (event.target.matches(".bought-check")) {
       const ingredientId = event.target.dataset.ingredientId;
       const bought = new Set(currentWeek.boughtIngredientIds);
@@ -1149,7 +1224,7 @@ function setupEvents() {
       else bought.delete(ingredientId);
       currentWeek.boughtIngredientIds = [...bought];
       saveCurrentWeek();
-      renderShoppingList();
+      renderShoppingList(event.target);
     } else if (event.target.matches(".cooked-check")) {
       const selection = getSelection(event.target.dataset.recipeId);
       if (!selection) return;
@@ -1192,7 +1267,9 @@ async function init() {
   else updateStorageStatus();
 
   setupEvents();
-  renderAll();
+  renderWeek(true);
+  renderRecipes();
+  renderWeightCheckIn();
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js").catch(() => {});
