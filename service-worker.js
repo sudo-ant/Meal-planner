@@ -1,7 +1,7 @@
-const CACHE_NAME = "maia-meal-planner-v2-17";
+const CACHE_NAME = "maia-meal-planner-v2-18";
 // Only retire names this project used in previous service workers.
 const OBSOLETE_CACHE_NAMES = new Set([
-  ...[2, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map(version => `maia-meal-planner-v2-${version}`),
+  ...[2, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].map(version => `maia-meal-planner-v2-${version}`),
   ...["1", "2", "3", "31", "4", "4-fixed", "5", "51", "51-fixed", "53-plan-details",
     "54-details-fixed", "55", "56", "56-fixed"].map(version => `student-food-planner-v${version}`)
 ]);
