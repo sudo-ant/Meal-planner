@@ -424,7 +424,7 @@ function keepControlInView(control) {
 }
 
 function restoreListFocus(control, keyboardFocus) {
-  if (!canRestoreFocus(control)) return;
+  if (!control) return;
   control.focus({ preventScroll: true });
   if (keyboardFocus) keepControlInView(control);
 }
@@ -437,10 +437,19 @@ function controlKey(control) {
   return control.dataset.action || control.id || control.tagName;
 }
 
+function findListControl(row, key) {
+  return [...(row?.querySelectorAll("button, input, select, summary") ?? [])].find(control =>
+    (key === undefined || controlKey(control) === key) && canRestoreFocus(control));
+}
+
+function listFallback(id) {
+  const control = id ? document.getElementById(id) : document.querySelector(".tab.active");
+  return canRestoreFocus(control) ? control : null;
+}
+
 function replaceList(id, markup, fallbackId) {
   const list = document.getElementById(id);
   const rowSelector = "[data-recipe-card], [data-ingredient-row]";
-  const controls = "button, input, select, summary";
   const rowKey = row => row.dataset.recipeCard ?? row.dataset.ingredientRow;
   const oldRows = [...list.querySelectorAll(rowSelector)];
   const active = document.activeElement;
@@ -469,19 +478,67 @@ function replaceList(id, markup, fallbackId) {
   if (!activeRow) return;
   const key = controlKey(active);
   const sameRow = rows.get(rowKey(activeRow));
-  const available = row => [...(row?.querySelectorAll(controls) ?? [])].filter(canRestoreFocus);
-  const exact = available(sameRow).find(control => controlKey(control) === key);
-  if (exact) {
-    restoreListFocus(exact, keyboardFocus);
+  const matching = findListControl(sameRow, key) ?? findListControl(sameRow);
+  if (matching) {
+    restoreListFocus(matching, keyboardFocus);
     return;
   }
 
   const index = oldRows.indexOf(activeRow);
   const neighbours = [...oldRows.slice(index + 1), ...oldRows.slice(0, index).reverse()];
-  const nearby = neighbours.flatMap(row => available(rows.get(rowKey(row))));
-  const target = available(sameRow)[0] ?? nearby.find(control => controlKey(control) === key) ??
-    (fallbackId ? document.getElementById(fallbackId) : document.querySelector(".tab.active"));
+  let target;
+  for (const row of neighbours) {
+    target = findListControl(rows.get(rowKey(row)), key);
+    if (target) break;
+  }
+  target ??= listFallback(fallbackId);
   restoreListFocus(target, keyboardFocus);
+}
+
+function recipeRow(list, recipeId) {
+  return list.querySelector(`[data-recipe-card="${CSS.escape(recipeId)}"]`);
+}
+
+function renderWeeklyCards(id, makeCard, emptyMessage, recipeId, fallbackId) {
+  const selections = currentWeek.selections;
+  if (!recipeId || !selections.length) {
+    const markup = selections.map(makeCard).join("") || `<div class="card empty">${emptyMessage}</div>`;
+    replaceList(id, markup, fallbackId);
+    return;
+  }
+
+  const list = document.getElementById(id);
+  const row = recipeRow(list, recipeId);
+  const selection = getSelection(recipeId);
+  const active = document.activeElement;
+  const key = row?.contains(active) ? controlKey(active) : null;
+  const keyboardFocus = key && active.matches(":focus-visible");
+  const next = row?.nextElementSibling;
+  const previous = row?.previousElementSibling;
+  const details = row?.querySelector("details");
+  const state = recipeListState.get(id) ?? new Map();
+  if (details) {
+    state.set(recipeId, { open: details.open });
+    recipeListState.set(id, state);
+  }
+
+  let replacement;
+  if (selection) {
+    const template = document.createElement("template");
+    template.innerHTML = makeCard(selection).trim();
+    replacement = template.content.firstElementChild;
+    if (state.get(recipeId)?.open) replacement.querySelector("details").open = true;
+    if (row) row.replaceWith(replacement);
+    else {
+      if (list.firstElementChild?.classList.contains("empty")) list.firstElementChild.remove();
+      list.append(replacement);
+    }
+  } else {
+    row?.remove();
+  }
+
+  if (key) restoreListFocus(findListControl(replacement, key) ?? findListControl(replacement) ??
+    findListControl(next, key) ?? findListControl(previous, key) ?? listFallback(fallbackId), keyboardFocus);
 }
 
 function addRecipeToWeek(recipeId, batchId) {
@@ -504,7 +561,8 @@ function addRecipeToWeek(recipeId, batchId) {
   }
 
   saveCurrentWeek();
-  renderWeek(true);
+  refreshWeeklyRecipe(recipeId);
+  updatePickerRecipe(recipeId);
 }
 
 function changeRecipeBatch(recipeId, batchId) {
@@ -516,7 +574,7 @@ function changeRecipeBatch(recipeId, batchId) {
   selection.batchId = batch.id;
   selection.choiceSelections = normaliseChoiceSelections(batch, selection.choiceSelections);
   saveCurrentWeek();
-  renderWeek();
+  refreshWeeklyRecipe(recipeId);
 }
 
 function changeRecipeRepeatCount(recipeId, value) {
@@ -527,7 +585,7 @@ function changeRecipeRepeatCount(recipeId, value) {
   selection.repeatCount = normaliseRepeatCount(recipe, Number(value));
   selection.cookedCount = normaliseCookedCount(selection.cookedCount, selection.repeatCount);
   saveCurrentWeek();
-  renderWeek();
+  refreshWeeklyRecipe(recipeId);
 }
 
 function changeCookedCount(recipeId, delta) {
@@ -542,7 +600,8 @@ function changeCookedCount(recipeId, delta) {
 function removeRecipeFromWeek(recipeId) {
   currentWeek.selections = currentWeek.selections.filter(selection => selection.recipeId !== recipeId);
   saveCurrentWeek();
-  renderWeek(true);
+  refreshWeeklyRecipe(recipeId);
+  updatePickerRecipe(recipeId);
 }
 
 function startNewWeek() {
@@ -629,12 +688,11 @@ function choiceControlsMarkup(selection, batch) {
   }).join("")}</div>`;
 }
 
-function renderPlan() {
+function renderPlan(recipeId) {
   const summary = document.getElementById("planSummary");
 
   if (!currentWeek.selections.length) {
     summary.textContent = "No recipes selected yet.";
-    replaceList("weekList", `<div class="card empty">Add recipes below to build this week.</div>`, "planRecipeSearch");
   } else {
     const totals = currentWeek.selections.reduce((result, selection) => {
       const { batch } = getSelectedRecipeData(selection);
@@ -649,29 +707,29 @@ function renderPlan() {
     summary.textContent = totals.occasions > recipeCount
       ? `${recipeLabel} · ${totals.occasions} cooking occasions · about ${portions} portions`
       : `${recipeLabel} · about ${portions} portions`;
-
-    const markup = currentWeek.selections.map(selection => {
-      const { recipe, batch } = getSelectedRecipeData(selection);
-      return `
-        <article class="card plan-item selected-recipe" data-recipe-card="${escapeHtml(recipe.id)}">
-          <div class="section-heading">
-            <div>
-              <h3>${escapeHtml(recipe.title)}</h3>
-              <p class="meta">${escapeHtml(recipe.group)} · ${escapeHtml(batch.label)} · ${escapeHtml(formatYield(batch))}</p>
-            </div>
-            <button class="ghost small" type="button" data-action="remove-recipe" data-recipe-id="${escapeHtml(recipe.id)}">Remove</button>
-          </div>
-          ${recipe.batchOptions.length > 1
-            ? batchOptionsMarkup(recipe, batch.id, "plan-batch-option", `plan-batch-${recipe.id}`, "Change batch")
-            : `<p class="batch-label"><strong>${escapeHtml(batch.label)}</strong> · ${escapeHtml(formatYield(batch))}</p>`}
-          ${repeatOptionsMarkup(recipe, selection, batch)}
-          ${choiceControlsMarkup(selection, batch)}
-          ${storageMarkup(batch)}
-        </article>
-      `;
-    }).join("");
-    replaceList("weekList", markup, "planRecipeSearch");
   }
+  renderWeeklyCards("weekList", planItemMarkup, "Add recipes below to build this week.", recipeId, "planRecipeSearch");
+}
+
+function planItemMarkup(selection) {
+  const { recipe, batch } = getSelectedRecipeData(selection);
+  return `
+    <article class="card plan-item selected-recipe" data-recipe-card="${escapeHtml(recipe.id)}">
+      <div class="section-heading">
+        <div>
+          <h3>${escapeHtml(recipe.title)}</h3>
+          <p class="meta">${escapeHtml(recipe.group)} · ${escapeHtml(batch.label)} · ${escapeHtml(formatYield(batch))}</p>
+        </div>
+        <button class="ghost small" type="button" data-action="remove-recipe" data-recipe-id="${escapeHtml(recipe.id)}">Remove</button>
+      </div>
+      ${recipe.batchOptions.length > 1
+        ? batchOptionsMarkup(recipe, batch.id, "plan-batch-option", `plan-batch-${recipe.id}`, "Change batch")
+        : `<p class="batch-label"><strong>${escapeHtml(batch.label)}</strong> · ${escapeHtml(formatYield(batch))}</p>`}
+      ${repeatOptionsMarkup(recipe, selection, batch)}
+      ${choiceControlsMarkup(selection, batch)}
+      ${storageMarkup(batch)}
+    </article>
+  `;
 }
 
 function recipeSearchBlob(recipe) {
@@ -690,20 +748,36 @@ function matchesSearch(recipe, query) {
   return tokens.every(token => searchable.includes(token));
 }
 
+function pickerActionMarkup(recipe, selection) {
+  const defaultBatch = recipe.batchOptions[0];
+  return selection
+      ? `<button class="secondary in-plan-button" type="button" data-action="view-plan">In this week's plan</button>`
+      : `
+        ${recipe.batchOptions.length > 1 ? batchOptionsMarkup(recipe, defaultBatch.id, "add-batch-option", `add-batch-plan-${recipe.id}`) : ""}
+        <button type="button" data-action="add-recipe" data-recipe-id="${escapeHtml(recipe.id)}" data-source="plan">
+          Add to week${recipe.batchOptions.length === 1 ? ` · ${escapeHtml(defaultBatch.label)} · ${escapeHtml(formatYield(defaultBatch))}` : ""}
+        </button>
+      `;
+}
+
+function updatePickerRecipe(recipeId) {
+  const row = recipeRow(document.getElementById("planRecipeList"), recipeId);
+  if (!row) return;
+
+  const action = row.querySelector(".recipe-action");
+  const active = document.activeElement;
+  const hadFocus = action.contains(active);
+  const keyboardFocus = hadFocus && active.matches(":focus-visible");
+  const selection = getSelection(recipeId);
+  row.classList.toggle("selected-recipe", Boolean(selection));
+  action.innerHTML = pickerActionMarkup(recipesById[recipeId], selection);
+  if (hadFocus) restoreListFocus(findListControl(action, selection ? "view-plan" : "add-recipe"), keyboardFocus);
+}
+
 function recipeCardMarkup(recipe, source) {
   const isPlanPicker = source === "plan";
   const selection = isPlanPicker ? getSelection(recipe.id) : null;
-  const defaultBatch = recipe.batchOptions[0];
-  const control = isPlanPicker
-    ? selection
-      ? `<button class="secondary in-plan-button" type="button" data-action="view-plan">In this week's plan</button>`
-      : `
-        ${recipe.batchOptions.length > 1 ? batchOptionsMarkup(recipe, defaultBatch.id, "add-batch-option", `add-batch-${source}-${recipe.id}`) : ""}
-        <button type="button" data-action="add-recipe" data-recipe-id="${escapeHtml(recipe.id)}" data-source="${escapeHtml(source)}">
-          Add to week${recipe.batchOptions.length === 1 ? ` · ${escapeHtml(defaultBatch.label)} · ${escapeHtml(formatYield(defaultBatch))}` : ""}
-        </button>
-      `
-    : "";
+  const control = isPlanPicker ? pickerActionMarkup(recipe, selection) : "";
 
   return `
     <article class="card recipe-card ${selection ? "selected-recipe" : ""}" data-recipe-card="${escapeHtml(recipe.id)}">
@@ -939,17 +1013,79 @@ function shoppingSectionMarkup(title, items, section, emptyText) {
   return `
     <section class="shopping-section" aria-labelledby="${section}-heading">
       <h2 id="${section}-heading" class="shopping-section-title">${escapeHtml(title)} <span>${items.length}</span></h2>
-      ${items.length ? orderedCategoryEntries(groups).map(([category, categoryItems]) => `
-        <section class="card shopping-category">
-          <h3 class="category-title">${escapeHtml(category)}</h3>
-          ${categoryItems.map(item => shoppingEntryMarkup(item, section)).join("")}
-        </section>
-      `).join("") : `<div class="card empty">${escapeHtml(emptyText)}</div>`}
+      ${items.length ? orderedCategoryEntries(groups).map(([category, categoryItems]) =>
+        shoppingCategoryMarkup(category, categoryItems, section)).join("") : shoppingEmptyMarkup(emptyText)}
     </section>
   `;
 }
 
-function renderShoppingList(focusedCheckbox) {
+function shoppingCategoryMarkup(category, items, section) {
+  return `
+    <section class="card shopping-category" data-shopping-category="${escapeHtml(category)}">
+      <h3 class="category-title">${escapeHtml(category)}</h3>
+      ${items.map(item => shoppingEntryMarkup(item, section)).join("")}
+    </section>
+  `;
+}
+
+function shoppingEmptyMarkup(message) {
+  return `<div class="card empty">${escapeHtml(message)}</div>`;
+}
+
+function patchShoppingStock(ingredientId, sections) {
+  const rowSelector = `[data-ingredient-row="${CSS.escape(ingredientId)}"]`;
+  const list = document.getElementById("shoppingList");
+  const oldRow = list.querySelector(rowSelector);
+  const active = document.activeElement;
+  const hadFocus = oldRow?.contains(active);
+  const keyboardFocus = hadFocus && active.matches(":focus-visible");
+  const key = hadFocus && controlKey(active);
+
+  for (const { items, id, emptyText } of sections) {
+    const heading = document.getElementById(`${id}-heading`);
+    const section = heading.parentElement;
+    const entry = items.find(item => item.ingredient.id === ingredientId);
+    if (!entry && !section.contains(oldRow)) {
+      const empty = section.querySelector(".empty");
+      if (empty && empty.textContent !== emptyText) empty.textContent = emptyText;
+      continue;
+    }
+
+    if (section.contains(oldRow)) {
+      const category = oldRow.parentElement;
+      oldRow.remove();
+      if (!category.querySelector("[data-ingredient-row]")) category.remove();
+    }
+    heading.querySelector("span").textContent = items.length;
+    if (!items.length) {
+      section.insertAdjacentHTML("beforeend", shoppingEmptyMarkup(emptyText));
+    } else if (entry) {
+      section.querySelector(".empty")?.remove();
+      const groups = orderedCategoryEntries(groupByCategory(items));
+      const index = groups.findIndex(([category]) => category === entry.ingredient.category);
+      const [category, categoryItems] = groups[index];
+      const findCategory = name => section.querySelector(`[data-shopping-category="${CSS.escape(name)}"]`);
+      const target = findCategory(category);
+      if (target) {
+        const next = categoryItems[categoryItems.indexOf(entry) + 1];
+        const nextRow = next && target.querySelector(`[data-ingredient-row="${CSS.escape(next.ingredient.id)}"]`);
+        if (nextRow) nextRow.insertAdjacentHTML("beforebegin", shoppingEntryMarkup(entry, id));
+        else target.insertAdjacentHTML("beforeend", shoppingEntryMarkup(entry, id));
+      } else {
+        const nextCategory = groups[index + 1] && findCategory(groups[index + 1][0]);
+        const markup = shoppingCategoryMarkup(category, [entry], id);
+        if (nextCategory) nextCategory.insertAdjacentHTML("beforebegin", markup);
+        else section.insertAdjacentHTML("beforeend", markup);
+      }
+    }
+  }
+  if (hadFocus) {
+    const row = list.querySelector(rowSelector);
+    restoreListFocus(findListControl(row, key) ?? findListControl(row) ?? listFallback("hideBoughtToggle"), keyboardFocus);
+  }
+}
+
+function renderShoppingList(focusedCheckbox, movedIngredientId) {
   const allEntries = collectShoppingEntries();
   const atHomeIds = new Set(atHome.ingredientIds);
   const boughtIds = new Set(currentWeek.boughtIngredientIds);
@@ -971,12 +1107,17 @@ function renderShoppingList(focusedCheckbox) {
     return;
   }
 
+  const sections = [
+    { id: "buy", title: "To buy", items: toBuy, emptyText: hideBought && toBuyAll.length ? "All required items are bought." : "Nothing required to buy." },
+    { id: "optional", title: "Optional", items: optional, emptyText: hideBought && optionalAll.length ? "All optional items are bought." : "No optional items this week." },
+    { id: "home", title: "At home", items: atHomeItems, emptyText: "No required items are marked At home." }
+  ];
+  if (movedIngredientId && currentWeek.selections.length) {
+    patchShoppingStock(movedIngredientId, sections);
+    return;
+  }
   const markup = currentWeek.selections.length
-      ? [
-        shoppingSectionMarkup("To buy", toBuy, "buy", hideBought && toBuyAll.length ? "All required items are bought." : "Nothing required to buy."),
-        shoppingSectionMarkup("Optional", optional, "optional", hideBought && optionalAll.length ? "All optional items are bought." : "No optional items this week."),
-        shoppingSectionMarkup("At home", atHomeItems, "home", "No required items are marked At home.")
-      ].join("")
+    ? sections.map(({ title, items, id, emptyText }) => shoppingSectionMarkup(title, items, id, emptyText)).join("")
     : `<div class="card empty">Add recipes in Plan to build the shopping list.</div>`;
   replaceList("shoppingList", markup, "hideBoughtToggle");
 }
@@ -1028,68 +1169,66 @@ function renderCookSummary() {
     : "Only recipes in this week's plan appear here.";
 }
 
-function renderCook() {
+function renderCook(recipeId) {
   renderCookSummary();
+  renderWeeklyCards("cookList", cookCardMarkup, "Add recipes in Plan before you start cooking.", recipeId);
+}
 
-  const markup = currentWeek.selections.length
-    ? currentWeek.selections.map(selection => {
-      const { recipe, batch } = getSelectedRecipeData(selection);
-      const ingredientGroups = getBatchIngredientGroups(selection);
-      const isComplete = selection.cookedCount === selection.repeatCount;
-      const progressControl = selection.repeatCount === 2
-        ? `
-          <div class="cook-repeat-progress" aria-label="Cooking progress for ${escapeHtml(recipe.title)}">
-            <p class="repeat-frequency">2 times this week</p>
-            <p><strong>Cooked this week: ${selection.cookedCount} of 2</strong></p>
-            <div class="cook-progress-actions">
-              <button class="ghost small" type="button" data-action="undo-cooked" data-recipe-id="${escapeHtml(recipe.id)}" ${selection.cookedCount === 0 ? "disabled" : ""}>Undo</button>
-              <button class="secondary small" type="button" data-action="mark-one-cooked" data-recipe-id="${escapeHtml(recipe.id)}" ${selection.cookedCount === 2 ? "disabled" : ""}>Mark one cooked</button>
-            </div>
+function cookCardMarkup(selection) {
+  const { recipe, batch } = getSelectedRecipeData(selection);
+  const ingredientGroups = getBatchIngredientGroups(selection);
+  const isComplete = selection.cookedCount === selection.repeatCount;
+  const progressControl = selection.repeatCount === 2
+    ? `
+      <div class="cook-repeat-progress" aria-label="Cooking progress for ${escapeHtml(recipe.title)}">
+        <p class="repeat-frequency">2 times this week</p>
+        <p><strong>Cooked this week: ${selection.cookedCount} of 2</strong></p>
+        <div class="cook-progress-actions">
+          <button class="ghost small" type="button" data-action="undo-cooked" data-recipe-id="${escapeHtml(recipe.id)}" ${selection.cookedCount === 0 ? "disabled" : ""}>Undo</button>
+          <button class="secondary small" type="button" data-action="mark-one-cooked" data-recipe-id="${escapeHtml(recipe.id)}" ${selection.cookedCount === 2 ? "disabled" : ""}>Mark one cooked</button>
+        </div>
+      </div>
+    `
+    : "";
+  return `
+      <article class="card cook-card ${isComplete ? "cooked" : ""}" data-recipe-card="${escapeHtml(recipe.id)}">
+        <div class="section-heading">
+          <div>
+            <h2>${escapeHtml(recipe.title)}</h2>
+            <p class="meta">${escapeHtml(batch.label)} · ${escapeHtml(formatYield(batch))}</p>
           </div>
-        `
-        : "";
-      return `
-          <article class="card cook-card ${isComplete ? "cooked" : ""}" data-recipe-card="${escapeHtml(recipe.id)}">
-            <div class="section-heading">
-              <div>
-                <h2>${escapeHtml(recipe.title)}</h2>
-                <p class="meta">${escapeHtml(batch.label)} · ${escapeHtml(formatYield(batch))}</p>
-              </div>
-              ${selection.repeatCount === 1 ? `
-                <label class="cook-toggle">
-                  <input class="checkbox cooked-check" type="checkbox" data-recipe-id="${escapeHtml(recipe.id)}" ${isComplete ? "checked" : ""}>
-                  <span>${isComplete ? "Cooked" : "Mark cooked"}</span>
-                </label>
-              ` : ""}
-            </div>
-            ${progressControl}
-            ${storageMarkup(batch)}
-            <details class="cook-details">
-              <summary><span class="show-recipe-label">Show recipe</span><span class="hide-recipe-label">Hide recipe</span></summary>
-              <div class="cook-details-body">
-                ${ingredientGroups.map(group => `
-                  <section class="recipe-detail-block">
-                    <h3>${escapeHtml(group.label)}</h3>
-                    <ul>${group.ingredients.map(ingredientLineMarkup).join("")}</ul>
-                  </section>
-                `).join("")}
-                <section class="recipe-detail-block">
-                  <h3>Steps</h3>
-                  <ol class="steps">${recipe.steps.map(step => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
-                </section>
-                ${(batch.notes || []).length || recipe.notes.length ? `
-                  <section class="recipe-detail-block">
-                    <h3>Notes</h3>
-                    <ul>${[...(batch.notes || []), ...recipe.notes].map(note => `<li>${escapeHtml(note)}</li>`).join("")}</ul>
-                  </section>
-                ` : ""}
-              </div>
-            </details>
-          </article>
-        `;
-      }).join("")
-    : `<div class="card empty">Add recipes in Plan before you start cooking.</div>`;
-  replaceList("cookList", markup);
+          ${selection.repeatCount === 1 ? `
+            <label class="cook-toggle">
+              <input class="checkbox cooked-check" type="checkbox" data-recipe-id="${escapeHtml(recipe.id)}" ${isComplete ? "checked" : ""}>
+              <span>${isComplete ? "Cooked" : "Mark cooked"}</span>
+            </label>
+          ` : ""}
+        </div>
+        ${progressControl}
+        ${storageMarkup(batch)}
+        <details class="cook-details">
+          <summary><span class="show-recipe-label">Show recipe</span><span class="hide-recipe-label">Hide recipe</span></summary>
+          <div class="cook-details-body">
+            ${ingredientGroups.map(group => `
+              <section class="recipe-detail-block">
+                <h3>${escapeHtml(group.label)}</h3>
+                <ul>${group.ingredients.map(ingredientLineMarkup).join("")}</ul>
+              </section>
+            `).join("")}
+            <section class="recipe-detail-block">
+              <h3>Steps</h3>
+              <ol class="steps">${recipe.steps.map(step => `<li>${escapeHtml(step)}</li>`).join("")}</ol>
+            </section>
+            ${(batch.notes || []).length || recipe.notes.length ? `
+              <section class="recipe-detail-block">
+                <h3>Notes</h3>
+                <ul>${[...(batch.notes || []), ...recipe.notes].map(note => `<li>${escapeHtml(note)}</li>`).join("")}</ul>
+              </section>
+            ` : ""}
+          </div>
+        </details>
+      </article>
+    `;
 }
 
 function renderFilterChips(containerId, values, activeFilter, action) {
@@ -1175,6 +1314,12 @@ function renderWeek(updatePicker = false) {
   if (updatePicker) renderPlanRecipeBrowser();
 }
 
+function refreshWeeklyRecipe(recipeId) {
+  renderPlan(recipeId);
+  renderShoppingList();
+  renderCook(recipeId);
+}
+
 function markIngredientAtHome(ingredientId) {
   if (!atHome.ingredientIds.includes(ingredientId)) atHome.ingredientIds.push(ingredientId);
   if (currentWeek.boughtIngredientIds.includes(ingredientId)) {
@@ -1183,13 +1328,13 @@ function markIngredientAtHome(ingredientId) {
     queueStoredJson(STORAGE_KEYS.currentWeek, currentWeek, true);
   }
   saveAtHome();
-  renderShoppingList();
+  renderShoppingList(null, ingredientId);
 }
 
 function removeIngredientAtHome(ingredientId) {
   atHome.ingredientIds = atHome.ingredientIds.filter(id => id !== ingredientId);
   saveAtHome();
-  renderShoppingList();
+  renderShoppingList(null, ingredientId);
 }
 
 function setupEvents() {
@@ -1265,7 +1410,7 @@ function setupEvents() {
       if (event.target.value) selection.choiceSelections[event.target.dataset.choiceId] = event.target.value;
       else delete selection.choiceSelections[event.target.dataset.choiceId];
       saveCurrentWeek();
-      renderWeek();
+      refreshWeeklyRecipe(selection.recipeId);
     } else if (event.target.matches(".bought-check")) {
       const ingredientId = event.target.dataset.ingredientId;
       const bought = new Set(currentWeek.boughtIngredientIds);
