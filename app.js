@@ -99,6 +99,7 @@ function readStoredValue(key, fallback, isValid) {
 
 function updateStorageStatus() {
   const records = [...storageRecords.values()];
+  const hasUnsavedEdits = [...pendingStorageWrites.values()].some(write => write.userChange);
   const messages = [];
   if (records.some(record => record.status === "unreadable")) {
     messages.push("Browser storage could not be read. Some saved data may be missing from this session. Reload when storage is available to restore it.");
@@ -110,24 +111,53 @@ function updateStorageStatus() {
     messages.push("Saved data became available or changed outside this session. Reload to use the saved copy.");
   }
   if (records.some(record => record.status === "write-failed")) {
-    messages.push("Browser storage could not save your changes. The app will try again the next time you make a change.");
+    messages.push(hasUnsavedEdits
+      ? "Browser storage could not save your changes. The app will try again the next time you make a change."
+      : "Browser storage could not finish updating the saved plan. The original plan is still saved.");
   }
-  if (pendingStorageWrites.size) {
+  if (hasUnsavedEdits) {
     messages.push("Unsaved changes are available only in this session. Closing or reloading the page will lose them.");
   }
 
   const status = document.getElementById("storageStatus");
   const message = messages.join(" ");
-  if (status.textContent !== message) status.textContent = message;
+  if (status.textContent === message) return;
+  status.textContent = message;
   status.classList.toggle("warning", Boolean(message));
+  const active = document.activeElement;
+  if (message && active?.matches(":focus-visible") && active.closest(".panel")) {
+    keepControlInView(active);
+  }
+}
+
+function removingAtHomeWouldRestoreBought() {
+  const savedHome = storageRecords.get(STORAGE_KEYS.atHome).raw;
+  if (!savedHome) return false;
+  const removed = JSON.parse(savedHome).ingredientIds.filter(id => !atHome.ingredientIds.includes(id));
+  if (!removed.length) return false;
+  const savedWeek = storageRecords.get(STORAGE_KEYS.currentWeek);
+  if (["invalid", "unreadable", "changed"].includes(savedWeek.status)) return true;
+  const rawWeek = savedWeek.raw ?? null;
+  try {
+    if (localStorage.getItem(STORAGE_KEYS.currentWeek) !== rawWeek) return true;
+  } catch {
+    return true;
+  }
+  const bought = JSON.parse(rawWeek)?.boughtIngredientIds ?? [];
+  return removed.some(id => bought.includes(id));
 }
 
 function flushStorageWrites() {
   const { atHome: atHomeKey, currentWeek: weekKey, hideBought: hideBoughtKey, weightEntries: weightKey } = STORAGE_KEYS;
-  // Save At home before its dependent weekly Bought change.
-  for (const key of [atHomeKey, weekKey, hideBoughtKey, weightKey]) {
+  const homeNeedsWeek = pendingStorageWrites.has(atHomeKey) &&
+    !["invalid", "changed"].includes(storageRecords.get(atHomeKey).status) &&
+    removingAtHomeWouldRestoreBought();
+  // Keep the saved At home marker until the weekly Bought clear can be saved.
+  const stockKeys = homeNeedsWeek ? [weekKey, atHomeKey] : [atHomeKey, weekKey];
+  for (const key of [...stockKeys, hideBoughtKey, weightKey]) {
     if (!pendingStorageWrites.has(key)) continue;
-    if (key === weekKey && weekSaveDependsOnAtHome && pendingStorageWrites.has(atHomeKey)) continue;
+    if (key === weekKey && !homeNeedsWeek && weekSaveDependsOnAtHome && pendingStorageWrites.has(atHomeKey)) continue;
+    if (key === atHomeKey && homeNeedsWeek && removingAtHomeWouldRestoreBought()) continue;
 
     const record = storageRecords.get(key);
     if (record.status === "invalid" || record.status === "changed") continue;
@@ -144,7 +174,7 @@ function flushStorageWrites() {
       continue;
     }
 
-    const next = pendingStorageWrites.get(key);
+    const { raw: next } = pendingStorageWrites.get(key);
     try {
       if (raw !== next) localStorage.setItem(key, next);
     } catch {
@@ -159,8 +189,13 @@ function flushStorageWrites() {
   updateStorageStatus();
 }
 
-function setStoredJson(key, value) {
-  pendingStorageWrites.set(key, JSON.stringify(value));
+function queueStoredJson(key, value, userChange) {
+  const existing = pendingStorageWrites.get(key);
+  pendingStorageWrites.set(key, { raw: JSON.stringify(value), userChange: userChange || existing?.userChange });
+}
+
+function setStoredJson(key, value, userChange = true) {
+  queueStoredJson(key, value, userChange);
   flushStorageWrites();
 }
 
@@ -257,8 +292,8 @@ function normaliseAtHome(value) {
   };
 }
 
-function saveCurrentWeek() {
-  setStoredJson(STORAGE_KEYS.currentWeek, currentWeek);
+function saveCurrentWeek(userChange = true) {
+  setStoredJson(STORAGE_KEYS.currentWeek, currentWeek, userChange);
 }
 
 function saveAtHome() {
@@ -381,6 +416,19 @@ function canRestoreFocus(control) {
   return control && !control.matches(":disabled") && control.getClientRects().length > 0;
 }
 
+function keepControlInView(control) {
+  const toolbarBottom = Math.max(0, document.querySelector(".app-toolbar").getBoundingClientRect().bottom);
+  const { top, bottom } = control.getBoundingClientRect();
+  const delta = top < toolbarBottom ? top - toolbarBottom : Math.max(0, bottom - window.innerHeight);
+  if (delta) window.scrollBy(0, delta);
+}
+
+function restoreListFocus(control, keyboardFocus) {
+  if (!canRestoreFocus(control)) return;
+  control.focus({ preventScroll: true });
+  if (keyboardFocus) keepControlInView(control);
+}
+
 function controlKey(control) {
   if (control.type === "radio") return `${control.name}:${control.value}`;
   if (control.dataset.choiceId) return `choice:${control.dataset.choiceId}`;
@@ -397,6 +445,7 @@ function replaceList(id, markup, fallbackId) {
   const oldRows = [...list.querySelectorAll(rowSelector)];
   const active = document.activeElement;
   const activeRow = list.contains(active) ? active.closest(rowSelector) : null;
+  const keyboardFocus = activeRow && active.matches(":focus-visible");
   // Keep each list's state for recipes temporarily absent from the results.
   const state = recipeListState.get(id) ?? new Map();
 
@@ -423,7 +472,7 @@ function replaceList(id, markup, fallbackId) {
   const available = row => [...(row?.querySelectorAll(controls) ?? [])].filter(canRestoreFocus);
   const exact = available(sameRow).find(control => controlKey(control) === key);
   if (exact) {
-    exact.focus({ preventScroll: true });
+    restoreListFocus(exact, keyboardFocus);
     return;
   }
 
@@ -432,7 +481,7 @@ function replaceList(id, markup, fallbackId) {
   const nearby = neighbours.flatMap(row => available(rows.get(rowKey(row))));
   const target = available(sameRow)[0] ?? nearby.find(control => controlKey(control) === key) ??
     (fallbackId ? document.getElementById(fallbackId) : document.querySelector(".tab.active"));
-  if (canRestoreFocus(target)) target.focus();
+  restoreListFocus(target, keyboardFocus);
 }
 
 function addRecipeToWeek(recipeId, batchId) {
@@ -1131,7 +1180,7 @@ function markIngredientAtHome(ingredientId) {
   if (currentWeek.boughtIngredientIds.includes(ingredientId)) {
     currentWeek.boughtIngredientIds = currentWeek.boughtIngredientIds.filter(id => id !== ingredientId);
     weekSaveDependsOnAtHome = true;
-    pendingStorageWrites.set(STORAGE_KEYS.currentWeek, JSON.stringify(currentWeek));
+    queueStoredJson(STORAGE_KEYS.currentWeek, currentWeek, true);
   }
   saveAtHome();
   renderShoppingList();
@@ -1263,7 +1312,7 @@ async function init() {
   const boughtIds = currentWeek.boughtIngredientIds.filter(id => !atHome.ingredientIds.includes(id));
   const needsBoughtRepair = boughtIds.length !== currentWeek.boughtIngredientIds.length;
   currentWeek.boughtIngredientIds = boughtIds;
-  if (savedWeek?.version === 2 || needsBoughtRepair) saveCurrentWeek();
+  if (savedWeek?.version === 2 || needsBoughtRepair) saveCurrentWeek(false);
   else updateStorageStatus();
 
   setupEvents();

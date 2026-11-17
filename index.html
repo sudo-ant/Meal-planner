@@ -18,15 +18,16 @@
   </header>
 
   <main class="app-shell">
-    <nav class="tabs" aria-label="Main sections">
-      <button class="tab active" type="button" data-tab="plan">Plan</button>
-      <button class="tab" type="button" data-tab="shop">Shop</button>
-      <button class="tab" type="button" data-tab="cook">Cook</button>
-      <button class="tab" type="button" data-tab="recipes">Recipes</button>
-      <button class="tab" type="button" data-tab="weight">Weight</button>
-    </nav>
-
-    <div id="storageStatus" role="status"></div>
+    <div class="app-toolbar">
+      <nav class="tabs" aria-label="Main sections">
+        <button class="tab active" type="button" data-tab="plan">Plan</button>
+        <button class="tab" type="button" data-tab="shop">Shop</button>
+        <button class="tab" type="button" data-tab="cook">Cook</button>
+        <button class="tab" type="button" data-tab="recipes">Recipes</button>
+        <button class="tab" type="button" data-tab="weight">Weight</button>
+      </nav>
+      <div id="storageStatus" role="status"></div>
+    </div>
 
     <section id="planPanel" class="panel active">
       <section class="plan-area current-week-area" aria-labelledby="currentWeekHeading">

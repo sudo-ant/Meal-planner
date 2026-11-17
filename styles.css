@@ -131,10 +131,14 @@ h5 {
   margin: 3px 0 0;
 }
 
-.tabs {
+.app-toolbar {
   position: sticky;
   top: 0;
   z-index: 5;
+  display: flow-root;
+}
+
+.tabs {
   display: grid;
   grid-template-columns: repeat(5, minmax(66px, 1fr));
   gap: 6px;
@@ -400,6 +404,10 @@ select {
   background: var(--warning-soft);
   color: #633e08;
   font-weight: 700;
+}
+
+#storageStatus.warning {
+  margin: -6px 0 14px;
 }
 
 .tags {
